@@ -1,4 +1,4 @@
-## Sentiment and Argumentation Mining in UN Security Council Speeches
+## Sentiment and Argumentation Mining (UN Security Council Speeches)
 
 ### Table of Contents
 
