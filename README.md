@@ -10,7 +10,7 @@
 
 ### Overview
 
-This project entails sentiment and argumentation mining into the recently published UN security council speeches (detailed in [Schönfeld et al. 2019](#Citation)), which is publicly accessible under the link below:
+This project entails sentiment and argumentation mining into the recently published UN security council speeches (detailed in [Schönfeld et al. 2019](#Citations)), which is publicly accessible under the link below:
 
 https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KGVSYH
 
