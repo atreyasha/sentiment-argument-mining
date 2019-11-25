@@ -1,6 +1,7 @@
-## Sentiment Mining
+# Sentiment Mining
 
-###Python:
+## Python:
+
 **[Lexicoder Sentiment Dictionary]("https://quanteda.io/reference/data_dictionary_LSD2015.html")**:
 A lexicon designed to capture the sentiment of political texts <br>
 *Possible concerns*: A good starting point, definitely more specific than other lexica but maybe rather appropriate for evaluating politics on national level. Some issues are not discussed at the international/UN level (wages, coalitions, pensions ...)
@@ -22,7 +23,7 @@ Subjectivity is within the range 0.0 to 1.0 where 0.0 is very objective and 1.0 
 (*Further reading:* <https://www.paulng.me/nlp-un-general-assembly/>)
 
 ---
-###R:
+## R:
 
 Three general purpose lexicons based on unigrams:
 
