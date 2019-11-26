@@ -5,7 +5,7 @@
 * Run an argumentation pipeline in UNSC speeches to determine claims and premises
 * This could also assist in deciphering between spontaneous vs. prepared segments; but this would be a downstream task
 
-#### Possible techniques
+#### Feasible (ranked) techniques
 
 ##### 1. Joint pointer neural network
 
@@ -24,5 +24,5 @@
 * Joint neural network solution would only provide an approximate solution to this problem, particulary due to lack of a global ontology for the political domain
 * A lower ontology designed for the political domain would be very helpful in setting up a proper knowledge base which could be much more scalable and interpretable than machine learning solutions
 * However, this would be very costly and generally difficult to do
-* Some papers have attempted making ontologies, for example in the medical/cancer domain [Groza and Maria 2016](https://www.researchgate.net/publication/309917353_Mining_arguments_from_cancer_documents_using_Natural_Language_Processing_and_ontologies).
+* Some papers have attempted making ontologies, for example in the medical/cancer domain as per [Groza and Maria 2016](https://www.researchgate.net/publication/309917353_Mining_arguments_from_cancer_documents_using_Natural_Language_Processing_and_ontologies).
 * Could be assited with some combinatorical solution to find probable argumentation trees which satisfy all rules of the ontology
