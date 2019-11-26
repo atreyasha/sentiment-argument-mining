@@ -1,0 +1,92 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{times}
+%\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{latexsym}
+\usepackage{subcaption}
+\usepackage{csquotes}
+\usepackage[round]{natbib}
+\usepackage{multirow}
+\usepackage{lipsum}
+\usepackage[table]{xcolor}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+\usepackage{setspace}
+\usepackage{ragged2e}
+\usepackage{array}
+\usepackage[font=footnotesize]{caption}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{tabulary}
+\onehalfspacing
+\geometry{top=2.5cm,
+		bottom=2.5cm,
+        left=3cm,
+        right=3cm}
+\usepackage{url}
+\newcommand\BibTeX{B\textsc{ib}\TeX}
+
+\newcolumntype{L}[1]{>{\RaggedRight\hspace{0pt}}p{#1}}
+\newcolumntype{R}[1]{>{\RaggedLeft\hspace{0pt}}p{#1}}
+\captionsetup[figure]{font=footnotesize,labelfont=footnotesize,labelfont={bf},labelformat={default},labelsep=period,name={Fig.}, justification=centering,singlelinecheck=false, width = 15cm}
+\captionsetup[table]{font=footnotesize,labelfont=footnotesize,labelfont={bf},labelformat={default},labelsep=period,name={Table},justification=centering, singlelinecheck=false, width = 15cm}
+\captionsetup[figure]{labelfont={bf},name={Figure},labelsep=period}
+\captionsetup[table]{labelfont={bf},name={Table},labelsep=period}
+
+\title{Mining Sentiments and Arguments in United Nations Security Council (UNSC)
+  Speeches \\[5pt]
+\large Exploring sentiment and argumentation pipelines in the UNSC corpus
+developed in \citet{schnfeld2019security}}
+
+\author{Atreya Shankar, Juliane Hanel\\
+\texttt{\{shankar,hanel\}@uni-potsdam.de} \\
+PM: Mining Sentiments and Arguments, WiSe 2019/2020 \\
+Prof. Dr. Manfred Stede \\
+University of Potsdam}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}\label{abstract}
+  The UNSC political speech corpus was released with the publication of \citet{schnfeld2019security}
+  and represents a comprehensive poltical speech corpus; containing $\sim$65,000
+  speeches from 4,400 security council meetings over the years of 1995-2017. As a
+  result, it represents a comprehensive corpus which can be utilized for
+  sentiment and argumentation mining. This project will explore the applications
+  of various sentiment and argumentation mining pipelines into this newly released dataset. 
+  
+\end{abstract}
+
+\newpage
+\setcounter{page}{1}
+\thispagestyle{plain}
+
+\section{Project Description}\label{sec:intro}
+
+Here, we present a preliminary project description with ranked preferences of
+techniques that we could use to mine the UNSC political speech corpus. As this
+project is exploratory in nature, some of these methods might be changed with
+future iterations of research. We will be publishing our work and source code in
+a public GitHub repository.\footnote{\url{https://github.com/atreyasha/sentiment-argument-mining}}
+
+\subsection{Sentiment Mining}
+
+\subsection{Argumentation Mining}
+
+\newpage
+\bibliographystyle{plainnat}
+\bibliography{bibliography}
+\nocite{*}
+\end{document}
