@@ -7,15 +7,17 @@
 #
 # To enable this hook, rename this file to "pre-commit".
 
-test=$(python3 -m pip list | grep -F "pipreqs")
+test=$(command -v pipreqs)
 
 if [ -n "$test" ]; then
 	# execute to update requirements
 	pipreqs --force .
+  # add requirements.txt to stage for commit
+  git add requirements.txt
+else
+  echo "pipreqs not found, install it manually via:"
+  echo "$ pip install --user pipreqs"
 fi
-
-# add requirements.txt to stage for commit
-git add requirements.txt
 
 if git rev-parse --verify HEAD >/dev/null 2>&1
 then
