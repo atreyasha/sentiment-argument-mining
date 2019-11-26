@@ -1,6 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{times}
-%\usepackage{hyperref}
+\usepackage{hyperref}
 \usepackage{wrapfig}
 \usepackage{latexsym}
 \usepackage{subcaption}
@@ -14,7 +14,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{geometry}
-\usepackage[hidelinks]{hyperref}
+%\usepackage[hidelinks]{hyperref}
 \usepackage{cleveref}
 \usepackage{setspace}
 \usepackage{ragged2e}
@@ -43,8 +43,8 @@
 
 \title{Mining Sentiments and Arguments in United Nations Security Council (UNSC)
   Speeches \\[5pt]
-\large Exploring sentiment and argumentation pipelines in the UNSC corpus
-developed in \citet{schnfeld2019security}}
+\large Exploring sentiment and argumentation pipelines in the UNSC political
+speech corpus detailed in \citet{schnfeld2019security}}
 
 \author{Atreya Shankar, Juliane Hanel\\
 \texttt{\{shankar,hanel\}@uni-potsdam.de} \\
@@ -60,13 +60,12 @@ University of Potsdam}
 \thispagestyle{empty}
 
 \begin{abstract}\label{abstract}
-  The UNSC political speech corpus was released with the publication of \citet{schnfeld2019security}
-  and represents a comprehensive poltical speech corpus; containing $\sim$65,000
-  speeches from 4,400 security council meetings over the years of 1995-2017. As a
+  The UNSC political speech corpus was released in late 2019 with the publication of
+  \citet{schnfeld2019security}. The corpus contains $\sim$65,000
+  speeches from $\sim$5,000 security council meetings over the years of 1995-2017. As a
   result, it represents a comprehensive corpus which can be utilized for
   sentiment and argumentation mining. This project will explore the applications
-  of various sentiment and argumentation mining pipelines into this newly released dataset. 
-  
+  of various sentiment and argumentation mining pipelines into this newly released dataset 
 \end{abstract}
 
 \newpage
@@ -83,7 +82,74 @@ a public GitHub repository.\footnote{\url{https://github.com/atreyasha/sentiment
 
 \subsection{Sentiment Mining}
 
+In order to conduct sentiment mining into the UNSC corpus, we aim to test
+multiple pre-developed sentiment analysis frameworks and compare their results
+on the UNSC corpus. Some of the approaches we could test are outlined below.
+
+\subsubsection{Lexicoder Sentiment Dictionary (LSD)}
+
+This is a lexicon\footnote{\url{http://www.lexicoder.com/}} designed to capture
+the sentiment of political texts. This could be a good starting point;
+definitely more specific than other lexica but maybe rather appropriate for
+evaluating politics on national level. Some issues are not discussed at the
+international/UN level; such as wages, coalitions and pensions.
+
+\subsubsection{VADER} 
+VADER is a rule-based sentiment analysis tool that is specifically attuned to
+sentiments expressed in social media \citep{vader}. It might be limited since the tool is
+optimized for social media sentiment analysis. We could attempt to improve the
+functionality of VADER using the aforementioned LSD.
+
+\subsubsection{Textblob}
+
+This is a library\footnote{\url{https://textblob.readthedocs.io/en/dev/}} built
+on top of NLTK. It brings in subjectivity as an interesting feature in addition
+to sentiment. Sentiment ranges between -1.0 and 1.0, where -1.0 is the most
+negative, 0.0 is neutral and 1.0 is the most positive sentiment value.
+Subjectivity is within the range 0.0 to 1.0 where 0.0 is very objective and 1.0
+is very subjective. This might be interesting for classifying spontaneous speech, as it might be less subjective.
+
+\clearpage
 \subsection{Argumentation Mining}
+
+As per our discussions, it would be good if we could attempt a downstream task
+of classifying spontaneous and prepared speech segments. However, in order to
+achieve this downstream task, we would need to work on breaking the speeches
+down into their respective argumentation structures. Following are two ranked
+approaches in terms of decreasing preference.
+
+\subsubsection{Joint Pointer Neural Architecture}
+
+In order to break the UNSC speeches into smaller claims and premises, we
+could use a joint pointer architecture proposed by \citet{potash2016heres}.
+Although the authors did not publicly release their source code, this
+architecture was previously emulated by students from the University of
+Potsdam.\footnote{\url{https://github.com/oguzserbetci/argmin2017}} As a result,
+the source code for this architecture has been made publicly available.
+
+In order to train this neural network, it would be best to use claims and
+premises which are relevant to political speeches. For this, we could use US
+election debate corpus\footnote{\url{https://github.com/ElecDeb60To16/Dataset}}
+which has been summarized in \citet{haddadan-etal-2019-yes}. This corpus is
+already annotated for premises and claims. We could train a joint pointer neural
+network and compare the classification results against that of baseline models
+in the paper.
+
+Following this, we could extend the application of the trained joint pointer
+neural network to the UNSC political speech corpus. As a downstream task,
+identifying potential claims/premises would require basic filtering using
+discourse connectives, and we could further analyze this aspect.
+
+\subsubsection{Political-Domain Ontology}
+
+The aforementioned joint neural network solution would only provide an
+approximate solution to this problem of argumentation mining, particularly due to
+lack of a global ontology for the political domain. A lower ontology designed for the political domain would be very helpful in setting up a proper knowledge base which could be much more scalable and interpretable than machine learning solutions
+
+However, this would be very costly and generally difficult to do. Some papers
+have attempted making ontologies, for example in the medical/cancer domain as
+per \citet{ontology}, with reasonable results. It would be interesting to
+pursue an ontology as it resembles a global solution to knowledge and argument representation. 
 
 \newpage
 \bibliographystyle{plainnat}
