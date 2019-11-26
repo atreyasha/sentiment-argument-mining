@@ -15,6 +15,7 @@
 * We could train the joint pointer neural architecture on the [US election debate corpus](https://github.com/ElecDeb60To16/Dataset)
     * Paper published on the corpus and baseline model performance in [Haddadan et al. 2019](https://www.aclweb.org/anthology/P19-1463/)
     * This corpus is already annotated for premises and claims; we could evaluate the joint pointer architecture and compare against the paper
+        * We could also convert the claim/premises in this corpus into a XML format so it complies to Uni-Potsdam corpus standards
     * If results are better than the paper, we could extend the neural architecture to the UNSC corpus
     * UNSC: Requires some pre-processing using discourse connectives to identify candidate components
 
