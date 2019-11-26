@@ -54,3 +54,7 @@ Assigns words with a score between -5 and 5, negative scores indicating negative
 People generally don’t seem to use special political dictionaries but just standard sentiment analysis tools as the ones mentioned above. <br>
 &rightarrow; Can we improve this procedure by expanding the lexicon? <br>
 &rightarrow; Is it worth creating our own lexicon?
+
+*So what do we use?*: <br>
+The Python resources seem the most promising. Working with Vader and possibly enhancing it with the Lexicoder Sentiment Dictionary is a good starting point and will yield valuable results. Furthermore, we should try and see if Textblob's *subjectivity* score helps us determine cues of spontaneous speech. For now, we should focus on this and find out about the advantages and limitations in practice.
+
