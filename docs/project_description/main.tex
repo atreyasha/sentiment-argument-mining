@@ -59,18 +59,16 @@ University of Potsdam}
 \maketitle
 \thispagestyle{empty}
 
-\begin{abstract}\label{abstract}
-  The UNSC political speech corpus was released in late 2019 with the publication of
-  \citet{schnfeld2019security}. The corpus contains $\sim$65,000
-  speeches from $\sim$5,000 security council meetings over the years of 1995-2017. As a
-  result, it represents a comprehensive corpus which can be utilized for
-  sentiment and argumentation mining. This project will explore the applications
-  of various sentiment and argumentation mining pipelines into this newly released dataset 
+\begin{abstract}\label{abstract} The UNSC political speech corpus was released
+in late 2019 with the publication of \citet{schnfeld2019security}. The corpus
+contains $\sim$65,000 speeches from $\sim$5,000 security council meetings over
+the years of 1995-2017. As a result, it represents a comprehensive corpus which
+can be utilized for sentiment and argumentation mining. This project will
+explore the applications of various sentiment and argumentation mining pipelines
+into this newly released dataset
 \end{abstract}
 
-\newpage
-\setcounter{page}{1}
-\thispagestyle{plain}
+\newpage \setcounter{page}{1} \thispagestyle{plain}
 
 \section{Project Description}\label{sec:intro}
 
@@ -78,7 +76,8 @@ Here, we present a preliminary project description with ranked preferences of
 techniques that we could use to mine the UNSC political speech corpus. As this
 project is exploratory in nature, some of these methods might be changed with
 future iterations of research. We will be publishing our work and source code in
-a public GitHub repository.\footnote{\url{https://github.com/atreyasha/sentiment-argument-mining}}
+a public GitHub
+repository.\footnote{\url{https://github.com/atreyasha/sentiment-argument-mining}}
 
 \subsection{Sentiment Mining}
 
@@ -94,11 +93,11 @@ definitely more specific than other lexica but maybe rather appropriate for
 evaluating politics on national level. Some issues are not discussed at the
 international/UN level; such as wages, coalitions and pensions.
 
-\subsubsection{VADER} 
-VADER is a rule-based sentiment analysis tool that is specifically attuned to
-sentiments expressed in social media \citep{vader}. It might be limited since the tool is
-optimized for social media sentiment analysis. We could attempt to improve the
-functionality of VADER using the aforementioned LSD.
+\subsubsection{VADER} VADER is a rule-based sentiment analysis tool that is
+specifically attuned to sentiments expressed in social media \citep{vader}. It
+might be limited since the tool is optimized for social media sentiment
+analysis. We could attempt to improve the functionality of VADER using the
+aforementioned LSD.
 
 \subsubsection{Textblob}
 
@@ -107,7 +106,8 @@ on top of NLTK. It brings in subjectivity as an interesting feature in addition
 to sentiment. Sentiment ranges between -1.0 and 1.0, where -1.0 is the most
 negative, 0.0 is neutral and 1.0 is the most positive sentiment value.
 Subjectivity is within the range 0.0 to 1.0 where 0.0 is very objective and 1.0
-is very subjective. This might be interesting for classifying spontaneous speech, as it might be less subjective.
+is very subjective. This might be interesting for classifying spontaneous
+speech, as it might be less subjective.
 
 \clearpage
 \subsection{Argumentation Mining}
@@ -120,10 +120,10 @@ approaches in terms of decreasing preference.
 
 \subsubsection{Joint Pointer Neural Architecture}
 
-In order to break the UNSC speeches into smaller claims and premises, we
-could use a joint pointer architecture proposed by \citet{potash2016heres}.
-Although the authors did not publicly release their source code, this
-architecture was previously emulated by students from the University of
+In order to break the UNSC speeches into smaller claims and premises, we could
+use a joint pointer architecture proposed by \citet{potash2016heres}. Although
+the authors did not publicly release their source code, this architecture was
+previously emulated by students from the University of
 Potsdam.\footnote{\url{https://github.com/oguzserbetci/argmin2017}} As a result,
 the source code for this architecture has been made publicly available.
 
@@ -143,16 +143,17 @@ discourse connectives, and we could further analyze this aspect.
 \subsubsection{Political-Domain Ontology}
 
 The aforementioned joint neural network solution would only provide an
-approximate solution to this problem of argumentation mining, particularly due to
-lack of a global ontology for the political domain. A lower ontology designed for the political domain would be very helpful in setting up a proper knowledge base which could be much more scalable and interpretable than machine learning solutions.
+approximate solution to this problem of argumentation mining, particularly due
+to lack of a global ontology for the political domain. A lower ontology designed
+for the political domain would be very helpful in setting up a proper knowledge
+base which could be much more scalable and interpretable than machine learning
+solutions.
 
 However, this would be very costly and generally difficult to do. Some papers
 have attempted making ontologies, for example in the medical/cancer domain as
-per \citet{ontology}, with reasonable results. It would be interesting to
-pursue an ontology as it resembles a global solution to knowledge and argument representation. 
+per \citet{ontology}, with reasonable results. It would be interesting to pursue
+an ontology as it resembles a global solution to knowledge and argument
+representation.
 
-\newpage
-\bibliographystyle{plainnat}
-\bibliography{bibliography}
-\nocite{*}
+\newpage \bibliographystyle{plainnat} \bibliography{bibliography} \nocite{*}
 \end{document}
