@@ -11,9 +11,9 @@ test=$(command -v pipreqs)
 
 if [ -n "$test" ]; then
 	# execute to update requirements
-	pipreqs --force .
+	pipreqs --force ./src
   # add requirements.txt to stage for commit
-  git add requirements.txt
+  git add ./src/requirements.txt
 else
   echo "pipreqs not found, install it manually via:"
   echo "$ pip install --user pipreqs"

@@ -1,6 +1,8 @@
 ## Developments
 
-### Overall structure
+### Documentation
+* add all dependencies and information on how to install
+* add information on ini.sh
 
-1. add roles and responsibilities
-2. add brainstorming ideas for different topics
+### Overall structure
+* add roles and responsibilities
