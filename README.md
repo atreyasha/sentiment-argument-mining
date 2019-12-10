@@ -18,17 +18,14 @@ It could be very interesting to conduct sentiment and argumentation analysis on 
 
 ### Methodologies
 
-#### Sentiment Mining
+A list of documents outlining our methodologies can be found below:
 
-Here, we envision conducting sentiment mining and emotion recogniton techniques to identify the polarity of various speeches and/or speech segments.
+* [Sentiment analysis brainstorming](/docs/sentiment.md)
+* [Argumentation mining brainstorming](/docs/arguments.md)
+* [Project proposal](/docs/project_description/main.pdf)
+* [Preliminary presentation](/docs/prelim_presentation/main.pdf)
 
-A detailed list of ideas/methodologies can be found [here](/docs/sentiment.md)
-
-#### Argumentation Mining
-
-Here, we envision conducting argumentation mining to break the UNSC corpus down into claims and premises; which could be used in downstream tasks such as classification of spontaneous and/or prepared speech (segments). 
-
-A detailed list of ideas/methodologies can be found [here](/docs/arguments.md)
+A formal description of our code and results can be found in the [src](/src) directory.
 
 ### Citations
 
