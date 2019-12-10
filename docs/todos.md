@@ -5,6 +5,7 @@
 * TODO maybe potentially can use us election corpus -> goto function in vim seems accurate but not so for python read
 * maybe this is python io stream specific issue
 * might even be possible to do 4 joint tasks, including AC identification and type/role within tree
+* clean up repo structure before pushing
 
 ### Argumentation workflow
 * TODO understand better how USElectionDebates is structured and transform into span and argument sets for training
