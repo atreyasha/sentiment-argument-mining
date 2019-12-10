@@ -11,8 +11,8 @@ read -rep "download and deply UNSC/USElection data? (y/n): " ans
 if [ $ans == "y" ]; then
     # get lfw-faces data
     cd ./data
-    wget -O ./USElection/ElecDeb60To16.zip https://github.com/ElecDeb60To16/Dataset/raw/master/ElecDeb60To16.zip
-    unzip -o ./USElection/ElecDeb60To16.zip -d ./USElection/
+    wget -O ./USElectionDebates/ElecDeb60To16.zip https://github.com/ElecDeb60To16/Dataset/raw/master/ElecDeb60To16.zip
+    unzip -o ./USElectionDebates/ElecDeb60To16.zip -d ./USElection/
     wget -O ./UNSC/docs.RData https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:10.7910/DVN/KGVSYH/G2DENH
     wget -O ./UNSC/docs_meta.RData https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:10.7910/DVN/KGVSYH/KHJOUV
     cd ..
