@@ -7,7 +7,7 @@ This readme will summarize our code and results in conducting sentiment analysis
 To install python-based dependencies, simply run the following command (alternatively with a virtual environment):
 
 ```shell
-$ pip install --user -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 ### 2. Repository initialization
