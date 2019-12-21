@@ -7,7 +7,7 @@ if [ $ans == "y" ]; then
     cp ../hooks/pre-commit.sample ../.git/hooks/pre-commit
 fi
 
-read -rep "download and deply UNSC/USElection data? (y/n): " ans
+read -rep "download and deploy UNSC/USElection data? (y/n): " ans
 if [ $ans == "y" ]; then
     # get lfw-faces data
     cd ./data

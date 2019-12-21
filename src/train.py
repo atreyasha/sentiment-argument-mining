@@ -61,6 +61,8 @@ def get_transformer_params():
 (encode_input,decode_input,decode_output,
  source_token_dict,target_token_dict) = get_transformer_params()
 # TODO save numpy binary for later use
+# TODO OOM issues when using character models, perhaps convert to smaller
+# TODO or try simple tokenization approach instead of complicated one
 
 # Build & fit model
 model = get_model(
