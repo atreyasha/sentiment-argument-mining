@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from .pre_process import *
+from pre_process import *
 from keras_transformer import get_model, decode
 
 def get_corpus_input(subtype="char"):
