@@ -44,7 +44,7 @@ Schönfeld et al. 2019 (paper describing creation of UN security council corpus)
 
 ### Developments
 
-A detailed development log can be found [here](/docs/todos.md).
+A detailed development log can be found [here](/docs/shankar_todos.md).
 
 ### Authors
 
