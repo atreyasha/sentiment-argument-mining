@@ -80,8 +80,11 @@ Developments
 
 5.  Documentation
 
-    1.  fill up pydocstrings for publishable functions
+    1.  redo colab notebook to clone and reset from master branch when
+        publishing
 
-    2.  add all dependencies and information on how to install
+    2.  fill up pydocstrings for publishable functions
 
-    3.  add information on init.sh and how to use
+    3.  add all dependencies and information on how to install
+
+    4.  add information on init.sh and how to use

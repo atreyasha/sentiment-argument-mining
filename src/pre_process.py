@@ -169,6 +169,10 @@ def tokenize(flat_text,flat_ann):
     # first loop to zip results and check for equal length initial tokens
     split_combined = []
     print("tokenizing and performing sanity checks")
+    try:
+        nltk.word_tokenize("testing.")
+    except LookupError:
+        nltk.download('punkt')
     for i in tqdm(range(len(flat_text))):
         split_text = [nltk.word_tokenize(el) for el in flat_text[i].split(" ")]
         split_ann = [(el,Counter(el)) for el in flat_ann[i].split("S")]

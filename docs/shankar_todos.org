@@ -34,6 +34,7 @@
 ***** try genereous claims and premises creation and map via negative sampling to actual trees and redundant candidates
 
 **** Documentation
+***** redo colab notebook to clone and reset from master branch when publishing
 ***** fill up pydocstrings for publishable functions
 ***** add all dependencies and information on how to install
 ***** add information on init.sh and how to use
