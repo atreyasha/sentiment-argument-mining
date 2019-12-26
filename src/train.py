@@ -24,10 +24,10 @@ def train():
     # Build & fit model
     model = get_model(
         token_num=max(len(source_token_dict), len(target_token_dict)),
-        embed_dim=32,
-        encoder_num=2,
-        decoder_num=2,
-        head_num=4,
+        embed_dim=12,
+        encoder_num=1,
+        decoder_num=1,
+        head_num=2,
         hidden_dim=28,
         dropout_rate=0.05,
         use_same_embed=False)
