@@ -1,49 +1,43 @@
 ** Developments
 
-############################
+###########################
 # comments/to-do's
-############################
+###########################
 
-# TODO try purely character transformer model first, then extend to others
-# TODO might be fun to try small and easy example and slowly extend out
-# consider using transformer xl for decoder, try out basic stuff in keras first
-# clear splits wetween segments and how to represent this clearly
-# TODO ultimately remove capital names and references to reduce bias
-# think of other bias reduction techniques later on once annotated
-# TODO add more possibilites of data to return
-
-# 1: claim
-# 2: claim connecting premise
-# 3: premise connecting premise (behind)
-# 4. no tag
-# 5. void
-
-# remove all delimiters after processing, it cannot be encoded
-# TODO: convert dataset to both word and character level for first task
-# TODO: stick to uncased data for ease, split into window and exact variant
-# TODO: or perhaps go straight to joint tas?
+# TODO consider allowing for vocabulary pruning and flexible padding
+# TODO redefine padding length based on UNSC dataset paragraph or processing lengths
+# TODO add modular functions to further modifications aside from all other functions, such as unknown token types eg. pos-tags, ner taggers, verb types, etc.
+# TODO re-sampling procedure to re-train inputs with rare words more than common words
+# TODO consider using special word embeddings and keep unmodified to retain word relationships
+# TODO update readme with new function
 
 *** Argumentation workflow
 
+**** Sequence encoding
+***** TODO make character and (simple) word representations with both cased and non-cased views -> OOM issues for character-transformer model
+***** TODO save numpy binaries for continued use
+***** TODO ultimately extend encodings to tree structures with distances to connective relation
+***** need to split into smaller speech segments or paragraphs to pass into pipeline
+***** 1: claim, 2: claim connecting premise, 3: premise connecting premise (behind), 4: no tag, 5: void
+
 **** Architecture
-***** TODO explore different tasks -> single/double candidate and span idenitfication (most important), or three/four-way joint model
-***** TODO try novel architectures for seq2seq task, egs. GRU, transformer, BERT pre-trained models
+***** TODO perform single task first, and then multi task to check performance
+***** try novel architectures for seq2seq task, egs. GRU, transformer, BERT pre-trained models
+***** think of best unique tree structure classification, perhaps with argument connection distances
 ***** if working with three-way task, need to think of how to pass a gradient on non-existent examples -> perhaps some kind of negative sampling procedure
 
-**** Sequence encoding
-***** TODO make datasets first with single and dual view (most important), and alternatively think of how to encode a tree for training (additional for three/four-way model)
-***** TODO make character and word representations with both cased and non-cased views -> will amount to 2^3=8 different datasets
-***** need to split into smaller speech segments or paragraphs to pass into pipeline
-
-**** Ideas to innovate
+**** Domain debiasing
+***** TODO remove capital names and references to reduce bias
 ***** experiment specific entity/token masking to prevent domain-specific bias from training vocabulary
+***** perhaps collapse all first, second and third-person pronouns to prevent self-referential bias 
 ***** add different classes in unknown vocabulary -> such as unknown noun, unknown adjective etc.
 
-**** Extra steps
+**** Ideas to extrapolate
 ***** ibm argumentation dataset
 ***** coreference resolution for tree structures
 ***** try genereous claims and premises creation and map via negative sampling to actual trees and redundant candidates
 
 **** Documentation
+***** TODO fill up pydocstrings for publishable functions
 ***** add all dependencies and information on how to install
 ***** add information on init.sh and how to use
