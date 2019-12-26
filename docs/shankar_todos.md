@@ -51,19 +51,22 @@ Developments
 
 3.  Architecture
 
-    1.  **TODO** perform single task first, and then multi
+    1.  **TODO** port transformer code to pytorch and attempt
+        running on colab
+
+    2.  **TODO** perform single task first, and then multi
         task to check performance
 
-    2.  consider non-transformer approach for character data due to GPU
+    3.  consider non-transformer approach for character data due to GPU
         OOM issues -\> perhaps adding more features to unknown words
 
-    3.  try novel architectures for seq2seq task, egs. GRU, transformer,
+    4.  try novel architectures for seq2seq task, egs. GRU, transformer,
         BERT pre-trained models
 
-    4.  think of best unique tree structure classification, perhaps with
+    5.  think of best unique tree structure classification, perhaps with
         argument connection distances
 
-    5.  if working with three-way task, need to think of how to pass a
+    6.  if working with three-way task, need to think of how to pass a
         gradient on non-existent examples -\> perhaps some kind of
         negative sampling procedure
 

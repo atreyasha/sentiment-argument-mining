@@ -5,14 +5,6 @@ import json
 import numpy as np
 from keras_transformer import get_model, decode
 
-from keras.backend.tensorflow_backend import set_session
-import tensorflow as tf
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-config.log_device_placement = True
-sess = tf.Session(config=config)
-set_session(sess)
-
 def retrieve_data():
     file_path = "./data/pre-processed/"
     with open(file_path+"tokenized_source_dict.json","r") as f:
@@ -43,7 +35,7 @@ def train():
     model.fit(x=[encode_input, decode_input],
         y=decode_output,
         epochs=10,
-        batch_size=32)
+              batch_size=5)
     model.save("test.h5")
 
 if __name__ == "__main__":
