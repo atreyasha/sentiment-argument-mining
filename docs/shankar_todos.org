@@ -27,6 +27,10 @@
 ***** think of best unique tree structure classification, perhaps with argument connection distances
 ***** if working with three-way task, need to think of how to pass a gradient on non-existent examples -> perhaps some kind of negative sampling procedure
 
+**** Local development
+***** TODO figure out pip local environment for earlier tensorflow version
+***** TODO find out how to include fixed names into requirements.txt file such as tensorflow, despite no explicit call in script
+
 **** Ideas to extrapolate
 ***** OOM issues for character-transformer model
 ***** ibm argumentation dataset

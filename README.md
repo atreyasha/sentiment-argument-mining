@@ -1,13 +1,5 @@
 ## Sentiment and Argumentation Mining (UN Security Council Speeches)
 
-### Table of Contents
-
-* [Overview](#Overview)
-* [Methodologies](#Methodologies)
-* [Citations](#Citations)
-* [Developments](#Developments)
-* [Authors](#Authors)
-
 ### Overview
 
 This project entails sentiment and argumentation mining into the recently published UN security council speeches (detailed in [Schönfeld et al. 2019](https://arxiv.org/abs/1906.10969), which is publicly accessible [here](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KGVSYH).

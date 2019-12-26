@@ -67,7 +67,16 @@ Developments
         gradient on non-existent examples -\> perhaps some kind of
         negative sampling procedure
 
-4.  Ideas to extrapolate
+4.  Local development
+
+    1.  **TODO** figure out pip local environment for earlier
+        tensorflow version
+
+    2.  **TODO** find out how to include fixed names into
+        requirements.txt file such as tensorflow, despite no explicit
+        call in script
+
+5.  Ideas to extrapolate
 
     1.  OOM issues for character-transformer model
 
@@ -78,7 +87,7 @@ Developments
     4.  try genereous claims and premises creation and map via negative
         sampling to actual trees and redundant candidates
 
-5.  Documentation
+6.  Documentation
 
     1.  redo colab notebook to clone and reset from master branch when
         publishing
