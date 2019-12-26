@@ -5,6 +5,14 @@ import json
 import numpy as np
 from keras_transformer import get_model, decode
 
+from keras.backend.tensorflow_backend import set_session
+import tensorflow as tf
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+config.log_device_placement = True
+sess = tf.Session(config=config)
+set_session(sess)
+
 def retrieve_data():
     file_path = "./data/pre-processed/"
     with open(file_path+"tokenized_source_dict.json","r") as f:
