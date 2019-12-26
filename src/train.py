@@ -28,7 +28,7 @@ def train():
         encoder_num=2,
         decoder_num=2,
         head_num=4,
-        hidden_dim=128,
+        hidden_dim=28,
         dropout_rate=0.05,
         use_same_embed=False)
     model.compile('adam', 'sparse_categorical_crossentropy')
