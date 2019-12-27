@@ -88,6 +88,10 @@ Developments
         requirements.txt file such as tensorflow, despite no explicit
         call in script
 
+    3.  add log files and model folders like other ML projects, where
+        detailed reconstruction information for models can be stored
+        along with many performance metrics and example runs
+
 5.  Ideas to extrapolate
 
     1.  OOM issues for character-transformer model
