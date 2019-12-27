@@ -24,7 +24,7 @@ def retrieve_data(dtype="tokens", file_path = "./data/pre-processed/"):
     if dtype == "tokens":
         prefix = "tokenized"
     elif dtype == "char":
-        prefix == "characterized"
+        prefix = "characterized"
     with open(file_path+prefix+"_source_dict.json","r") as f:
         source_token_dict = json.load(f)
     with open(file_path+prefix+"_target_dict.json","r") as f:
