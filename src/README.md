@@ -25,9 +25,9 @@ In order to initialize this repository, simply run `init.sh` as shown below:
 $ ./init.sh
 ```
 
-**i.** Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
+i. Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
 
-**ii.** Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
+ii. Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
 
 ### 3. Pre-process data
 
@@ -55,7 +55,7 @@ $ python3 pre_process.py --dtype both
 
 #### i. Argumentation Mining
 
-###### Single model run
+##### Single model run
 
 To test a basic transformer model in the seq2seq argumentation task, one can use the script `train.py`:
 
