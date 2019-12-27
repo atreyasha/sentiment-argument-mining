@@ -55,8 +55,6 @@ $ python3 pre_process.py --dtype both
 
 #### i. Argumentation Mining
 
-##### Single model run
-
 To test a basic transformer model in the seq2seq argumentation task, one can use the script `train.py`:
 
 ```
@@ -71,4 +69,4 @@ optional arguments:
                         batch size in stochastic gradient descent (default: 5
 ```
 
-The resulting model after training will be saved in the `./models` directory.
+The resulting model after training will be saved in the `models` directory.
