@@ -291,9 +291,12 @@ def text2encoding(source_tokens,target_tokens):
     return (encode_input,decode_input,decode_output,
             source_token_dict,target_token_dict)
 
-def corpus2char():
+def corpus2char(file_path="./data/pre-processed/"):
     """
     Function to convert US election corpus to numpy character encodings
+
+    Args:
+        file_path (str): base file directory on which to store output
     """
     corpus = read_us_election_corpus()
     tagged = char_tag(corpus,spaces=False)
@@ -301,7 +304,7 @@ def corpus2char():
     flat_ann = flatten(tagged)
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=False)
-    with open("./data/pre-processed/characterized_corpus.tsv","w") as f:
+    with open(file_path+"characterized_corpus.tsv","w") as f:
         writer = csv.writer(f,delimiter="\t")
         header = ["i","char_sequence->[P=premise,C=claim,N=None]"]
         writer.writerow(header)
@@ -313,18 +316,21 @@ def corpus2char():
     (encode_input,decode_input,decode_output,
             source_char_dict,target_char_dict) = text2encoding(source_char,
                                                                  target_char)
-    np.save("./data/pre-processed/characterized_encode_input.npy",encode_input)
-    np.save("./data/pre-processed/characterized_decode_input.npy",decode_input)
-    np.save("./data/pre-processed/characterized_decode_output.npy",
+    np.save(file_path+"characterized_encode_input.npy",encode_input)
+    np.save(file_path+"characterized_decode_input.npy",decode_input)
+    np.save(file_path+"characterized_decode_output.npy",
             decode_output)
-    with open("./data/pre-processed/characterized_source_dict.json","w") as f:
+    with open(file_path+"characterized_source_dict.json","w") as f:
         json.dump(source_char_dict,f)
-    with open("./data/pre-processed/characterized_target_dict.json","w") as f:
+    with open(file_path+"characterized_target_dict.json","w") as f:
         json.dump(target_char_dict,f)
 
-def corpus2tokens():
+def corpus2tokens(file_path="./data/pre-processed/"):
     """
     Function to convert US election corpus to numpy token encodings
+
+    Args:
+        file_path (str): base file directory on which to store output
     """
     corpus = read_us_election_corpus()
     tagged = char_tag(corpus,spaces=True)
@@ -333,7 +339,7 @@ def corpus2tokens():
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=True)
     split_combined = tokenize(flat_text,flat_ann)
-    with open("./data/pre-processed/tokenized_corpus.tsv","w") as f:
+    with open(file_path+"tokenized_corpus.tsv","w") as f:
         writer = csv.writer(f,delimiter="\t")
         writer.writerow(["i","token","annotation->[P=premise,C=claim,N=None]"])
         for i,token_set in enumerate(split_combined):
@@ -346,12 +352,12 @@ def corpus2tokens():
     (encode_input,decode_input,decode_output,
             source_token_dict,target_token_dict) = text2encoding(source_tokens,
                                                               target_tokens)
-    np.save("./data/pre-processed/tokenized_encode_input.npy",encode_input)
-    np.save("./data/pre-processed/tokenized_decode_input.npy",decode_input)
-    np.save("./data/pre-processed/tokenized_decode_output.npy",decode_output)
-    with open("./data/pre-processed/tokenized_source_dict.json","w") as f:
+    np.save(file_path+"tokenized_encode_input.npy",encode_input)
+    np.save(file_path+"tokenized_decode_input.npy",decode_input)
+    np.save(file_path+"tokenized_decode_output.npy",decode_output)
+    with open(file_path+"tokenized_source_dict.json","w") as f:
         json.dump(source_token_dict,f)
-    with open("./data/pre-processed/tokenized_target_dict.json","w") as f:
+    with open(file_path+"tokenized_target_dict.json","w") as f:
         json.dump(target_token_dict,f)
 
 if __name__ == "__main__":

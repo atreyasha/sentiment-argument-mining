@@ -51,22 +51,31 @@ Developments
 
 3.  Architecture
 
-    1.  **TODO** port transformer code to pytorch and attempt
-        running on colab
+    1.  **TODO** split data into various sets and think of
+        useful means of evaluating results, add various parameters such
+        as window size for errors, perplexity and other useful
+        parameters
 
-    2.  **TODO** perform single task first, and then multi
+    2.  **TODO** add checkpoints and early stoppage to find
+        better models in training, find ways to integrate bert into
+        training procedure
+
+    3.  **TODO** port transformer code to pytorch and attempt
+        running on colab, useful with bert
+
+    4.  **TODO** perform single task first, and then multi
         task to check performance
 
-    3.  consider non-transformer approach for character data due to GPU
+    5.  consider non-transformer approach for character data due to GPU
         OOM issues -\> perhaps adding more features to unknown words
 
-    4.  try novel architectures for seq2seq task, egs. GRU, transformer,
+    6.  try novel architectures for seq2seq task, egs. GRU, transformer,
         BERT pre-trained models
 
-    5.  think of best unique tree structure classification, perhaps with
+    7.  think of best unique tree structure classification, perhaps with
         argument connection distances
 
-    6.  if working with three-way task, need to think of how to pass a
+    8.  if working with three-way task, need to think of how to pass a
         gradient on non-existent examples -\> perhaps some kind of
         negative sampling procedure
 
