@@ -64,7 +64,7 @@ def train(dtype="tokens",
     model.compile('adam','sparse_categorical_crossentropy')
     model.fit(x=[encode_input,decode_input],
               y=decode_output,epochs=epochs,batch_size=batch_size)
-    model.save(file_path+dtype"_single_run.h5")
+    model.save(file_path+dtype+"_single_run.h5")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class
