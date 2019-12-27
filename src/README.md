@@ -55,7 +55,7 @@ $ python3 pre_process.py --dtype both
 
 #### i. Argumentation Mining
 
-##### Single model run
+#### Single model run
 
 To test a basic transformer model in the seq2seq argumentation task, one can use the script `train.py`:
 
