@@ -360,9 +360,16 @@ def corpus2tokens(file_path="./data/pre-processed/"):
     with open(file_path+"tokenized_target_dict.json","w") as f:
         json.dump(target_token_dict,f)
 
+class arg_metav_formatter(argparse.ArgumentDefaultsHelpFormatter,
+                      argparse.MetavarTypeHelpFormatter):
+    """
+    Class to combine argument parsers in order to display meta-variables
+    and defaults for arguments
+    """
+    pass
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(formatter_class
-                                     =argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
     parser.add_argument("--dtype", type=str, default="tokens",
                         help="which type of data pre-processing;"+
                         " either 'tokens', 'char' or 'both'")

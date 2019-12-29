@@ -31,18 +31,16 @@ ii. Secondly, you will be prompted to download and deploy the UNSC and US electi
 
 ### 3. Pre-process data
 
-#### i. Argumentation mining
-
 In order to pre-process and encode US election debate data, we have developed some useful functions in `pre_process.py`. Usage documentation for this script is shown below: 
 
 ```
 $ python3 pre_process.py --help
 
-usage: pre_process.py [-h] [--dtype DTYPE]
+usage: pre_process.py [-h] [--dtype str]
 
 optional arguments:
-  -h, --help     show this help message and exit
-  --dtype DTYPE  which type of data pre-processing; either 'tokens', 'char' or 'both' (default: tokens)
+  -h, --help   show this help message and exit
+  --dtype str  which type of data pre-processing; either 'tokens', 'char' or 'both' (default: tokens)
 ```
 
 An example of running the script is shown below:
@@ -53,20 +51,17 @@ $ python3 pre_process.py --dtype both
 
 ### 4. Run models
 
-#### i. Argumentation Mining
-
 To test a basic transformer model in the seq2seq argumentation task, one can use the script `train.py`:
 
 ```
 $ python3 train.py --help
 
-usage: train.py [-h] [--epochs EPOCHS] [--batch-size BATCH_SIZE]
+usage: train.py [-h] [--epochs int] [--batch-size int]
 
 optional arguments:
-  -h, --help            show this help message and exit
-  --epochs EPOCHS       maximum number of training epochs (default: 50)
-  --batch-size BATCH_SIZE
-                        batch size in stochastic gradient descent (default: 5
+  -h, --help        show this help message and exit
+  --epochs int      maximum number of training epochs (default: 50)
+  --batch-size int  batch size in stochastic gradient descent (default: 5)
 ```
 
 The resulting model after training will be saved in the `models` directory.
