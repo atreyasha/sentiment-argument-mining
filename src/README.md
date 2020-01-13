@@ -31,10 +31,12 @@ ii. Secondly, you will be prompted to download and deploy the UNSC and US electi
 
 ### 3. Pre-process data
 
-In order to pre-process and encode US election debate data, we have developed some useful functions in `pre_process.py`. Usage documentation for this script is shown below: 
+#### i. Argumentation
+
+In order to pre-process and encode US election debate data, we have developed some useful functions in `pre_process_argumentation.py`. Usage documentation for this script is shown below: 
 
 ```
-$ python3 pre_process.py --help
+$ python3 pre_process_argumentation.py --help
 
 usage: pre_process.py [-h] [--dtype str]
 
@@ -46,15 +48,17 @@ optional arguments:
 An example of running the script is shown below:
 
 ```shell
-$ python3 pre_process.py --dtype both
+$ python3 pre_process_argumentation.py --dtype both
 ```
 
 ### 4. Run models
 
-To test a basic transformer model in the seq2seq argumentation task, one can use the script `train.py`:
+#### i. Argumentation
+
+To test a basic transformer model in the seq2seq argumentation task, one can use the script `train_argumentation.py`:
 
 ```
-$ python3 train.py --help
+$ python3 train_argumentation.py --help
 
 usage: train.py [-h] [--epochs int] [--batch-size int]
 

@@ -4,6 +4,7 @@
 import json
 import argparse
 import numpy as np
+from obj.arg_metav_formatter import *
 from keras_transformer import get_model, decode
 
 def retrieve_data(file_path = "./data/pre-processed/"):
@@ -58,14 +59,6 @@ def train(epochs=50,batch_size=5,file_path="./models/"):
     model.fit(x=[encode_input,decode_input],
               y=decode_output,epochs=epochs,batch_size=batch_size)
     model.save(file_path+"single_run.h5")
-
-class arg_metav_formatter(argparse.ArgumentDefaultsHelpFormatter,
-                      argparse.MetavarTypeHelpFormatter):
-    """
-    Class to combine argument parsers in order to display meta-variables
-    and defaults for arguments
-    """
-    pass
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)

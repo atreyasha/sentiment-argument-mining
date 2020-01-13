@@ -3,7 +3,40 @@ Developments
 
 ### Argumentation workflow
 
-1.  Sequence encoding
+1.  Architecture
+
+    1.  **TODO** make balanced datasets for checking, think
+        of appropriate training metrics
+
+    2.  **TODO** split data into various sets and think of
+        useful means of evaluating results, add various parameters such
+        as window size for errors, perplexity and other useful
+        parameters
+
+    3.  **TODO** add checkpoints and early stoppage to find
+        better models in training, find ways to integrate bert into
+        training procedure
+
+    4.  **TODO** port transformer code to pytorch and attempt
+        running on colab, useful with bert
+
+    5.  **TODO** perform single task first, and then multi
+        task to check performance
+
+    6.  consider non-transformer approach for character data due to GPU
+        OOM issues -\> perhaps adding more features to unknown words
+
+    7.  try novel architectures for seq2seq task, egs. GRU, transformer,
+        BERT pre-trained models
+
+    8.  think of best unique tree structure classification, perhaps with
+        argument connection distances
+
+    9.  if working with three-way task, need to think of how to pass a
+        gradient on non-existent examples -\> perhaps some kind of
+        negative sampling procedure
+
+2.  Sequence encoding
 
     1.  **TODO** add data options with both cased and
         non-cased views
@@ -26,7 +59,7 @@ Developments
     7.  tree (task 2) -\> distances to connective argument components
         which can help form tree
 
-2.  Domain debiasing
+3.  Domain debiasing
 
     1.  **TODO** remove capital names and references to
         reduce bias
@@ -48,36 +81,6 @@ Developments
 
     7.  add different classes in unknown vocabulary -\> such as unknown
         noun, unknown adjective etc.
-
-3.  Architecture
-
-    1.  **TODO** split data into various sets and think of
-        useful means of evaluating results, add various parameters such
-        as window size for errors, perplexity and other useful
-        parameters
-
-    2.  **TODO** add checkpoints and early stoppage to find
-        better models in training, find ways to integrate bert into
-        training procedure
-
-    3.  **TODO** port transformer code to pytorch and attempt
-        running on colab, useful with bert
-
-    4.  **TODO** perform single task first, and then multi
-        task to check performance
-
-    5.  consider non-transformer approach for character data due to GPU
-        OOM issues -\> perhaps adding more features to unknown words
-
-    6.  try novel architectures for seq2seq task, egs. GRU, transformer,
-        BERT pre-trained models
-
-    7.  think of best unique tree structure classification, perhaps with
-        argument connection distances
-
-    8.  if working with three-way task, need to think of how to pass a
-        gradient on non-existent examples -\> perhaps some kind of
-        negative sampling procedure
 
 4.  Local development
 

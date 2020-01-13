@@ -2,6 +2,17 @@
 
 *** Argumentation workflow
 
+**** Architecture
+***** TODO make balanced datasets for checking, think of appropriate training metrics
+***** TODO split data into various sets and think of useful means of evaluating results, add various parameters such as window size for errors, perplexity and other useful parameters
+***** TODO add checkpoints and early stoppage to find better models in training, find ways to integrate bert into training procedure
+***** TODO port transformer code to pytorch and attempt running on colab, useful with bert
+***** TODO perform single task first, and then multi task to check performance
+***** consider non-transformer approach for character data due to GPU OOM issues -> perhaps adding more features to unknown words
+***** try novel architectures for seq2seq task, egs. GRU, transformer, BERT pre-trained models
+***** think of best unique tree structure classification, perhaps with argument connection distances
+***** if working with three-way task, need to think of how to pass a gradient on non-existent examples -> perhaps some kind of negative sampling procedure
+
 **** Sequence encoding
 ***** TODO add data options with both cased and non-cased views 
 ***** TODO redefine padding length based on UNSC dataset paragraph or processing lengths
@@ -19,16 +30,6 @@
 ***** experiment specific entity/token masking to prevent domain-specific bias from training vocabulary
 ***** perhaps collapse all first, second and third-person pronouns to prevent self-referential bias 
 ***** add different classes in unknown vocabulary -> such as unknown noun, unknown adjective etc.
-
-**** Architecture
-***** TODO split data into various sets and think of useful means of evaluating results, add various parameters such as window size for errors, perplexity and other useful parameters
-***** TODO add checkpoints and early stoppage to find better models in training, find ways to integrate bert into training procedure
-***** TODO port transformer code to pytorch and attempt running on colab, useful with bert
-***** TODO perform single task first, and then multi task to check performance
-***** consider non-transformer approach for character data due to GPU OOM issues -> perhaps adding more features to unknown words
-***** try novel architectures for seq2seq task, egs. GRU, transformer, BERT pre-trained models
-***** think of best unique tree structure classification, perhaps with argument connection distances
-***** if working with three-way task, need to think of how to pass a gradient on non-existent examples -> perhaps some kind of negative sampling procedure
 
 **** Local development
 ***** TODO figure out pip local environment for earlier tensorflow version

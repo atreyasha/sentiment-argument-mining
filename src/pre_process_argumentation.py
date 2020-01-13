@@ -11,6 +11,7 @@ import numpy as np
 from glob import glob
 from tqdm import tqdm
 from collections import Counter
+from obj.arg_metav_formatter import *
 
 def read_us_election_corpus():
     """
@@ -63,7 +64,7 @@ def char_tag(corpus,spaces=False):
         they should be marked same as span
 
     Returns:
-        list: each component contains annotated characters
+        (list): each component contains annotated characters
     """
     # create empty list
     tagged = []
@@ -115,7 +116,7 @@ def flatten(char_sequences):
         char_sequences (list): character sequences
 
     Returns:
-        list: flattened arguments character sequences
+        (list): flattened arguments character sequences
     """
     flat = []
     for speech in char_sequences:
@@ -164,7 +165,7 @@ def tokenize(flat_text,flat_ann):
         flat_ann (list): character sequences for tagged text from "flatten"
 
     Returns:
-        list: pruned list of tokens and associated annotations
+        (list): pruned list of tokens and associated annotations
     """
     # first loop to zip results and check for equal length initial tokens
     split_combined = []
@@ -214,7 +215,7 @@ def roundup(x,nearest=100):
         nearest (int): nearest integer on which to round up
 
     Returns:
-        int: rounded up integer
+        (int): rounded up integer
     """
     return int(np.ceil(x/nearest))*int(nearest)
 
@@ -226,7 +227,7 @@ def build_token_dict(token_list):
         token_list (list): list containing list of tokenized segments
 
     Returns:
-        dict: dictionary and indices of all tokens
+        (dict): dictionary and indices of all tokens
     """
     token_dict = {
         '<PAD>': 0,
@@ -359,14 +360,6 @@ def corpus2tokens(file_path="./data/pre-processed/"):
         json.dump(source_token_dict,f)
     with open(file_path+"tokenized_target_dict.json","w") as f:
         json.dump(target_token_dict,f)
-
-class arg_metav_formatter(argparse.ArgumentDefaultsHelpFormatter,
-                      argparse.MetavarTypeHelpFormatter):
-    """
-    Class to combine argument parsers in order to display meta-variables
-    and defaults for arguments
-    """
-    pass
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
