@@ -240,13 +240,14 @@ def build_token_dict(token_list):
                 token_dict[token] = len(token_dict)
     return token_dict
 
-def text2encoding(source_tokens,target_tokens):
+def text2encoding(source_tokens,target_tokens,max_padding_len=None):
     """
     Function to convert token segments into indices for training
 
     Args:
         source_tokens (list): source or input tokens
         target_tokens (list): target or ouput tokens
+        max_padding_len (int): maximum padding length for any encoding
 
     Returns:
         encode_input (numpy.ndarray): encoded input tokens
@@ -269,8 +270,14 @@ def text2encoding(source_tokens,target_tokens):
                      for tokens in target_tokens]
     # padding
     print("padding tokens")
-    source_max_len = roundup(max(map(len, encode_tokens)))
-    target_max_len = roundup(max(map(len, decode_tokens)))
+    if max_padding_len is None:
+        source_max_len = roundup(max(map(len, encode_tokens)))
+        target_max_len = roundup(max(map(len, decode_tokens)))
+    else:
+        assert max_padding_len >= max(map(len, encode_tokens))
+        assert max_padding_len >= max(map(len, decode_tokens))
+        source_max_len = max_padding_len
+        target_max_len = max_padding_len
     encode_tokens = [tokens + ['<PAD>'] *
                      (source_max_len - len(tokens))
                      for tokens in tqdm(encode_tokens)]
@@ -292,47 +299,57 @@ def text2encoding(source_tokens,target_tokens):
     return (encode_input,decode_input,decode_output,
             source_token_dict,target_token_dict)
 
-def corpus2char(file_path="./data/pre-processed/"):
+def corpus2char(file_path="./data/pre-processed/task_1/"):
     """
     Function to convert US election corpus to numpy character encodings
 
     Args:
         file_path (str): base file directory on which to store output
     """
+    if not file_path.endswith("/"):
+        file_path += "/"
     corpus = read_us_election_corpus()
     tagged = char_tag(corpus,spaces=False)
     flat_text = flatten(corpus[0])
     flat_ann = flatten(tagged)
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=False)
-    with open(file_path+"characterized_corpus.tsv","w") as f:
+    with open(file_path+"text/characterized_corpus.tsv","w") as f:
         writer = csv.writer(f,delimiter="\t")
-        header = ["i","char_sequence->[P=premise,C=claim,N=None]"]
+        header = ["char_sequence",
+                  "annotated_char_sequence->[P=premise,C=claim,N=None]"]
         writer.writerow(header)
+        writer.writerow([])
         for i in range(len(flat_text)):
-            writer.writerow([i,flat_text[i]])
-            writer.writerow([i,flat_ann[i]])
+            writer.writerow([flat_text[i],flat_ann[i]])
+            writer.writerow([])
     source_char = [list(text) for text in flat_text]
     target_char = [list(ann) for ann in flat_ann]
     (encode_input,decode_input,decode_output,
             source_char_dict,target_char_dict) = text2encoding(source_char,
                                                                  target_char)
-    np.save(file_path+"characterized_encode_input.npy",encode_input)
-    np.save(file_path+"characterized_decode_input.npy",decode_input)
-    np.save(file_path+"characterized_decode_output.npy",
+    np.save(file_path+"simple_encodings/characterized_encode_input.npy",
+            encode_input)
+    np.save(file_path+"simple_encodings/characterized_decode_input.npy",
+            decode_input)
+    np.save(file_path+"simple_encodings/characterized_decode_output.npy",
             decode_output)
-    with open(file_path+"characterized_source_dict.json","w") as f:
+    with open(file_path+"simple_encodings/characterized_source_dict.json",
+              "w") as f:
         json.dump(source_char_dict,f)
-    with open(file_path+"characterized_target_dict.json","w") as f:
+    with open(file_path+"simple_encodings/characterized_target_dict.json",
+              "w") as f:
         json.dump(target_char_dict,f)
 
-def corpus2tokens(file_path="./data/pre-processed/"):
+def corpus2tokens(file_path="./data/pre-processed/task_1/"):
     """
     Function to convert US election corpus to numpy token encodings
 
     Args:
         file_path (str): base file directory on which to store output
     """
+    if not file_path.endswith("/"):
+        file_path += "/"
     corpus = read_us_election_corpus()
     tagged = char_tag(corpus,spaces=True)
     flat_text = flatten(corpus[0])
@@ -340,12 +357,14 @@ def corpus2tokens(file_path="./data/pre-processed/"):
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=True)
     split_combined = tokenize(flat_text,flat_ann)
-    with open(file_path+"tokenized_corpus.tsv","w") as f:
+    with open(file_path+"text/tokenized_corpus.tsv","w") as f:
         writer = csv.writer(f,delimiter="\t")
-        writer.writerow(["i","token","annotation->[P=premise,C=claim,N=None]"])
-        for i,token_set in enumerate(split_combined):
+        writer.writerow(["token","annotation->[P=premise,C=claim,N=None]"])
+        writer.writerow([])
+        for token_set in split_combined:
             for token,tag in token_set:
-                writer.writerow([i,token,tag])
+                writer.writerow([token,tag])
+            writer.writerow([])
     source_tokens = [[token[0] for token in token_set]
                      for token_set in split_combined]
     target_tokens = [[token[1] for token in token_set]
@@ -353,12 +372,15 @@ def corpus2tokens(file_path="./data/pre-processed/"):
     (encode_input,decode_input,decode_output,
             source_token_dict,target_token_dict) = text2encoding(source_tokens,
                                                               target_tokens)
-    np.save(file_path+"tokenized_encode_input.npy",encode_input)
-    np.save(file_path+"tokenized_decode_input.npy",decode_input)
-    np.save(file_path+"tokenized_decode_output.npy",decode_output)
-    with open(file_path+"tokenized_source_dict.json","w") as f:
+    np.save(file_path+"simple_encodings/tokenized_encode_input.npy",
+            encode_input)
+    np.save(file_path+"simple_encodings/tokenized_decode_input.npy",
+            decode_input)
+    np.save(file_path+"simple_encodings/tokenized_decode_output.npy",
+            decode_output)
+    with open(file_path+"simple_encodings/tokenized_source_dict.json","w") as f:
         json.dump(source_token_dict,f)
-    with open(file_path+"tokenized_target_dict.json","w") as f:
+    with open(file_path+"simple_encodings/tokenized_target_dict.json","w") as f:
         json.dump(target_token_dict,f)
 
 if __name__ == "__main__":
