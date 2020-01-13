@@ -38,7 +38,7 @@ In order to pre-process and encode US election debate data, use the script `pre_
 ```
 $ python3 pre_process_argumentation.py --help
 
-usage: pre_process.py [-h] [--dtype str]
+usage: pre_process_argumentation.py [-h] [--dtype str]
 
 optional arguments:
   -h, --help   show this help message and exit
@@ -60,7 +60,7 @@ To test a basic transformer model in the seq2seq argumentation task, one can use
 ```
 $ python3 train_argumentation.py --help
 
-usage: train.py [-h] [--epochs int] [--batch-size int]
+usage: train_argumentation.py [-h] [--epochs int] [--batch-size int]
 
 optional arguments:
   -h, --help        show this help message and exit
