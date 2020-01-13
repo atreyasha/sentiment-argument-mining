@@ -1,27 +1,56 @@
 Developments
 ------------
 
+split into various categories
+=============================
+
+one option is using FLAIR models, with lstm\'s
+==============================================
+
+another is a transformer with bert
+==================================
+
+possible to re-interpret results in accuracy form
+=================================================
+
+perhaps save data in tsv format, or similar to CONLL style format
+=================================================================
+
+consider whether pos-tagging is further necessary
+=================================================
+
+look through code and identify all areas which need changing to us election data
+================================================================================
+
+modify those parts accordingly, or alternatively transform own data to conll format
+===================================================================================
+
+add auto-creation of folders if missing
+=======================================
+
+fix slash error possibilities in path argument
+==============================================
+
 ### Argumentation workflow
 
 1.  Architecture
 
-    1.  **TODO** make balanced datasets for checking, think
-        of appropriate training metrics
+    1.  **TODO** start off with bert seq2seq tagger in
+        tensorflow, and advance application from there
 
-    2.  **TODO** split data into various sets and think of
-        useful means of evaluating results, add various parameters such
-        as window size for errors, perplexity and other useful
-        parameters
+    2.  **TODO** make easy data split for temporary model
+        run, weakest point is the model
 
     3.  **TODO** add checkpoints and early stoppage to find
         better models in training, find ways to integrate bert into
         training procedure
 
-    4.  **TODO** port transformer code to pytorch and attempt
-        running on colab, useful with bert
+    4.  split data into various sets and think of useful means of
+        evaluating results, add various parameters such as window size
+        for errors, perplexity and other useful parameters
 
-    5.  **TODO** perform single task first, and then multi
-        task to check performance
+    5.  perform single task first, and then multi task to check
+        performance
 
     6.  consider non-transformer approach for character data due to GPU
         OOM issues -\> perhaps adding more features to unknown words
@@ -38,25 +67,22 @@ Developments
 
 2.  Sequence encoding
 
-    1.  **TODO** add data options with both cased and
-        non-cased views
-
-    2.  **TODO** redefine padding length based on UNSC
+    1.  **TODO** redefine padding length based on UNSC
         dataset paragraph or processing lengths
 
-    3.  **TODO** consider allowing for vocabulary pruning and
-        flexible padding
+    2.  **TODO** add data options with both cased and
+        non-cased views
 
-    4.  need to split UNSC smaller speech segments or paragraphs to pass
+    3.  need to split UNSC smaller speech segments or paragraphs to pass
         into pipeline
 
-    5.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
+    4.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
 
-    6.  tree (task 1) -\> 1: claim, 2: aux claim connecting to same
+    5.  tree (task 1) -\> 1: claim, 2: aux claim connecting to same
         claim (behind), 3: premise connecting to claim, 4: aux premise
         connecting to same premise (behind), 5: non-argument
 
-    7.  tree (task 2) -\> distances to connective argument components
+    6.  tree (task 2) -\> distances to connective argument components
         which can help form tree
 
 3.  Domain debiasing
