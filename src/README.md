@@ -33,7 +33,7 @@ ii. Secondly, you will be prompted to download and deploy the UNSC and US electi
 
 #### i. Argumentation
 
-In order to pre-process and encode US election debate data, we have developed some useful functions in `pre_process_argumentation.py`. Usage documentation for this script is shown below: 
+In order to pre-process and encode US election debate data, use the script `pre_process_argumentation.py`. Usage documentation for this script is shown below: 
 
 ```
 $ python3 pre_process_argumentation.py --help
@@ -45,7 +45,7 @@ optional arguments:
   --dtype str  which type of data pre-processing; either 'tokens', 'char' or 'both' (default: tokens)
 ```
 
-An example of running the script is shown below:
+Run the following script to produce both character and word encodings for model training:
 
 ```shell
 $ python3 pre_process_argumentation.py --dtype both
