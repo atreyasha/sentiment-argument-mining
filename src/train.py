@@ -232,7 +232,6 @@ train_features = convert_examples_to_features(
 train_x = np.array([input_set.input_ids for input_set in train_features])
 train_y = np.array([input_set.label_id for input_set in train_features])
 
-
 def create_learning_rate_scheduler(max_learn_rate=5e-5,
                                    end_learn_rate=1e-7,
                                    warmup_epoch_count=10,
@@ -259,7 +258,7 @@ def create_model(l_bert,model_ckpt,max_seq_len=300):
     cls_out = tf.keras.layers.Dropout(0.5)(output)
     logits = tf.keras.layers.Dense(units=768, activation="tanh")(cls_out)
     logits = tf.keras.layers.Dropout(0.5)(logits)
-    logits = tf.keras.layers.Dense(units=300, activation="softmax")(logits)
+    logits = tf.keras.layers.Dense(units=1, activation="softmax")(logits)
     model = tf.keras.Model(inputs=input_ids, outputs=logits)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
