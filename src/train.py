@@ -258,7 +258,7 @@ def create_model(l_bert,model_ckpt,max_seq_len=300):
     cls_out = tf.keras.layers.Dropout(0.5)(output)
     logits = tf.keras.layers.Dense(units=768, activation="tanh")(cls_out)
     logits = tf.keras.layers.Dropout(0.5)(logits)
-    logits = tf.keras.layers.Dense(units=1, activation="softmax")(logits)
+    logits = tf.keras.layers.Dense(output_dim=1, activation="softmax")(logits)
     model = tf.keras.Model(inputs=input_ids, outputs=logits)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
