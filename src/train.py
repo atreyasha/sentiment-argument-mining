@@ -207,8 +207,14 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
                           label_mask=label_mask))
     return features
 
+model_name = "albert_base_v2"
+model_dir    = bert.fetch_google_albert_model(model_name, ".models")
+model_ckpt   = os.path.join(model_dir, "model.ckpt-best")
+model_params = bert.albert_params(model_dir)
+l_bert = bert.BertModelLayer.from_params(model_params, name="albert")
+
 import sentencepiece as spm
-spm_model = "./albert_base/30k-clean.model"
+spm_model = "./.models/albert_base_v2/albert_base/30k-clean.model"
 sp = spm.SentencePieceProcessor()
 sp.load(spm_model)
 do_lower_case = True
@@ -216,7 +222,7 @@ do_lower_case = True
 processor = NerProcessor()
 label_list = processor.get_labels()
 num_labels = len(label_list) + 1
-tokenizer = bert.albert_tokenization.FullTokenizer("./albert_base/30k-clean.vocab", do_lower_case=True,spm_model_file="./albert_base/30k-clean.model")
+tokenizer = bert.albert_tokenization.FullTokenizer("./.models/albert_base_v2/albert_base/30k-clean.vocab", do_lower_case=True,spm_model_file="./albert_base/30k-clean.model")
 
 train_examples = processor.get_train_examples("./data/pre-processed/task_1/tokens")
 label_map = {i: label for i, label in enumerate(label_list, 1)}
@@ -226,11 +232,6 @@ train_features = convert_examples_to_features(
 train_x = np.array([input_set.input_ids for input_set in train_features])
 train_y = np.array([input_set.label_id for input_set in train_features])
 
-model_name = "albert_base_v2"
-model_dir    = bert.fetch_google_albert_model(model_name, ".models")
-model_ckpt   = os.path.join(model_dir, "model.ckpt-best")
-model_params = bert.albert_params(model_dir)
-l_bert = bert.BertModelLayer.from_params(model_params, name="albert")
 
 def create_learning_rate_scheduler(max_learn_rate=5e-5,
                                    end_learn_rate=1e-7,
