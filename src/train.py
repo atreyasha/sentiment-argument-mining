@@ -258,12 +258,12 @@ def create_model(l_bert,model_ckpt,max_seq_len=300):
     cls_out = tf.keras.layers.Dropout(0.5)(output)
     logits = tf.keras.layers.Dense(units=768, activation="tanh")(cls_out)
     logits = tf.keras.layers.Dropout(0.5)(logits)
-    logits = tf.keras.layers.Dense(output_dim=1, activation="softmax")(logits)
+    logits = tf.keras.layers.Dense(units=6, activation="softmax")(logits)
     model = tf.keras.Model(inputs=input_ids, outputs=logits)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
     model.compile(optimizer=tf.keras.optimizers.Adam(),
-                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True,reduction=tf.keras.losses.Reduction.NONE),
                   metrics=[tf.keras.metrics.SparseCategoricalAccuracy(name="acc")])
     model.summary()
     return model
