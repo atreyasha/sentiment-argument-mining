@@ -222,7 +222,7 @@ do_lower_case = True
 processor = NerProcessor()
 label_list = processor.get_labels()
 num_labels = len(label_list) + 1
-tokenizer = bert.albert_tokenization.FullTokenizer("./.models/albert_base_v2/albert_base/30k-clean.vocab", do_lower_case=True,spm_model_file="./albert_base/30k-clean.model")
+tokenizer = bert.albert_tokenization.FullTokenizer("./.models/albert_base_v2/albert_base/30k-clean.vocab", do_lower_case=True,spm_model_file="./.models/albert_base_v2/albert_base/30k-clean.model")
 
 train_examples = processor.get_train_examples("./data/pre-processed/task_1/tokens")
 label_map = {i: label for i, label in enumerate(label_list, 1)}
