@@ -1,52 +1,70 @@
 ** Developments
-
+   
 *** Argumentation workflow
 
-**** Architecture
-***** TODO identify all areas where changes would be necessary in bert code regarding own data
-***** TODO perhaps focus only on task 1 instead of multi-task, or maybe that could the last priority
-***** TODO possibly undo work tokenization via nltk and have it done in bert
-***** TODO start off with bert seq2seq tagger in tensorflow, and advance application from there
-***** TODO make easy data split for temporary model run, weakest point is the model
-***** TODO add checkpoints and early stoppage to find better models in training, find ways to integrate bert into training procedure
-***** possible to evaluate with accuracy metrics as well
-***** split data into various sets and think of useful means of evaluating results, add various parameters such as window size for errors, perplexity and other useful parameters
-***** perform single task first, and then multi task to check performance
-***** consider non-transformer approach for character data due to GPU OOM issues -> perhaps adding more features to unknown words
-***** try novel architectures for seq2seq task, egs. GRU, transformer, BERT pre-trained models
-***** think of best unique tree structure classification, perhaps with argument connection distances
-***** if working with three-way task, need to think of how to pass a gradient on non-existent examples -> perhaps some kind of negative sampling procedure
+* TODO masks out cls and sep at the end?
+* TODO consider how to insert multiple sep delimiters and later handle them in pipeline and output
+* TODO make sentence splits, easiest way to handle hierarchies also later in argument structure
+* need to re-create data structure via sentences and encode them accordingly
+* use BERT for sentence or clause embeddings?
 
+**** Sequence encoding
+***** TODO split by lengths of up to 500 and think of how to handle this problem, maybe add possibility of inter-sequence connections in graph structure 
+***** TODO pad sequences and attempt masking activations for padded positions
+***** TODO make better splits in next runs with more thought put behind into distribution of splits
+***** TODO think of creative way to handle sequence shortening for UNSC dataset
+***** UNSC: need to split UNSC smaller speech segments or paragraphs to pass into pipeline
+***** fix up data structure with different tasks later on, perhaps can merge all tasks into one, or keep multiple tasks
+***** add data options with both cased and non-cased views
+
+**** Architecture
+***** TODO attempt using tensorboard for better visualization and understanding
+***** TODO if there are still OOM issues, collect samples and gradients and update later
+***** TODO investigate sota sequence tagging and graph connecting networks, use recent word embedding frameworks where possible
+***** TODO work on task 1 and observe how multi-task setting could improve both tasks, use adjacency matrix for second task
+***** TODO think of appropriate performance metrics given label/tag imbalance
+***** TODO update documentation and pydocstrings with new code
+***** identify maximum sequence length (words): pad up to 1900, not possible for bert models
+***** make naive split into train/test/sequence: use sklearn with random_seed=42
+***** add various parameters such as window size for errors, perplexity, accuracy, bleu score for diversity
+***** add checkpoints and early stoppage to find better models in training
+***** consider non-transformer approach for character data due to GPU OOM issues -> perhaps adding more features to unknown words
+      
 **** Code-specifc development
+***** TODO update all readmes, check unused imports and code health in general
 ***** TODO add existing folder checks, creation if missing and trailing slash addition
 ***** TODO figure out pip local environment for earlier tensorflow version
 ***** TODO find out how to include fixed names into requirements.txt file such as tensorflow, despite no explicit call in script
-***** fix slash error possibilities in path argument, check if directory exists to prevent later error
+***** fix slash error possibilities in path argument
+***** check if directory exists to prevent later error, if not make directory
 ***** add log files and model folders like other ML projects, where detailed reconstruction information for models can be stored along with many performance metrics and example runs
 
-**** Sequence encoding
-***** TODO redefine padding length based on UNSC dataset paragraph or processing lengths
-***** fix up data structure with different tasks later on, perhaps can merge all tasks into one, or keep multiple tasks
-***** add data options with both cased and non-cased views 
-***** need to split UNSC smaller speech segments or paragraphs to pass into pipeline
+**** Task construction
+***** first priority is task 1, followed by others
 ***** simple (task 1) -> 1: claim, 2: premise, 3: non-argument
-***** tree (task 1) -> 1: claim, 2: aux claim connecting to same claim (behind), 3: premise connecting to claim, 4: aux premise connecting to same premise (behind), 5: non-argument
-***** tree (task 2) -> distances to connective argument components which can help form tree
+***** tree (task 1 + task 2) -> task 1 representation + distances to connective argument components which can help form tree
+***** tree (task 1 + task 2) -> 1: claim, 2: aux claim connecting to same claim (behind), 3: premise connecting to claim, 4: aux premise connecting to same premise (behind), 5: non-argument
+***** think of best unique tree structure classification, perhaps with argument connection distances -> maybe make it a sorting issue where vector of arguments is re-sorted
+***** if working with three-way task, need to think of how to pass a gradient on non-existent examples -> perhaps some kind of negative sampling procedure
 
 **** Domain debiasing
-***** re-sampling procedure to re-train inputs with rare words more than common words
-***** remove capital names and references to reduce bias
-***** consider using special word embeddings and keep unmodified to retain word relationships
-***** possibly add unknown token types eg. pos-tags, ner taggers, verb types, etc.
-***** experiment specific entity/token masking to prevent domain-specific bias from training vocabulary
+***** re-sampling or gradient weighting to re-train inputs with rare words more than common words
 ***** perhaps collapse all first, second and third-person pronouns to prevent self-referential bias 
-***** add different classes in unknown vocabulary -> such as unknown noun, unknown adjective etc.
+***** non-BERT: remove capital names and references to reduce bias
+***** non-BERT: consider using special word embeddings and keep unmodified to retain word relationships
+***** non-BERT: possibly add unknown token types eg. pos-tags, ner taggers, verb types, etc.
+***** non-BERT: experiment specific entity/token masking to prevent domain-specific bias from training vocabulary
+***** non-BERT: add different classes in unknown vocabulary -> such as unknown noun, unknown adjective etc.
+
+**** Timeline
+***** start writing paper in end February, submit by end of March
+***** write combined paper, clarify on number of pages
 
 **** Documentation
 ***** fill up pydocstrings for publishable functions
 ***** redo colab notebook to clone and reset from master branch when publishing
 
-**** Ideas to extrapolate
+**** Ideas to explore
 ***** OOM issues for character-transformer model
 ***** ibm argumentation dataset
 ***** coreference resolution for tree structures
