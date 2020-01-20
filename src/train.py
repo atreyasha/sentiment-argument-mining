@@ -14,7 +14,7 @@ def read_data(directory="./data/pre-processed/task_1/tokens/"):
         train_data = pickle.load(f)
     return train_data
 
-def project_to_ids(train_data,label_id_map,max_seq_length=200):
+def project_to_ids(train_data,label_id_map,max_seq_length=128):
     model_name = "albert_base_v2"
     model_dir    = bert.fetch_google_albert_model(model_name, ".models")
     spm = "./.models/albert_base_v2/albert_base/30k-clean.model"
@@ -68,7 +68,7 @@ def create_learning_rate_scheduler(max_learn_rate=5e-5,
                                                                        verbose=1)
     return learning_rate_scheduler
 
-def create_model(l_bert,model_ckpt,max_seq_len=200):
+def create_model(l_bert,model_ckpt,max_seq_len=128):
     """Creates a classification model."""
     input_ids = tf.keras.layers.Input(shape=(max_seq_len,), dtype='int32',
                                            name="input_ids")
