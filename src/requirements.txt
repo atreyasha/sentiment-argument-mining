@@ -1,8 +1,8 @@
+benepar==0.1.2
+nltk==3.4.5
+tqdm==4.28.1
+tensorflow==2.1.0
 numpy==1.18.1
 bert_for_tf2==0.13.2
-nltk==3.4.5
-tensorflow==2.1.0
-benepar==0.1.2
-tqdm==4.28.1
 bert==2.2.0
 scikit_learn==0.22.1
