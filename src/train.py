@@ -11,13 +11,6 @@ from tqdm import tqdm
 from obj.arg_metav_formatter import *
 import logging
 
-# read in data as string representation
-# map labels to integers, pad labels as well
-# TODO use kamalkraj's implementation for data formatting, use local keras library for model handling
-# TODO need to modify end of system to handle masking
-# TODO replace local tokenizers with those suggested in bert-tf-2
-# TODO issue of trimming/padding before or inside model
-
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
                     datefmt='%m/%d/%Y %H:%M:%S',
                     level=logging.INFO)
@@ -122,7 +115,6 @@ class NerProcessor(DataProcessor):
                 guid=guid, text_a=text_a, text_b=text_b, label=label))
         return examples
 
-# TODO modify tokenizer here
 def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer):
     """Loads a data file into a list of `InputBatch`s."""
     label_map = {label: i for i, label in enumerate(label_list, 1)}

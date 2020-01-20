@@ -169,12 +169,7 @@ def tokenize(flat_text,flat_ann):
     """
     # first loop to zip results and check for equal length initial tokens
     split_combined = []
-    print("tokenizing and performing sanity checks")
-    try:
-        nltk.word_tokenize("testing.")
-    except LookupError:
-        nltk.download('punkt')
-    for i in tqdm(range(len(flat_text))):
+    for i in range(len(flat_text)):
         split_text = [nltk.word_tokenize(el)
                     for el in flat_text[i].split(" ")]
         split_ann = [(el,Counter(el)) for el in flat_ann[i].split("S")]
@@ -183,8 +178,7 @@ def tokenize(flat_text,flat_ann):
     # prune tokens to ensure proper splits
     split_combined_pruned = []
     # next loop to check and combine results
-    print("tagging tokens")
-    for segment in tqdm(split_combined):
+    for segment in split_combined:
         temp = []
         for token_set in segment:
             if len(token_set[0]) > 0:
@@ -231,9 +225,12 @@ def write_to_file(data,subtype,directory,name,header):
             writer = csv.writer(f,delimiter="\t")
             writer.writerow(header)
             writer.writerow([])
-            for token_set in data:
-                for token,tag in token_set:
-                    writer.writerow([token,tag])
+            for sent_set in data:
+                for i,sent in enumerate(sent_set):
+                    for token,tag in sent:
+                        writer.writerow([token,tag])
+                    if i != (len(sent_set)-1):
+                        writer.writerow(["+","+"])
                 writer.writerow([])
 
 def corpus2char(directory="./data/pre-processed/task_1/char/"):
@@ -279,8 +276,35 @@ def corpus2tokens(directory="./data/pre-processed/task_1/tokens/"):
     flat_ann = flatten(tagged)
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=True)
-    split_combined = tokenize(flat_text,flat_ann)
-    train, test = train_test_split(split_combined,test_size=0.33,
+    collection = []
+    print("splitting and tokenizing sentences")
+    # check for punkt tokenizer
+    try:
+        nltk.word_tokenize("testing.")
+    except LookupError:
+        nltk.download('punkt')
+    # enter main loop
+    for i in tqdm(range(len(flat_text))):
+        sub_text = nltk.tokenize.sent_tokenize(flat_text[i])
+        sub_ann = []
+        for j,chunk in enumerate(sub_text):
+            span = re.search(re.escape(chunk),flat_text[i]).span()
+            sub_ann.append(flat_ann[i][span[0]:span[1]])
+            assert len(sub_ann[j]) == len(chunk)
+            flat_text[i] = flat_text[i][span[1]:]
+            flat_ann[i] = flat_ann[i][span[1]:]
+        collection.append(tokenize(sub_text,sub_ann))
+    # check data length and remove long sentences
+    to_remove = []
+    for i,sent_set in enumerate(collection):
+        token_count = sum([1 for sent in sent_set for token in sent])
+        length = token_count+len(sent_set)+1
+        if length > 512:
+            to_remove.append(i)
+    collection = [sent_set for i,sent_set in enumerate(collection)
+                  if i not in to_remove]
+    # split data into train and test sets
+    train, test = train_test_split(collection,test_size=0.33,
                                    random_state=42)
     header = ["-DOCSTART-","-token-",
               "-annotation->[P=premise,C=claim,N=None]-"]
