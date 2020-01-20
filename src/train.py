@@ -82,6 +82,7 @@ def create_model(l_bert,model_ckpt,max_seq_len=300):
     model.summary()
     return model
 
+train_data = read_data()
 label_map = {"<pad>":0,"[CLS]":1,"[SEP]":2,"N":3,"C":4,"P":5}
 input_ids, label_ids, token_type_ids = project_to_ids(train_data,label_map)
 
