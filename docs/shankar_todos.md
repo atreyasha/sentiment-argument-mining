@@ -3,20 +3,23 @@ Developments
 
 ### Argumentation workflow
 
-**TODO**
-=====================================================
+write data to json for easier handling
+======================================
 
-**TODO**
-===============================================================================================================
+use token type ids for segment ids
+==================================
 
-**TODO**
-============================================================================================================
+write data in single loop to contain everything cleanly
+=======================================================
 
-need to re-create data structure via sentences and encode them accordingly
-==========================================================================
+character and direct bert tokenization
+======================================
 
-use BERT for sentence or clause embeddings?
-===========================================
+handle masking downstream as well
+=================================
+
+add x label and consider what kind of implementation is necessary
+=================================================================
 
 Sequence encoding
 

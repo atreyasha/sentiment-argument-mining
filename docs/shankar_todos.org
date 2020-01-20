@@ -1,12 +1,13 @@
-** Developments
-   
+** Developments 
+
 *** Argumentation workflow
 
-* TODO masks out cls and sep at the end?
-* TODO consider how to insert multiple sep delimiters and later handle them in pipeline and output
-* TODO make sentence splits, easiest way to handle hierarchies also later in argument structure
-* need to re-create data structure via sentences and encode them accordingly
-* use BERT for sentence or clause embeddings?
+* write data to json for easier handling
+* use token type ids for segment ids
+* write data in single loop to contain everything cleanly
+* character and direct bert tokenization
+* handle masking downstream as well
+* add x label and consider what kind of implementation is necessary
 
 **** Sequence encoding
 ***** TODO split by lengths of up to 500 and think of how to handle this problem, maybe add possibility of inter-sequence connections in graph structure 
