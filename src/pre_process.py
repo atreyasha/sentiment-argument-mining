@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import re
-import csv
+import bert
+import pickle
+import json
 import nltk
 import codecs
 import argparse
@@ -156,25 +158,35 @@ def correct_periods(flat_text,flat_ann,spaces=False):
                                 forward_ann + flat_ann[i][match.end()-1:])
     return flat_text,flat_ann
 
-def tokenize(flat_text,flat_ann):
+def tokenize(flat_text,flat_ann,Tokenizer):
     """
     Function to prune and tokenize corpus
 
     Args:
         flat_text (list): character sequences for raw rext from "flatten"
         flat_ann (list): character sequences for tagged text from "flatten"
+        Tokenizer (object): tokenizer class for either nltk or bert
 
     Returns:
         (list): pruned list of tokens and associated annotations
     """
     # first loop to zip results and check for equal length initial tokens
     split_combined = []
-    for i in range(len(flat_text)):
-        split_text = [nltk.word_tokenize(el)
-                    for el in flat_text[i].split(" ")]
-        split_ann = [(el,Counter(el)) for el in flat_ann[i].split("S")]
-        assert len(split_ann) == len(split_text)
-        split_combined.append(list(zip(split_text,split_ann)))
+    if "nltk" in str(Tokenizer):
+        for i in range(len(flat_text)):
+            split_text = [Tokenizer.word_tokenize(el)
+                          for el in flat_text[i].split(" ")]
+            split_ann = [(el,Counter(el)) for el in flat_ann[i].split("S")]
+            assert len(split_ann) == len(split_text)
+            split_combined.append(list(zip(split_text,split_ann)))
+    elif "bert" in str(Tokenizer):
+        preprocess = bert.albert_tokenization.preprocess_text
+        for i in range(len(flat_text)):
+            split_text = [Tokenizer.tokenize(preprocess(el,lower=True))
+                          for el in flat_text[i].split(" ")]
+            split_ann = [(el,Counter(el)) for el in flat_ann[i].split("S")]
+            assert len(split_ann) == len(split_text)
+            split_combined.append(list(zip(split_text,split_ann)))
     # prune tokens to ensure proper splits
     split_combined_pruned = []
     # next loop to check and combine results
@@ -183,7 +195,8 @@ def tokenize(flat_text,flat_ann):
         for token_set in segment:
             if len(token_set[0]) > 0:
                 most_common = token_set[1][1].most_common()[0][0]
-                if len("".join(token_set[0])) == len(token_set[1][0]):
+                if (sum([len(token) for token in token_set[0]]) ==
+                    len(token_set[1][0])):
                     if len(token_set[1][1]) == 1:
                         for token in token_set[0]:
                             temp.append([token,most_common])
@@ -201,7 +214,7 @@ def tokenize(flat_text,flat_ann):
         split_combined_pruned.append(temp)
     return split_combined_pruned
 
-def write_to_file(data,subtype,directory,name,header):
+def write_to_file(data,subtype,directory,name):
     """
     Function to write parsed text to CoNLL file format
 
@@ -213,60 +226,62 @@ def write_to_file(data,subtype,directory,name,header):
         header (str): header of CoNLL stored files
     """
     if subtype == "char":
+        char_dict = {}
+        for i in range(len(data[0])):
+            char_dict[data[0][i][0]] = {"char":data[0][i][1],
+                                        "ann":data[1][i][1]}
         with open(directory+name,"w") as f:
-            writer = csv.writer(f,delimiter="\t")
-            writer.writerow(header)
-            writer.writerow([])
-            for i in range(len(data[0])):
-                writer.writerow([data[0][i],data[1][i]])
-                writer.writerow([])
+            json.dump(char_dict,f)
     elif subtype == "tokens":
-        with open(directory+name,"w") as f:
-            writer = csv.writer(f,delimiter="\t")
-            writer.writerow(header)
-            writer.writerow([])
-            for sent_set in data:
-                for i,sent in enumerate(sent_set):
-                    for token,tag in sent:
-                        writer.writerow([token,tag])
-                    if i != (len(sent_set)-1):
-                        writer.writerow(["+","+"])
-                writer.writerow([])
+        token_list = []
+        for i, sent_set in enumerate(data):
+            tmp_sent = []
+            tmp_ann = []
+            for j,sent in enumerate(sent_set[1]):
+                unzipped = list(zip(*sent))
+                tmp_sent.append(list(unzipped[0]))
+                tmp_ann.append(list(unzipped[1]))
+            token_list.append([data[i][0],tmp_sent,tmp_ann])
+        with open(directory+name,"wb") as f:
+            pickle.dump(token_list,f)
 
-def corpus2char(directory="./data/pre-processed/task_1/char/"):
+def corpus2char(directory="./data/pre-processed/task_1/char/",spaces=False):
     """
     Function to convert US election corpus to character representation
-    and save in CoNLL format
+    and save to json
 
     Args:
         directory (str): base file directory on which to store output
+        spaces (bool): True to tag spaces as separate character
     """
     if not directory.endswith("/"):
         directory += "/"
     corpus = read_us_election_corpus()
-    tagged = char_tag(corpus,spaces=False)
+    tagged = char_tag(corpus,spaces=spaces)
     flat_text = flatten(corpus[0])
     flat_ann = flatten(tagged)
     assert len(flat_text) == len(flat_ann)
-    flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=False)
+    flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=spaces)
+    flat_text = [[i,text] for i,text in enumerate(flat_text)]
+    flat_ann = [[i,ann] for i,ann in enumerate(flat_ann)]
     (flat_text_train,flat_text_test,
      flat_ann_train,flat_ann_test) = train_test_split(flat_text,
                                                       flat_ann,test_size=0.33,
                                                       random_state=42)
-    header = ["-DOCSTART-","-char_seq-",
-              "-char_seq_annotated->[P=premise,C=claim,N=None]-"]
     write_to_file([flat_text_train,flat_ann_train],"char",
-                  directory,"train.txt",header)
+                  directory,"train.json")
     write_to_file([flat_text_test,flat_ann_test],"char",
-                  directory,"test.txt",header)
+                  directory,"test.json")
 
-def corpus2tokens(directory="./data/pre-processed/task_1/tokens/"):
+def corpus2tokens(directory="./data/pre-processed/task_1/tokens/",
+                  tokenizer="bert",max_seq_length=512):
     """
     Function to convert US election corpus to token representation
-    and save in CoNLL format
+    and save to pickle
 
     Args:
         directory (str): base file directory on which to store output
+        tokenizer (str): whether to use nltk or bert for tokenization
     """
     if not directory.endswith("/"):
         directory += "/"
@@ -283,6 +298,16 @@ def corpus2tokens(directory="./data/pre-processed/task_1/tokens/"):
         nltk.word_tokenize("testing.")
     except LookupError:
         nltk.download('punkt')
+    # define albert tokenizer
+    if tokenizer == "bert":
+        model_name = "albert_base_v2"
+        model_dir    = bert.fetch_google_albert_model(model_name, ".models")
+        spm = "./.models/albert_base_v2/albert_base/30k-clean.model"
+        vocab = "./.models/albert_base_v2/albert_base/30k-clean.vocab"
+        Tokenizer = bert.albert_tokenization.FullTokenizer(vocab,
+                                                           spm_model_file=spm)
+    elif tokenizer == "nltk":
+        Tokenizer = nltk.tokenize
     # enter main loop
     for i in tqdm(range(len(flat_text))):
         sub_text = nltk.tokenize.sent_tokenize(flat_text[i])
@@ -293,37 +318,42 @@ def corpus2tokens(directory="./data/pre-processed/task_1/tokens/"):
             assert len(sub_ann[j]) == len(chunk)
             flat_text[i] = flat_text[i][span[1]:]
             flat_ann[i] = flat_ann[i][span[1]:]
-        collection.append(tokenize(sub_text,sub_ann))
+        collection.append(tokenize(sub_text,sub_ann,Tokenizer))
     # check data length and remove long sentences
     to_remove = []
     for i,sent_set in enumerate(collection):
         token_count = sum([1 for sent in sent_set for token in sent])
         length = token_count+len(sent_set)+1
-        if length > 512:
+        if length > max_seq_length:
             to_remove.append(i)
     collection = [sent_set for i,sent_set in enumerate(collection)
                   if i not in to_remove]
+    collection = [[i,sent_set] for i,sent_set in enumerate(collection)]
     # split data into train and test sets
     train, test = train_test_split(collection,test_size=0.33,
                                    random_state=42)
-    header = ["-DOCSTART-","-token-",
-              "-annotation->[P=premise,C=claim,N=None]-"]
-    write_to_file(train,"tokens",directory,"train.txt",header)
-    write_to_file(test,"tokens",directory,"test.txt",header)
+    write_to_file(train,"tokens",directory,"train.pickle")
+    write_to_file(test,"tokens",directory,"test.pickle")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
     parser.add_argument("--dtype", type=str, default="tokens",
                         help="which type of data pre-processing;"+
-                        " either tokens, char or both")
+                        " either 'tokens', 'char' or 'both'")
+    parser.add_argument("--tokenizer", type=str, default="bert",
+                        help="use 'nltk' or 'bert' for tokenization")
+    parser.add_argument("--spaces", default=False, action="store_true",
+                        help="whether to tag spaces; for character annotations"+
+                        " only")
     args = parser.parse_args()
     assert args.dtype in ["tokens","char","both"]
+    assert args.tokenizer in ["bert","nltk"]
     if args.dtype == "tokens":
-        corpus2tokens()
+        corpus2tokens(tokenizer=args.tokenizer)
     elif args.dtype == "char":
-        corpus2char()
+        corpus2char(spaces=args.spaces)
     elif args.dtype == "both":
         print("processing tokens")
-        corpus2tokens()
+        corpus2tokens(tokenizer=args.tokenizer)
         print("processing characters")
-        corpus2char()
+        corpus2char(spaces=args.spaces)
