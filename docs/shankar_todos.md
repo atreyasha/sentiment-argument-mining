@@ -6,20 +6,32 @@ Developments
 write data to json for easier handling
 ======================================
 
+might run into unicode formatting error for byte symbols
+========================================================
+
 use token type ids for segment ids
 ==================================
 
-write data in single loop to contain everything cleanly
-=======================================================
+improve code tidyness later on, perhaps change tokenization pipeline and add to train
+=====================================================================================
 
-character and direct bert tokenization
-======================================
+add token length pruning elsewhere instead of pre-process
+=========================================================
 
 handle masking downstream as well
 =================================
 
+handle accuracy for key classes instead of paddings
+===================================================
+
 add x label and consider what kind of implementation is necessary
 =================================================================
+
+look into argument structure and ensure all arguments are present in same paragraph
+===================================================================================
+
+when converting to graph, mask out N to zero in adjaceny matrix
+===============================================================
 
 Sequence encoding
 
