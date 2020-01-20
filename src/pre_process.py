@@ -274,7 +274,7 @@ def corpus2char(directory="./data/pre-processed/task_1/char/",spaces=False):
                   directory,"test.json")
 
 def corpus2tokens(directory="./data/pre-processed/task_1/tokens/",
-                  tokenizer="bert",max_seq_length=200):
+                  tokenizer="bert",max_seq_length=128):
     """
     Function to convert US election corpus to token representation
     and save to pickle
