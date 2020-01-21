@@ -92,10 +92,10 @@ model_dir    = bert.fetch_google_albert_model(model_name, ".models")
 model_ckpt   = os.path.join(model_dir, "model.ckpt-best")
 model_params = bert.albert_params(model_dir)
 l_bert = bert.BertModelLayer.from_params(model_params, name="albert")
-# TODO attempt predicting and see output, check model summary as well
 
 model = create_model(l_bert,model_ckpt)
 total_epoch_count=3
+test = model.predict(input_ids[0].reshape(1,128))
 
 model.fit(x=input_ids,y=label_ids,
           validation_split=0.1,

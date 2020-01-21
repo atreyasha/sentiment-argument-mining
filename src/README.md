@@ -6,8 +6,6 @@ This readme will summarize our code and results in conducting sentiment analysis
 
 1. [Dependencies](#1-Dependencies)
 2. [Repository initialization](#2-Repository-initialization)
-3. [Pre-process data](#3-Pre-process-data)
-4. [Run models](#4-Run-models)
 
 ### 1. Dependencies
 
@@ -29,43 +27,4 @@ i. Firstly, you will be prompted to initialize a pre-commit hook which will keep
 
 ii. Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
 
-### 3. Pre-process data
-
-#### i. Argumentation
-
-In order to pre-process and encode US election debate data, use the script `pre_process_argumentation.py`. Usage documentation for this script is shown below: 
-
-```
-$ python3 pre_process_argumentation.py --help
-
-usage: pre_process_argumentation.py [-h] [--dtype str]
-
-optional arguments:
-  -h, --help   show this help message and exit
-  --dtype str  which type of data pre-processing; either 'tokens', 'char' or 'both' (default: tokens)
-```
-
-Run the following script to produce both character and word encodings for model training:
-
-```shell
-$ python3 pre_process_argumentation.py --dtype both
-```
-
-### 4. Run models
-
-#### i. Argumentation
-
-To test a basic transformer model in the seq2seq argumentation task, one can use the script `train_argumentation.py`:
-
-```
-$ python3 train_argumentation.py --help
-
-usage: train_argumentation.py [-h] [--epochs int] [--batch-size int]
-
-optional arguments:
-  -h, --help        show this help message and exit
-  --epochs int      maximum number of training epochs (default: 50)
-  --batch-size int  batch size in stochastic gradient descent (default: 5)
-```
-
-The resulting model after training will be saved in the `models` directory.
+More developments underway :snail:
