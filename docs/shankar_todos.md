@@ -12,6 +12,12 @@ might run into unicode formatting error for byte symbols
 use token type ids for segment ids
 ==================================
 
+add grid-search to workflow and add logging to csvs/folders with saved models -\> find tensorflow-specific way of doing this
+============================================================================================================================
+
+add tensorboard functionality to this task to monitor training
+==============================================================
+
 improve code tidyness later on, perhaps change tokenization pipeline and add to train
 =====================================================================================
 
@@ -21,8 +27,8 @@ add token length pruning elsewhere instead of pre-process
 handle masking downstream as well
 =================================
 
-handle accuracy for key classes instead of paddings
-===================================================
+handle accuracy for key classes instead of paddings, make custom setting for this
+=================================================================================
 
 add x label and consider what kind of implementation is necessary
 =================================================================
@@ -32,6 +38,15 @@ look into argument structure and ensure all arguments are present in same paragr
 
 when converting to graph, mask out N to zero in adjaceny matrix
 ===============================================================
+
+**TODO**
+===================================================================
+
+**TODO**
+===============================================
+
+**TODO**
+=====================================================================================
 
 Sequence encoding
 

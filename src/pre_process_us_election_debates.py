@@ -21,7 +21,8 @@ def read_us_election_corpus():
     check on text vs. annotations to ensure data makes sense.
 
     Returns:
-        (list,list): raw text and annotated argument candidates respectively
+        raw (list): raw text in corpus
+        ann (list): annotations in corpus
     """
     # read raw text into memory by sorting first through indices
     files_raw = glob("./data/USElectionDebates/*.txt")
@@ -110,23 +111,36 @@ def char_tag(corpus,spaces=False):
     print("returning final object")
     return ["".join(char for char in segment) for segment in tqdm(tagged)]
 
-def flatten(char_sequences):
+def flatten(char_sequences,indices=False):
     """
     Function to split and flatten character sequences
 
     Args:
         char_sequences (list): character sequences
+        indices (bool): True to return a list of indices
 
     Returns:
-        (list): flattened arguments character sequences
+        flat (list): flattened arguments character sequences
+        indices (list): optional list of indices
     """
     flat = []
-    for speech in char_sequences:
-        split = re.split(r"\r\n|\n|\r|\n\r",speech)
-        for segment in split:
-            if segment != "":
-                flat.append(segment)
-    return flat
+    if indices:
+        indices = []
+        for i, speech in enumerate(char_sequences):
+            split = re.split(r"\r\n|\n|\r|\n\r",speech)
+            for j, segment in enumerate(split):
+                if segment != "":
+                    flat.append(segment)
+                    indices.append([i,j])
+        # return both lists
+        return indices, flat
+    else:
+        for speech in char_sequences:
+            split = re.split(r"\r\n|\n|\r|\n\r",speech)
+            for segment in split:
+                if segment != "":
+                    flat.append(segment)
+        return flat
 
 def correct_periods(flat_text,flat_ann,spaces=False):
     """
@@ -138,7 +152,8 @@ def correct_periods(flat_text,flat_ann,spaces=False):
         spaces (bool): True if spaces are to be annotated, False if not
 
     Returns:
-        (list,list): corrected versions of flat_text and flat_ann
+        flat_text (list): corrected version of flat_text
+        flat_ann (list): corrected version of flat_ann
     """
     for i in range(len(flat_text)):
         run = True
@@ -168,7 +183,7 @@ def tokenize(flat_text,flat_ann,Tokenizer):
         Tokenizer (object): tokenizer class for either nltk or bert
 
     Returns:
-        (list): pruned list of tokens and associated annotations
+        split_combined_pruned (list): pruned list of tokens and associated annotations
     """
     # first loop to zip results and check for equal length initial tokens
     split_combined = []
@@ -227,9 +242,11 @@ def write_to_file(data,subtype,directory,name):
     """
     if subtype == "char":
         char_dict = {}
-        for i in range(len(data[0])):
-            char_dict[data[0][i][0]] = {"char":data[0][i][1],
-                                        "ann":data[1][i][1]}
+        for i,j,text,ann in data:
+            if i not in char_dict.keys():
+                char_dict[i] = {}
+            char_dict[i][j] = {"text":text,
+                               "ann":ann}
         with open(directory+name,"w") as f:
             json.dump(char_dict,f)
     elif subtype == "tokens":
@@ -245,7 +262,8 @@ def write_to_file(data,subtype,directory,name):
         with open(directory+name,"wb") as f:
             pickle.dump(token_list,f)
 
-def corpus2char(directory="./data/pre-processed/task_1/char/",spaces=False):
+def corpus2char(directory="./data/USElectionDebates/pre-processed/corpus/",
+                spaces=True):
     """
     Function to convert US election corpus to character representation
     and save to json
@@ -258,22 +276,15 @@ def corpus2char(directory="./data/pre-processed/task_1/char/",spaces=False):
         directory += "/"
     corpus = read_us_election_corpus()
     tagged = char_tag(corpus,spaces=spaces)
-    flat_text = flatten(corpus[0])
+    indices,flat_text = flatten(corpus[0],indices=True)
     flat_ann = flatten(tagged)
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=spaces)
-    flat_text = [[i,text] for i,text in enumerate(flat_text)]
-    flat_ann = [[i,ann] for i,ann in enumerate(flat_ann)]
-    (flat_text_train,flat_text_test,
-     flat_ann_train,flat_ann_test) = train_test_split(flat_text,
-                                                      flat_ann,test_size=0.33,
-                                                      random_state=42)
-    write_to_file([flat_text_train,flat_ann_train],"char",
-                  directory,"train.json")
-    write_to_file([flat_text_test,flat_ann_test],"char",
-                  directory,"test.json")
+    corpus = [[indices[i][0],indices[i][1],text,flat_ann[i]]
+              for i,text in enumerate(flat_text)]
+    write_to_file(corpus,"char",directory,"corpus.json")
 
-def corpus2tokens(directory="./data/pre-processed/task_1/tokens/",
+def corpus2tokens(directory="./data/USElectionDebates/pre-processed/tokenized/",
                   tokenizer="bert",max_seq_length=128):
     """
     Function to convert US election corpus to token representation
@@ -282,6 +293,7 @@ def corpus2tokens(directory="./data/pre-processed/task_1/tokens/",
     Args:
         directory (str): base file directory on which to store output
         tokenizer (str): whether to use nltk or bert for tokenization
+        max_seq_length (int): maximum token sequence length for model
     """
     if not directory.endswith("/"):
         directory += "/"
@@ -337,23 +349,14 @@ def corpus2tokens(directory="./data/pre-processed/task_1/tokens/",
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
-    parser.add_argument("--dtype", type=str, default="tokens",
-                        help="which type of data pre-processing;"+
-                        " either 'tokens', 'char' or 'both'")
     parser.add_argument("--tokenizer", type=str, default="bert",
                         help="use 'nltk' or 'bert' for tokenization")
-    parser.add_argument("--spaces", default=False, action="store_true",
-                        help="whether to tag spaces; for character annotations"+
-                        " only")
+    parser.add_argument("--max-seq-length", type=int, default=128,
+                        help="maximum token length for training data"+
+                        "; including special BERT tokens")
     args = parser.parse_args()
-    assert args.dtype in ["tokens","char","both"]
     assert args.tokenizer in ["bert","nltk"]
-    if args.dtype == "tokens":
-        corpus2tokens(tokenizer=args.tokenizer)
-    elif args.dtype == "char":
-        corpus2char(spaces=args.spaces)
-    elif args.dtype == "both":
-        print("processing tokens")
-        corpus2tokens(tokenizer=args.tokenizer)
-        print("processing characters")
-        corpus2char(spaces=args.spaces)
+    print("processing characters")
+    corpus2char()
+    print("processing tokens")
+    corpus2tokens(tokenizer=args.tokenizer,max_seq_length=args.max_seq_length)
