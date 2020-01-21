@@ -1,7 +1,9 @@
 ** Developments 
  
 *** Argumentation workflow
-    
+
+* TODO add data utils file to load tokenizer and other features    
+* TODO dynamic data processing with max sequence length different from 128, need to incorporate then in train
 * write data to json for easier handling
 * might run into unicode formatting error for byte symbols
 * use token type ids for segment ids
