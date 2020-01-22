@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import bert
 import numpy as np
 from tqdm import tqdm
@@ -8,19 +9,14 @@ from tqdm import tqdm
 def initialize_bert_tokenizer():
     model_name = "albert_base_v2"
     model_dir = bert.fetch_google_albert_model(model_name, ".models")
-    spm = "./.models/albert_base_v2/albert_base/30k-clean.model"
-    vocab = "./.models/albert_base_v2/albert_base/30k-clean.vocab"
+    spm = os.path.join(model_dir,"30k-clean.model")
+    vocab = os.path.join(model_dir,"30k-clean.vocab")
     Tokenizer = bert.albert_tokenization.FullTokenizer(vocab,
                                                        spm_model_file=spm)
     return Tokenizer
 
 def project_to_ids(train_data,label_id_map,max_seq_length=128):
-    model_name = "albert_base_v2"
-    model_dir    = bert.fetch_google_albert_model(model_name, ".models")
-    spm = "./.models/albert_base_v2/albert_base/30k-clean.model"
-    vocab = "./.models/albert_base_v2/albert_base/30k-clean.vocab"
-    Tokenizer = bert.albert_tokenization.FullTokenizer(vocab,
-                                                       spm_model_file=spm)
+    Tokenizer = initialize_bert_tokenizer()
     input_ids = []
     label_ids = []
     output_mask = []

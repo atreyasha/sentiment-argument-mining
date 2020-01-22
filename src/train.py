@@ -23,7 +23,6 @@ def train(max_epochs=3):
                                                   warmup_epoch_count=20,
                                                   total_epoch_count=max_epochs)
     print(model.predict(input_ids[0].reshape(1,128)))
-    # max_sequence_length = 128
 
 if __name__ == "__main__":
     train()
@@ -37,3 +36,4 @@ if __name__ == "__main__":
 #                      tf.keras.callbacks.EarlyStopping(patience=20,
 #                                                       restore_best_weights=True)])
 # model.save_weights('./test.h5', overwrite=True)
+# max_sequence_length = 128
