@@ -8,15 +8,15 @@ import tensorflow as tf
 
 def fetch_bert_layer():
     model_name = "albert_base_v2"
-    model_dir    = bert.fetch_google_albert_model(model_name, ".models")
-    model_ckpt   = os.path.join(model_dir, "model.ckpt-best")
+    model_dir = bert.fetch_google_albert_model(model_name, ".models")
+    model_ckpt = os.path.join(model_dir, "model.ckpt-best")
     model_params = bert.albert_params(model_dir)
     l_bert = bert.BertModelLayer.from_params(model_params, name="albert")
     return l_bert, model_ckpt
 
-def create_learning_rate_scheduler(max_learn_rate=5e-5,
+def create_learning_rate_scheduler(max_learn_rate=1e-5,
                                    end_learn_rate=1e-7,
-                                   warmup_epoch_count=10,
+                                   warmup_epoch_count=20,
                                    total_epoch_count=90):
     def lr_scheduler(epoch):
         if epoch < warmup_epoch_count:
@@ -28,9 +28,8 @@ def create_learning_rate_scheduler(max_learn_rate=5e-5,
                                           (total_epoch_count-
                                            warmup_epoch_count+1))
         return float(res)
-    learning_rate_scheduler = tf.keras.callbacks.LearningRateScheduler(lr_scheduler,
-                                                                       verbose=1)
-    return learning_rate_scheduler
+    return tf.keras.callbacks.LearningRateScheduler(lr_scheduler,
+                                                    verbose=1)
 
 def create_model(l_bert,model_ckpt,max_seq_len=128):
     input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
