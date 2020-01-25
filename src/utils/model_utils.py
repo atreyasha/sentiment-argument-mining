@@ -55,6 +55,6 @@ def create_model(l_bert,model_ckpt,max_seq_len=128):
     bert.load_albert_weights(l_bert, model_ckpt)
     model.compile(optimizer=tf.keras.optimizers.Adam(),
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-                  metrics=[specific_acc(3)])
+                  metrics=[tf.keras.metrics.SparseCategoricalAccuracy(name="acc"),specific_acc(3)])
     model.summary()
     return model
