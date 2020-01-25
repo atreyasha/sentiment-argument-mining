@@ -1,85 +1,53 @@
 ** Developments 
- 
+   
 *** Argumentation workflow
-
-* TODO add data utils file to load tokenizer and other features    
-* TODO dynamic data processing with max sequence length different from 128, need to incorporate then in train
-* write data to json for easier handling
-* might run into unicode formatting error for byte symbols
-* use token type ids for segment ids
-* add grid-search to workflow and add logging to csvs/folders with saved models -> find tensorflow-specific way of doing this
-* add tensorboard functionality to this task to monitor training
-* improve code tidyness later on, perhaps change tokenization pipeline and add to train
-* add token length pruning elsewhere instead of pre-process
-* handle masking downstream as well
-* handle accuracy for key classes instead of paddings, make custom setting for this
-* add x label and consider what kind of implementation is necessary
-* look into argument structure and ensure all arguments are present in same paragraph
-* when converting to graph, mask out N to zero in adjaceny matrix
-
-* TODO add claim/premise structure to main corpus json
-* TODO add maximum sequence option
-* TODO add task 1 and task 2 data as one since they build on one another
+ 
+**** Training pipeline
+***** TODO consider how to *mask* outputs to get only relevant data and pre-assign others, and proceed with loss over those
+***** TODO add appropriate citations for code
+***** TODO think about extra labels for "X" class, also *custom accuracy metrics* for particular classes instead of averaged, perhaps also f1
+***** TODO add maximum sequence option and data stats printing before pushing on with training
+***** TODO add grid-search to workflow and add logging to csvs/folders with saved models -> find tensorflow-specific way of doing this
+***** when converting to graph, mask out N to zero in adjacency matrix
+***** look into argument structure and ensure all arguments are present in same paragraph
 
 **** Sequence encoding
-***** TODO split by lengths of up to 500 and think of how to handle this problem, maybe add possibility of inter-sequence connections in graph structure 
-***** TODO pad sequences and attempt masking activations for padded positions
-***** TODO make better splits in next runs with more thought put behind into distribution of splits
-***** TODO think of creative way to handle sequence shortening for UNSC dataset
-***** UNSC: need to split UNSC smaller speech segments or paragraphs to pass into pipeline
-***** fix up data structure with different tasks later on, perhaps can merge all tasks into one, or keep multiple tasks
-***** add data options with both cased and non-cased views
+***** TODO place training/test data in convenient locations for caching and re-using, perhaps move conversion to id's into pre_process directly
+***** TODO improve splits in next runs with more thought put behind into distribution of splits
+***** TODO fix up data structure with different tasks later on, perhaps can merge all tasks into one, or keep multiple tasks, eg. single json for corpus etc.
+***** find shorter sequence candidates in UNSC corpus for testing out model 
 
 **** Architecture
 ***** TODO attempt using tensorboard for better visualization and understanding
-***** TODO if there are still OOM issues, collect samples and gradients and update later
-***** TODO investigate sota sequence tagging and graph connecting networks, use recent word embedding frameworks where possible
-***** TODO work on task 1 and observe how multi-task setting could improve both tasks, use adjacency matrix for second task
+***** TODO if there are still OOM issues, collect samples and gradients and update later -> look at *run.ai* for optimizers with this functionality
+***** TODO work on task 1 and observe how multi-task setting could improve both tasks, use *adjacency matrix* for second task
 ***** TODO think of appropriate performance metrics given label/tag imbalance
-***** TODO update documentation and pydocstrings with new code
-***** identify maximum sequence length (words): pad up to 1900, not possible for bert models
-***** make naive split into train/test/sequence: use sklearn with random_seed=42
 ***** add various parameters such as window size for errors, perplexity, accuracy, bleu score for diversity
 ***** add checkpoints and early stoppage to find better models in training
-***** consider non-transformer approach for character data due to GPU OOM issues -> perhaps adding more features to unknown words
-      
+
+**** Domain debiasing
+***** TODO remove capital names and references to reduce bias
+***** TODO re-sampling or gradient weighting to re-train inputs with rare words more than common words
+***** perhaps collapse all first, second and third-person pronouns to prevent self-referential bias 
+     
 **** Code-specifc development
-***** TODO update all readmes, check unused imports and code health in general
-***** TODO add existing folder checks, creation if missing and trailing slash addition
-***** TODO figure out pip local environment for earlier tensorflow version
-***** TODO find out how to include fixed names into requirements.txt file such as tensorflow, despite no explicit call in script
-***** fix slash error possibilities in path argument
-***** check if directory exists to prevent later error, if not make directory
+***** TODO update all readmes and pydocstrings, check unused imports and code health in general
+***** add existing folder checks, creation if missing and trailing slash addition
+***** figure out pip local environment and how to fix this for future development
+***** find out how to include fixed names into requirements.txt file such as tensorflow, despite no explicit call in script
 ***** add log files and model folders like other ML projects, where detailed reconstruction information for models can be stored along with many performance metrics and example runs
 
 **** Task construction
-***** first priority is task 1, followed by others
-***** simple (task 1) -> 1: claim, 2: premise, 3: non-argument
-***** tree (task 1 + task 2) -> task 1 representation + distances to connective argument components which can help form tree
-***** tree (task 1 + task 2) -> 1: claim, 2: aux claim connecting to same claim (behind), 3: premise connecting to claim, 4: aux premise connecting to same premise (behind), 5: non-argument
-***** think of best unique tree structure classification, perhaps with argument connection distances -> maybe make it a sorting issue where vector of arguments is re-sorted
-***** if working with three-way task, need to think of how to pass a gradient on non-existent examples -> perhaps some kind of negative sampling procedure
-
-**** Domain debiasing
-***** re-sampling or gradient weighting to re-train inputs with rare words more than common words
-***** perhaps collapse all first, second and third-person pronouns to prevent self-referential bias 
-***** non-BERT: remove capital names and references to reduce bias
-***** non-BERT: consider using special word embeddings and keep unmodified to retain word relationships
-***** non-BERT: possibly add unknown token types eg. pos-tags, ner taggers, verb types, etc.
-***** non-BERT: experiment specific entity/token masking to prevent domain-specific bias from training vocabulary
-***** non-BERT: add different classes in unknown vocabulary -> such as unknown noun, unknown adjective etc.
-
-**** Timeline
-***** start writing paper in end February, submit by end of March
-***** write combined paper, clarify on number of pages
-
-**** Documentation
-***** fill up pydocstrings for publishable functions
-***** redo colab notebook to clone and reset from master branch when publishing
+***** task 1 -> 1: claim, 2: premise, 3: non-argument
+***** task 2 (dependent on task 1) -> form argumentation structure with adjacency matrix, multiply input from task 1 by row
+     
+**** Story for presentation
+***** clause extraction did not show reliable results with benepar and hard to process
+***** mention using various [SEP] indicators for flipping sentences (need some more backup information for this process)
+***** mention memory issues related to bert, therefore trying albert with single gpu -> talk about differences between albert and bert
+***** also shorter sequence length due to memory issues, makes for better toy examples
 
 **** Ideas to explore
-***** OOM issues for character-transformer model
 ***** ibm argumentation dataset
 ***** coreference resolution for tree structures
 ***** try genereous claims and premises creation and map via negative sampling to actual trees and redundant candidates
-      
