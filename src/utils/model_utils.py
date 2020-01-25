@@ -4,7 +4,20 @@
 import os
 import bert
 import math
+import numpy as np
 import tensorflow as tf
+import tensorflow.keras.backend as K
+
+def specific_acc(label_threshold_less):
+    def arg_label_acc(y_true, y_pred):
+        class_id_true = K.argmax(y_true, axis=-1)
+        class_id_preds = K.argmax(y_pred, axis=-1)
+        accuracy_mask = K.cast(K.less(class_id_preds,label_threshold_less),'float32')
+        accuracy_mask = 1 - accuracy_mask
+        class_acc_tensor = K.cast(K.equal(class_id_true, class_id_preds), 'float32') * accuracy_mask
+        class_acc = K.sum(class_acc_tensor) / K.maximum(K.sum(accuracy_mask), 1)
+        return class_acc
+    return arg_label_acc
 
 def fetch_bert_layer():
     model_name = "albert_base_v2"
@@ -42,6 +55,6 @@ def create_model(l_bert,model_ckpt,max_seq_len=128):
     bert.load_albert_weights(l_bert, model_ckpt)
     model.compile(optimizer=tf.keras.optimizers.Adam(),
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-                  metrics=[tf.keras.metrics.SparseCategoricalAccuracy(name="acc")])
+                  metrics=[specific_acc(3)])
     model.summary()
     return model
