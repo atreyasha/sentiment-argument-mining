@@ -10,7 +10,7 @@ import tensorflow.keras.backend as K
 
 def specific_acc(label_threshold_less):
     def arg_label_acc(y_true, y_pred):
-        class_id_true = y_true
+        class_id_true = K.cast(y_true,'int64')
         class_id_preds = K.argmax(y_pred, axis=-1)
         accuracy_mask = K.cast(K.less(class_id_preds,label_threshold_less),'float32')
         accuracy_mask = 1 - accuracy_mask
