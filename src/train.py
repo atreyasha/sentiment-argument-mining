@@ -26,7 +26,7 @@ def train(max_epochs=10,max_seq_length=128):
             validation_split=0.15,
             batch_size=48,
             shuffle=True,
-            epochs=total_epoch_count,
+            epochs=max_epochs,
             callbacks=[lr_scheduler,
                         tf.keras.callbacks.EarlyStopping(patience=20,
                                                         restore_best_weights=True)])
