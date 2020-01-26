@@ -8,7 +8,7 @@ from utils.data_utils import *
 from utils.metrics_utils import *
 from utils.model_utils import *
 from utils.arg_metav_formatter import *
-from pre_process_us_election_debates import *
+from pre_process import *
 
 def pipe_tokenized_data(max_seq_length):
     train, test = corpus2tokens(max_seq_length=max_seq_length)
