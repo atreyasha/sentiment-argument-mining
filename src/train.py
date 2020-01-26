@@ -82,7 +82,7 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                                                       log_dir+"model_history_"
                                                       +str(count)+".csv")])
     # find actual trained epochs
-    train_epochs = history.history["val_loss"].shape[0]
+    train_epochs = len(history.history["val_loss"])
     # find train f1
     y_pred = model.predict(train_X)
     y_pred = np.argmax(y_pred,axis=-1)
@@ -133,7 +133,6 @@ if __name__ == "__main__":
                      args.batch_size,args.warmup_epochs,
                      args.max_learn_rate,args.end_learn_rate,
                      args.model_type)
-
 
 # TODO add log.csv with all information, make f1 calculating script to compute train and test f1s
 # TODO add model types to create model
