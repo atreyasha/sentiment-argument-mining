@@ -48,7 +48,7 @@ def single_train(max_seq_length=128,max_epochs=2,batch_size=48,
     model = create_model(l_bert,model_ckpt,max_seq_length,
                          num_labels,label_threshold_less)
     LrScheduler = create_learning_rate_scheduler(max_learn_rate=max_learn_rate,
-                                                 end_learn_rate=min_learn_rate,
+                                                 end_learn_rate=end_learn_rate,
                                                  warmup_epoch_count=
                                                  warmup_epoch_count,
                                                  total_epoch_count=max_epochs)
