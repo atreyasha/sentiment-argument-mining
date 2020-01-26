@@ -1,44 +1,59 @@
 Developments
 ------------
 
+1. Fix up metrics class with epoch-wise f1 checks for callbacks -\> use val loss for early stopping
+===================================================================================================
+
+2. Fix up logging for models and reconstruction information, and accuracies (perhaps with tensorboard)
+======================================================================================================
+
+3. Fix up grid search with various parameters and model end types
+=================================================================
+
+4. Test this out, compute computation time for 1 week and try out various optimizations for performance
+=======================================================================================================
+
 ### Argumentation workflow
 
 1.  Training pipeline
 
-    1.  **TODO** change printing of learning rate scheduler
+    1.  **TODO** make model more agnostic to exact label
+        numbers etc.
+
+    2.  **TODO** change printing of learning rate scheduler
         to be prettier
 
-    2.  **TODO** make specific callback class for f1 metric
+    3.  **TODO** make specific callback class for f1 metric
         instead of metrics to avoid batch approximation error
 
-    3.  **TODO** consider how to **mask** outputs to get only
+    4.  **TODO** consider how to **mask** outputs to get only
         relevant data and pre-assign others, and proceed with loss over
         those
 
-    4.  **TODO** add appropriate citations for code, review
+    5.  **TODO** add appropriate citations for code, review
         to make sure this is done correctly
 
-    5.  **TODO** think about extra labels for \"X\" class,
+    6.  **TODO** think about extra labels for \"X\" class,
         also **custom accuracy metrics** for particular classes instead
         of averaged, perhaps also f1
 
-    6.  **TODO** add maximum sequence option and data stats
+    7.  **TODO** add maximum sequence option and data stats
         printing before pushing on with training
 
-    7.  **TODO** add grid-search to workflow and add logging
+    8.  **TODO** add grid-search to workflow and add logging
         to csvs/folders with saved models -\> find tensorflow-specific
         way of doing this
 
-    8.  when converting to graph, mask out N to zero in adjacency matrix
+    9.  when converting to graph, mask out N to zero in adjacency matrix
 
-    9.  look into argument structure and ensure all arguments are
+    10. look into argument structure and ensure all arguments are
         present in same paragraph
 
 2.  Sequence encoding
 
     1.  **TODO** place training/test data in convenient
         locations for caching and re-using, perhaps move conversion to
-        id\'s into pre~process~ directly
+        id\'s and saving into pre~process~ directly
 
     2.  **TODO** improve splits in next runs with more
         thought put behind into distribution of splits
