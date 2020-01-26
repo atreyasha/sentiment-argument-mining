@@ -71,6 +71,9 @@ def single_train(max_seq_length=128,max_epochs=2,batch_size=48,
 def grid_train():
     pass
 
+if __name__ == "__main__":
+    single_train()
+
 # TODO finish single run, test and extrapolate to grid search
 # TODO clear session on each grid-search loop
 # TODO add checkpoint callback for saving models, need to generate separate folder
