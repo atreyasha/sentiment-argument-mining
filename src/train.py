@@ -5,7 +5,6 @@ import numpy as np
 import tensorflow as tf
 from glob import glob
 from utils.data_utils import *
-from utils.metrics_utils import *
 from utils.model_utils import *
 from utils.arg_metav_formatter import *
 from pre_process import *
