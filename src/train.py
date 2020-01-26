@@ -93,6 +93,7 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
     test_f1 = filtered_f1(test_Y,y_pred)
     # write to log file
     with open(log_dir+"log.csv","a") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writerow({"id":str(count), "model_type":model_type,
                          "max_epochs":str(max_epochs),
                          "train_epochs":str(train_epochs),
