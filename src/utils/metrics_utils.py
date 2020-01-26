@@ -23,6 +23,7 @@ def class_acc(label_threshold_less):
 
 class FilteredF1Score(tf.keras.callbacks.Callback):
     def __init__(self, to_ignore=[0,1,2]):
+        super(FilteredF1Score, self).__init__()
         self.to_ignore = to_ignore
 
     def on_train_begin(self, logs={}):
