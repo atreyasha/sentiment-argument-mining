@@ -7,6 +7,7 @@ import math
 import numpy as np
 import tensorflow as tf
 import tensorflow.keras.backend as K
+from sklearn.metrics import f1_score
 
 def class_acc(label_threshold_less):
     def argument_candidate_acc(y_true, y_pred):
@@ -22,6 +23,14 @@ def class_acc(label_threshold_less):
                           K.maximum(K.sum(accuracy_mask),1))
         return class_accuracy
     return argument_candidate_acc
+
+def filtered_f1(y_true,y_pred,greater_than_equal=3):
+    y_pred = y_pred.flatten()
+    y_true = y_true.flatten()
+    relevant_indices = np.where(y_true >= greater_than_equal)[0]
+    y_pred = y_pred[relevant_indices]
+    y_true = y_true[relevant_indices]
+    return f1_score(y_true,y_pred,average="macro")
 
 def fetch_bert_layer():
     model_name = "albert_base_v2"
