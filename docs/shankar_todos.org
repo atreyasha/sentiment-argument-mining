@@ -1,8 +1,14 @@
 ** Developments 
-   
+
+* 1. Fix up metrics class with epoch-wise f1 checks for callbacks -> use val loss for early stopping
+* 2. Fix up logging for models and reconstruction information, and accuracies (perhaps with tensorboard)
+* 3. Fix up grid search with various parameters and model end types
+* 4. Test this out, compute computation time for 1 week and try out various optimizations for performance
+ 
 *** Argumentation workflow
  
 **** Training pipeline
+***** TODO make model more agnostic to exact label numbers etc.
 ***** TODO change printing of learning rate scheduler to be prettier
 ***** TODO make specific callback class for f1 metric instead of metrics to avoid batch approximation error
 ***** TODO consider how to *mask* outputs to get only relevant data and pre-assign others, and proceed with loss over those
@@ -14,7 +20,7 @@
 ***** look into argument structure and ensure all arguments are present in same paragraph
 
 **** Sequence encoding
-***** TODO place training/test data in convenient locations for caching and re-using, perhaps move conversion to id's into pre_process directly
+***** TODO place training/test data in convenient locations for caching and re-using, perhaps move conversion to id's and saving into pre_process directly
 ***** TODO improve splits in next runs with more thought put behind into distribution of splits
 ***** TODO fix up data structure with different tasks later on, perhaps can merge all tasks into one, or keep multiple tasks, eg. single json for corpus etc.
 ***** find shorter sequence candidates in UNSC corpus for testing out model 
