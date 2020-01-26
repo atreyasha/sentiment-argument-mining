@@ -3,8 +3,10 @@
 *** Argumentation workflow
  
 **** Training pipeline
+***** TODO change printing of learning rate scheduler to be prettier
+***** TODO make specific callback class for f1 metric instead of metrics to avoid batch approximation error
 ***** TODO consider how to *mask* outputs to get only relevant data and pre-assign others, and proceed with loss over those
-***** TODO add appropriate citations for code
+***** TODO add appropriate citations for code, review to make sure this is done correctly
 ***** TODO think about extra labels for "X" class, also *custom accuracy metrics* for particular classes instead of averaged, perhaps also f1
 ***** TODO add maximum sequence option and data stats printing before pushing on with training
 ***** TODO add grid-search to workflow and add logging to csvs/folders with saved models -> find tensorflow-specific way of doing this
