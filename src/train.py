@@ -1,73 +1,80 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
+import csv
+import json
+import argparse
+import datetime
 import numpy as np
 import tensorflow as tf
 from glob import glob
-from utils.data_utils import *
 from utils.model_utils import *
 from utils.arg_metav_formatter import *
 from pre_process import *
 
-def pipe_tokenized_data(max_seq_length):
-    train, test = corpus2tokens(max_seq_length=max_seq_length)
-    return train, test
+def getCurrentTime():
+    return datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 
-def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
-                 label_threshold_less):
-    input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
-                                      dtype='int32',
-                                      name="input_ids")
-    output = l_bert(input_ids)
-    logits = tf.keras.layers.Dense(units=num_labels,
-                                   activation="softmax")(output)
-    model = tf.keras.Model(inputs=input_ids, outputs=logits)
-    model.build(input_shape=(None, max_seq_len))
-    bert.load_albert_weights(l_bert, model_ckpt)
-    model.compile(optimizer=tf.keras.optimizers.Adam(),
-                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits
-                                                                     =True),
-                  metrics=[class_acc(label_threshold_less)])
-    model.summary()
-    return model
-
-def train(max_epochs=10,max_seq_length=128,
-          directory="./data/USElectionDebates/task_1/"):
-    label_map = {"<pad>":0,"[CLS]":1,"[SEP]":2,"N":3,"C":4,"P":5}
-    num_labels = len(label_map.keys())
-    label_threshold_less = 3
+def read_or_create_data(max_seq_length,
+                        directory="./data/USElectionDebates/task_1/"):
     check = glob(directory+"*"+str(max_seq_length)+"*")
     if len(check) != 4:
-        train_data, test_data = pipe_tokenized_data(max_seq_length)
-        train_X, train_Y, _ = project_to_ids(train_data,label_map)
-        test_X, test_Y, _ = project_to_ids(test_data,label_map)
-        np.save(directory+"train_X_"+str(max_seq_length)+".npy",train_X)
-        np.save(directory+"train_Y_"+str(max_seq_length)+".npy",train_Y)
-        np.save(directory+"test_X_"+str(max_seq_length)+".npy",test_X)
-        np.save(directory+"test_Y_"+str(max_seq_length)+".npy",test_Y)
-        del test_X
-        del test_Y
+        (train_X, train_Y, test_X,
+         test_Y, label_map) = corpus2tokenids(max_seq_length=max_seq_length)
     else:
         train_X = np.load(directory+"train_X_"+str(max_seq_length)+".npy")
         train_Y = np.load(directory+"train_Y_"+str(max_seq_length)+".npy")
+        test_X = np.load(directory+"test_X_"+str(max_seq_length)+".npy")
+        test_Y = np.load(directory+"test_Y_"+str(max_seq_length)+".npy")
+        with open(directory+"label_map.json","r") as f:
+            label_map = json.load(f)
+    return train_X, train_Y, test_X, test_Y, label_map
+
+def single_train(max_seq_length=128,max_epochs=2,batch_size=48,
+                 warmup_epoch_count=10,max_learn_rate=1e-5,
+                 end_learn_rate=1e-7):
+    # read in data
+    label_threshold_less = 3
+    train_X, train_Y, _, _, label_map = read_or_create_data(max_seq_length)
+    num_labels = len(label_map.keys())
+    # clear keras session
+    tf.keras.backend.clear_session()
+    # create log directory
+    log_dir = "./model_logs/"+getCurrentTime()+"_single_train/"
+    os.makedirs(log_dir)
+    # prepare model compilation
     l_bert, model_ckpt = fetch_bert_layer()
     model = create_model(l_bert,model_ckpt,max_seq_length,
                          num_labels,label_threshold_less)
-    LrScheduler = create_learning_rate_scheduler(max_learn_rate=1e-5,
-                                                  end_learn_rate=1e-7,
-                                                  warmup_epoch_count=10,
-                                                  total_epoch_count=max_epochs)
+    LrScheduler = create_learning_rate_scheduler(max_learn_rate=max_learn_rate,
+                                                 end_learn_rate=min_learn_rate,
+                                                 warmup_epoch_count=
+                                                 warmup_epoch_count,
+                                                 total_epoch_count=max_epochs)
+    # train model
     model.fit(x=train_X,y=train_Y,
               validation_split=0.15,
-              batch_size=48,
+              batch_size=batch_size,
               shuffle=True,
               epochs=max_epochs,
               callbacks=[LrScheduler,
                          tf.keras.callbacks.EarlyStopping(monitor="val_loss",
                                                           patience=5,
                                                           restore_best_weights
-                                                          =True)])
-    model.save_weights('./test.h5', overwrite=True)
+                                                          =True),
+                         tf.keras.callbacks.ModelCheckpoint(monitor="val_loss",
+                                                            filepath=log_dir+
+                                                            "best_model.h5",
+                                                            save_best_only=True)])
 
-if __name__ == "__main__":
-    train()
+def grid_train():
+    pass
+
+# TODO finish single run, test and extrapolate to grid search
+# TODO clear session on each grid-search loop
+# TODO add checkpoint callback for saving models, need to generate separate folder
+# TODO create logging system to retrieve scores and understand models -> have combined log.csv and init.csv and model-specific history log
+# TODO create grid search parameters, use only albert base for simplicity, collect all possible parameters for summary, possibly with accumulation optimizer, learning rate possibilities -> use script to delete worse models
+# TODO add necessary parameters as command line arguments, eg. total maximum epochs, batch size, model type, grid search or single
+# think about how to handle test data and how to select best model from grid search

@@ -47,3 +47,20 @@ def create_learning_rate_scheduler(max_learn_rate,
         return float(res)
     return tf.keras.callbacks.LearningRateScheduler(lr_scheduler,
                                                     verbose=1)
+
+def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
+                 label_threshold_less):
+    input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
+                                      dtype='int32')
+    output = l_bert(input_ids)
+    logits = tf.keras.layers.Dense(units=num_labels,
+                                   activation="softmax")(output)
+    model = tf.keras.Model(inputs=input_ids, outputs=logits)
+    model.build(input_shape=(None, max_seq_len))
+    bert.load_albert_weights(l_bert, model_ckpt)
+    model.compile(optimizer=tf.keras.optimizers.Adam(),
+                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits
+                                                                     =True),
+                  metrics=[class_acc(label_threshold_less)])
+    model.summary()
+    return model
