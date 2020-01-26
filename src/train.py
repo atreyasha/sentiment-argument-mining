@@ -64,7 +64,7 @@ def train(max_epochs=10,max_seq_length=128,
               shuffle=True,
               epochs=max_epochs,
               callbacks=[LrScheduler,
-                         FilteredF1Score()
+                         FilteredF1Score(),
                          tf.keras.callbacks.EarlyStopping(monitor="val_loss",
                                                           patience=20,
                                                           restore_best_weights
