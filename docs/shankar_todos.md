@@ -5,26 +5,33 @@ Developments
 
 1.  Training pipeline
 
-    1.  **TODO** consider how to **mask** outputs to get only
+    1.  **TODO** change printing of learning rate scheduler
+        to be prettier
+
+    2.  **TODO** make specific callback class for f1 metric
+        instead of metrics to avoid batch approximation error
+
+    3.  **TODO** consider how to **mask** outputs to get only
         relevant data and pre-assign others, and proceed with loss over
         those
 
-    2.  **TODO** add appropriate citations for code
+    4.  **TODO** add appropriate citations for code, review
+        to make sure this is done correctly
 
-    3.  **TODO** think about extra labels for \"X\" class,
+    5.  **TODO** think about extra labels for \"X\" class,
         also **custom accuracy metrics** for particular classes instead
         of averaged, perhaps also f1
 
-    4.  **TODO** add maximum sequence option and data stats
+    6.  **TODO** add maximum sequence option and data stats
         printing before pushing on with training
 
-    5.  **TODO** add grid-search to workflow and add logging
+    7.  **TODO** add grid-search to workflow and add logging
         to csvs/folders with saved models -\> find tensorflow-specific
         way of doing this
 
-    6.  when converting to graph, mask out N to zero in adjacency matrix
+    8.  when converting to graph, mask out N to zero in adjacency matrix
 
-    7.  look into argument structure and ensure all arguments are
+    9.  look into argument structure and ensure all arguments are
         present in same paragraph
 
 2.  Sequence encoding
