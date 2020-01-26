@@ -335,6 +335,11 @@ def corpus2tokenids(max_seq_length=128,
     collection = []
     print("splitting and tokenizing sentences")
     Tokenizer = initialize_bert_tokenizer()
+    # ensure nltk sentence tokenizer is present
+    try:
+        nltk.tokenize.sent_tokenize("testing. hello")
+    except LookupError:
+        nltk.download('punkt')
     # enter main loop
     for i in tqdm(range(len(flat_text))):
         sub_text = nltk.tokenize.sent_tokenize(flat_text[i])
