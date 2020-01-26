@@ -66,7 +66,9 @@ def single_train(max_seq_length=128,max_epochs=2,batch_size=48,
                          tf.keras.callbacks.ModelCheckpoint(monitor="val_loss",
                                                             filepath=log_dir+
                                                             "best_model.h5",
-                                                            save_best_only=True)])
+                                                            save_best_only=True),
+                         tf.keras.callbacks.CSVLogger(filename=
+                                                      log_dir+"model_history.csv")])
 
 def grid_train():
     pass
