@@ -1,37 +1,22 @@
 ** Developments 
 
-* 1. Fix up metrics class with epoch-wise f1 checks for callbacks -> use val loss for early stopping
-* 2. Fix up logging for models and reconstruction information, and accuracies (perhaps with tensorboard)
-* 3. Fix up grid search with various parameters and model end types
-* 4. Test this out, compute computation time for 1 week and try out various optimizations for performance
- 
 *** Argumentation workflow
  
 **** Training pipeline
-***** TODO make model more agnostic to exact label numbers etc.
-***** TODO change printing of learning rate scheduler to be prettier
-***** TODO make specific callback class for f1 metric instead of metrics to avoid batch approximation error
-***** TODO consider how to *mask* outputs to get only relevant data and pre-assign others, and proceed with loss over those
-***** TODO add appropriate citations for code, review to make sure this is done correctly
-***** TODO think about extra labels for "X" class, also *custom accuracy metrics* for particular classes instead of averaged, perhaps also f1
 ***** TODO add maximum sequence option and data stats printing before pushing on with training
-***** TODO add grid-search to workflow and add logging to csvs/folders with saved models -> find tensorflow-specific way of doing this
+***** TODO add grid-search to workflow and add logging to csvs/folders with saved models
+***** TODO add appropriate citations for code, review to make sure this is done correctly
 ***** when converting to graph, mask out N to zero in adjacency matrix
 ***** look into argument structure and ensure all arguments are present in same paragraph
 
 **** Sequence encoding
-***** TODO place training/test data in convenient locations for caching and re-using, perhaps move conversion to id's and saving into pre_process directly
+***** TODO improve multitask data processing pipeline with task specification and complete json corpus with argument structure as matrix
 ***** TODO improve splits in next runs with more thought put behind into distribution of splits
-***** TODO fix up data structure with different tasks later on, perhaps can merge all tasks into one, or keep multiple tasks, eg. single json for corpus etc.
 ***** find shorter sequence candidates in UNSC corpus for testing out model 
 
 **** Architecture
-***** TODO attempt using tensorboard for better visualization and understanding
-***** TODO if there are still OOM issues, collect samples and gradients and update later -> look at *run.ai* for optimizers with this functionality
+***** TODO if there are still OOM issues -> look at *run.ai* for accumulation optimzers and implement training generators
 ***** TODO work on task 1 and observe how multi-task setting could improve both tasks, use *adjacency matrix* for second task
-***** TODO think of appropriate performance metrics given label/tag imbalance
-***** add various parameters such as window size for errors, perplexity, accuracy, bleu score for diversity
-***** add checkpoints and early stoppage to find better models in training
 
 **** Domain debiasing
 ***** TODO remove capital names and references to reduce bias

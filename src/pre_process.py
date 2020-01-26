@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
 import re
 import bert
 import json
 import nltk
 import codecs
 import argparse
+import numpy as np
 from glob import glob
 from tqdm import tqdm
 from collections import Counter
 from sklearn.model_selection import train_test_split
 from utils.arg_metav_formatter import *
-from utils.data_utils import *
 
 def read_us_election_corpus():
     """
@@ -179,28 +180,20 @@ def tokenize(flat_text,flat_ann,Tokenizer):
     Args:
         flat_text (list): character sequences for raw rext from "flatten"
         flat_ann (list): character sequences for tagged text from "flatten"
-        Tokenizer (object): tokenizer class for either nltk or bert
+        Tokenizer (object): tokenizer class for bert tokenizer
 
     Returns:
         split_combined_pruned (list): pruned list of tokens and associated annotations
     """
     # first loop to zip results and check for equal length initial tokens
     split_combined = []
-    if "nltk" in str(Tokenizer):
-        for i in range(len(flat_text)):
-            split_text = [Tokenizer.word_tokenize(el)
-                          for el in flat_text[i].split(" ")]
-            split_ann = [(el,Counter(el)) for el in flat_ann[i].split("S")]
-            assert len(split_ann) == len(split_text)
-            split_combined.append(list(zip(split_text,split_ann)))
-    elif "bert" in str(Tokenizer):
-        preprocess = bert.albert_tokenization.preprocess_text
-        for i in range(len(flat_text)):
-            split_text = [Tokenizer.tokenize(preprocess(el,lower=True))
-                          for el in flat_text[i].split(" ")]
-            split_ann = [(el,Counter(el)) for el in flat_ann[i].split("S")]
-            assert len(split_ann) == len(split_text)
-            split_combined.append(list(zip(split_text,split_ann)))
+    preprocess = bert.albert_tokenization.preprocess_text
+    for i in range(len(flat_text)):
+        split_text = [Tokenizer.tokenize(preprocess(el,lower=True))
+                    for el in flat_text[i].split(" ")]
+        split_ann = [(el,Counter(el)) for el in flat_ann[i].split("S")]
+        assert len(split_ann) == len(split_text)
+        split_combined.append(list(zip(split_text,split_ann)))
     # prune tokens to ensure proper splits
     split_combined_pruned = []
     # next loop to check and combine results
@@ -290,15 +283,49 @@ def corpus2char(directory="./data/USElectionDebates/corpus/",
               for i,text in enumerate(flat_text)]
     write_to_json(corpus,directory,"corpus.json")
 
-def corpus2tokens(tokenizer="bert",max_seq_length=128):
-    """
-    Function to convert US election corpus to token representation
-    and save to pickle
+def initialize_bert_tokenizer():
+    model_name = "albert_base_v2"
+    model_dir = bert.fetch_google_albert_model(model_name, ".models")
+    spm = os.path.join(model_dir,"30k-clean.model")
+    vocab = os.path.join(model_dir,"30k-clean.vocab")
+    Tokenizer = bert.albert_tokenization.FullTokenizer(vocab,
+                                                       spm_model_file=spm)
+    return Tokenizer
 
-    Args:
-        tokenizer (str): whether to use nltk or bert for tokenization
-        max_seq_length (int): maximum token sequence length for model
-    """
+def project_to_ids(Tokenizer,train_data,label_id_map,max_seq_length=128):
+    input_ids = []
+    label_ids = []
+    output_mask = []
+    print("projecting text to indices")
+    for instance_set in tqdm(train_data):
+        input_ids_sub = ["[CLS]"]
+        label_ids_sub = ["[CLS]"]
+        output_mask_sub = [0]
+        for i in range(len(instance_set[1])):
+            input_ids_sub.extend(instance_set[1][i])
+            label_ids_sub.extend(instance_set[2][i])
+            output_mask_sub.extend([1]*len(instance_set[1][i]))
+            input_ids_sub.extend(["[SEP]"])
+            label_ids_sub.extend(["[SEP]"])
+            output_mask_sub.extend([0])
+        assert (len(input_ids_sub) == len(label_ids_sub)
+                == len(output_mask_sub))
+        input_ids_sub.extend(["<pad>"]*(max_seq_length-len(input_ids_sub)))
+        label_ids_sub.extend(["<pad>"]*(max_seq_length-len(label_ids_sub)))
+        output_mask_sub.extend([0]*(max_seq_length-
+                                    len(output_mask_sub)))
+        assert (len(input_ids_sub) == len(label_ids_sub)
+                == len(output_mask_sub) == max_seq_length)
+        input_ids_sub = Tokenizer.convert_tokens_to_ids(input_ids_sub)
+        label_ids_sub = [label_id_map[label] for label in label_ids_sub]
+        input_ids.append(input_ids_sub)
+        label_ids.append(label_ids_sub)
+        output_mask.append(output_mask_sub)
+    return np.array(input_ids), np.array(label_ids), np.array(output_mask)
+
+def corpus2tokenids(max_seq_length=128,
+                    directory="./data/USElectionDebates/task_1/"):
+    label_map = {"<pad>":0,"[CLS]":1,"[SEP]":2,"N":3,"C":4,"P":5}
     corpus = read_us_election_corpus()
     tagged = char_tag(corpus,spaces=True)
     flat_text = flatten(corpus[0])
@@ -307,16 +334,7 @@ def corpus2tokens(tokenizer="bert",max_seq_length=128):
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=True)
     collection = []
     print("splitting and tokenizing sentences")
-    # check for punkt tokenizer
-    try:
-        nltk.word_tokenize("testing.")
-    except LookupError:
-        nltk.download('punkt')
-    # define albert tokenizer
-    if tokenizer == "bert":
-        Tokenizer = initialize_bert_tokenizer()
-    elif tokenizer == "nltk":
-        Tokenizer = nltk.tokenize
+    Tokenizer = initialize_bert_tokenizer()
     # enter main loop
     for i in tqdm(range(len(flat_text))):
         sub_text = nltk.tokenize.sent_tokenize(flat_text[i])
@@ -343,13 +361,36 @@ def corpus2tokens(tokenizer="bert",max_seq_length=128):
                                    random_state=42)
     train = post_process(train)
     test = post_process(test)
-    return train, test
+    train_X, train_Y, _ = project_to_ids(Tokenizer,train,label_map,
+                                         max_seq_length)
+    test_X, test_Y, _ = project_to_ids(Tokenizer,test,label_map,
+                                       max_seq_length)
+    np.save(directory+"train_X_"+str(max_seq_length)+".npy",train_X)
+    np.save(directory+"train_Y_"+str(max_seq_length)+".npy",train_Y)
+    np.save(directory+"test_X_"+str(max_seq_length)+".npy",test_X)
+    np.save(directory+"test_Y_"+str(max_seq_length)+".npy",test_Y)
+    # write json label map
+    with open(directory+"label_map.json","w") as f:
+        json.dump(label_map,f)
+    return train_X, train_Y, test_X, test_Y, label_map
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
+    parser.add_argument("--dtype", type=str, default="all",
+                        help="which dtype to process, either 'corpus',"+
+                        " 'token_ids' or 'all'")
+    parser.add_argument("--max-seq-length", type=int, default=128,
+                        help="maximum sequence length of tokenized id's")
     parser.add_argument("--no-spaces", action="store_true", default=False,
                         help="if True, spaces will be annotated as arguments"+
                         " in overall span. If False, spaces will be tagged"+
                         " as 'S'.")
     args = parser.parse_args()
-    corpus2char(spaces=(not args.no_spaces))
+    assert args.dtype in ["all","corpus","token_ids"]
+    if args.dtype == "corpus":
+        corpus2char(spaces=(not args.no_spaces))
+    elif args.dtype == "token_ids":
+        corpus2tokenids(max_seq_length=args.max_seq_length)
+    else:
+        corpus2char(spaces=(not args.no_spaces))
+        corpus2tokenids(max_seq_length=args.max_seq_length)

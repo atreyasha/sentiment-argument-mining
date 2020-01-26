@@ -1,91 +1,45 @@
 Developments
 ------------
 
-1. Fix up metrics class with epoch-wise f1 checks for callbacks -\> use val loss for early stopping
-===================================================================================================
-
-2. Fix up logging for models and reconstruction information, and accuracies (perhaps with tensorboard)
-======================================================================================================
-
-3. Fix up grid search with various parameters and model end types
-=================================================================
-
-4. Test this out, compute computation time for 1 week and try out various optimizations for performance
-=======================================================================================================
-
 ### Argumentation workflow
 
 1.  Training pipeline
 
-    1.  **TODO** make model more agnostic to exact label
-        numbers etc.
-
-    2.  **TODO** change printing of learning rate scheduler
-        to be prettier
-
-    3.  **TODO** make specific callback class for f1 metric
-        instead of metrics to avoid batch approximation error
-
-    4.  **TODO** consider how to **mask** outputs to get only
-        relevant data and pre-assign others, and proceed with loss over
-        those
-
-    5.  **TODO** add appropriate citations for code, review
-        to make sure this is done correctly
-
-    6.  **TODO** think about extra labels for \"X\" class,
-        also **custom accuracy metrics** for particular classes instead
-        of averaged, perhaps also f1
-
-    7.  **TODO** add maximum sequence option and data stats
+    1.  **TODO** add maximum sequence option and data stats
         printing before pushing on with training
 
-    8.  **TODO** add grid-search to workflow and add logging
-        to csvs/folders with saved models -\> find tensorflow-specific
-        way of doing this
+    2.  **TODO** add grid-search to workflow and add logging
+        to csvs/folders with saved models
 
-    9.  when converting to graph, mask out N to zero in adjacency matrix
+    3.  **TODO** add appropriate citations for code, review
+        to make sure this is done correctly
 
-    10. look into argument structure and ensure all arguments are
+    4.  when converting to graph, mask out N to zero in adjacency matrix
+
+    5.  look into argument structure and ensure all arguments are
         present in same paragraph
 
 2.  Sequence encoding
 
-    1.  **TODO** place training/test data in convenient
-        locations for caching and re-using, perhaps move conversion to
-        id\'s and saving into pre~process~ directly
+    1.  **TODO** improve multitask data processing pipeline
+        with task specification and complete json corpus with argument
+        structure as matrix
 
     2.  **TODO** improve splits in next runs with more
         thought put behind into distribution of splits
 
-    3.  **TODO** fix up data structure with different tasks
-        later on, perhaps can merge all tasks into one, or keep multiple
-        tasks, eg. single json for corpus etc.
-
-    4.  find shorter sequence candidates in UNSC corpus for testing out
+    3.  find shorter sequence candidates in UNSC corpus for testing out
         model
 
 3.  Architecture
 
-    1.  **TODO** attempt using tensorboard for better
-        visualization and understanding
+    1.  **TODO** if there are still OOM issues -\> look at
+        **run.ai** for accumulation optimzers and implement training
+        generators
 
-    2.  **TODO** if there are still OOM issues, collect
-        samples and gradients and update later -\> look at **run.ai**
-        for optimizers with this functionality
-
-    3.  **TODO** work on task 1 and observe how multi-task
+    2.  **TODO** work on task 1 and observe how multi-task
         setting could improve both tasks, use **adjacency matrix** for
         second task
-
-    4.  **TODO** think of appropriate performance metrics
-        given label/tag imbalance
-
-    5.  add various parameters such as window size for errors,
-        perplexity, accuracy, bleu score for diversity
-
-    6.  add checkpoints and early stoppage to find better models in
-        training
 
 4.  Domain debiasing
 
