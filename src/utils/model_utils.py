@@ -61,17 +61,29 @@ def learning_rate_scheduler(max_learn_rate,
 
 def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
                  label_threshold_less,model_type):
-    if model_type == "dense":
-        input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
+    input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
                                       dtype='int32')
-        output = l_bert(input_ids)
-        output = Dense(400)(output)
+    output = l_bert(input_ids)
+    if model_type == "dense":
+        output = Dense(512)(output)
         output = BatchNormalization()(output)
         output = Activation("relu")(output)
-        output = Dense(50)(output)
+        output = Dense(64)(output)
         output = BatchNormalization()(output)
         output = Activation("relu")(output)
-        logits = Dense(num_labels,activation="softmax")(output)
+        output = Dense(num_labels)
+        output = BatchNormalization()(output)
+        logits = Activation("softmax")(output)
+    elif model_type == "cnn":
+        output = Conv1D(256,padding="same")(output)
+        output = BatchNormalization()(output)
+        output = Activation("relu")(output)
+        output = Conv1D(64,padding="same")(output)
+        output = BatchNormalization()(output)
+        output = Activation("relu")(output)
+        output = Conv1D(num_labels,padding="same")(output)
+        output = BatchNormalization()(output)
+        logits = Activation("softmax")(output)
     model = tf.keras.Model(inputs=input_ids, outputs=logits)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
