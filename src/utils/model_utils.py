@@ -9,7 +9,7 @@ import tensorflow as tf
 import tensorflow.keras.backend as K
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.layers import Dense, BatchNormalization, Activation
-from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed
+from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed, Masking
 from sklearn.metrics import f1_score
 
 def class_acc(label_threshold_less):
@@ -63,6 +63,7 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
                  label_threshold_less,model_type):
     input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
                                       dtype='int32')
+    input_ids = Masking(mask_value=0)(input_ids)
     output = l_bert(input_ids)
     if model_type == "dense_0":
         output = Dense(512)(output)
@@ -97,7 +98,7 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
     elif model_type == "lstm":
         output = LSTM(128,return_sequences=True)(output)
         output = LSTM(64,return_sequences=True)(output)
-        output = LSTM(6,return_sequences=True)(output)
+        output = LSTM(num_labels,return_sequences=True)(output)
         logits = Activation("softmax")(output)
     model = tf.keras.Model(inputs=input_ids, outputs=logits)
     model.build(input_shape=(None, max_seq_len))
