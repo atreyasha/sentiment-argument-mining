@@ -94,6 +94,11 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
         output = Conv1D(num_labels,3,padding="same")(output)
         output = BatchNormalization()(output)
         logits = Activation("softmax")(output)
+    elif model_type == "lstm":
+        output = LSTM(256,return_sequences=True)(output)
+        output = LSTM(128,return_sequences=True)(output)
+        output = LSTM(6,return_sequences=True)(output)
+        logits = Activation("softmax")(output)
     model = tf.keras.Model(inputs=input_ids, outputs=logits)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
@@ -103,5 +108,3 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
                   metrics=[class_acc(label_threshold_less)])
     model.summary()
     return model
-
-# TODO add model types to create model to complete full pipeline, use nice defeaults from experience
