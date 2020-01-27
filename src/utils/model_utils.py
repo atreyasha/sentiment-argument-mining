@@ -9,7 +9,7 @@ import tensorflow as tf
 import tensorflow.keras.backend as K
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.layers import Dense, BatchNormalization, Activation
-from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed
+from tensorflow.keras.layers import Conv1D, LSTM
 from sklearn.metrics import f1_score
 
 def class_acc(label_threshold_less):
@@ -64,14 +64,24 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
     input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
                                       dtype='int32')
     output = l_bert(input_ids)
-    if model_type == "dense":
+    if model_type == "dense_0":
         output = Dense(512)(output)
         output = BatchNormalization()(output)
         output = Activation("relu")(output)
         output = Dense(64)(output)
         output = BatchNormalization()(output)
         output = Activation("relu")(output)
-        output = Dense(num_labels)
+        output = Dense(num_labels)(output)
+        output = BatchNormalization()(output)
+        logits = Activation("softmax")(output)
+    elif model_type == "dense_1":
+        output = TimeDistributed(Dense(512))(output)
+        output = BatchNormalization()(output)
+        output = Activation("relu")(output)
+        output = TimeDistributed(Dense(64))(output)
+        output = BatchNormalization()(output)
+        output = Activation("relu")(output)
+        output = TimeDistributed(Dense(num_labels))(output)
         output = BatchNormalization()(output)
         logits = Activation("softmax")(output)
     elif model_type == "cnn":

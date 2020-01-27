@@ -226,7 +226,7 @@ if __name__ == "__main__":
                         help="final learning rate at end of planned training")
     single.add_argument("--model-type", type=str, default="dense",
                         help="top layer after albert, options are"+
-                        " 'dense', 'cnn' or 'lstm'")
+                        " 'dense_0', 'dense_1', 'cnn' or 'lstm'")
     args = parser.parse_args()
     if not args.grid_search:
         single_train(args.max_seq_length,args.max_epochs,
