@@ -63,7 +63,6 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
                  label_threshold_less,model_type):
     input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
                                       dtype='int32')
-    masked_ids = Masking(mask_value=0)(input_ids)
     output = l_bert(masked_ids)
     if model_type == "dense_0":
         output = Dense(512)(output)
@@ -104,8 +103,7 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
     model.compile(optimizer=tf.keras.optimizers.Adam(),
-                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits
-                                                                     =True),
+                  loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   metrics=[class_acc(label_threshold_less)])
     model.summary()
     return model
