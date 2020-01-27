@@ -9,7 +9,7 @@ import tensorflow as tf
 import tensorflow.keras.backend as K
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.layers import Dense, BatchNormalization, Activation
-from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed, Masking
+from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed, Input
 from sklearn.metrics import f1_score
 
 def class_acc(label_threshold_less):
@@ -61,8 +61,8 @@ def learning_rate_scheduler(max_learn_rate,
 
 def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
                  label_threshold_less,model_type):
-    input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
-                                      dtype='int32')
+    input_ids = Input(shape=(max_seq_len,),
+                      dtype='int32')
     output = l_bert(input_ids)
     if model_type == "dense_0":
         output = Dense(512)(output)
