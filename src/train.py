@@ -198,10 +198,11 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
         if best_test >= record_test:
             record_test = best_test
             todel = [el for el in glob(log_dir+"*") if ('_'+str(i)+'.')
-                     not in el and "log.csv" not in el]
+                     not in el]
             if len(todel) > 0:
                 for el in todel:
-                    os.remove(el)
+                    if "log.csv" not in el:
+                        os.remove(el)
         else:
             os.remove(log_dir+"model_history_"+str(i)+".csv")
             os.remove(log_dir+"model_"+str(i)+".h5")

@@ -6,7 +6,7 @@ Developments
 1.  Training pipeline
 
     1.  **TODO** cuda comptability pipeline, contact
-        maintainer
+        maintainer and/or find workaround
 
     2.  **TODO** add maximum sequence option and data stats
         printing before pushing on with training
