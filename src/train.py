@@ -35,7 +35,7 @@ def read_or_create_data(max_seq_length,
 
 def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                  warmup_epoch_count=10,max_learn_rate=1e-5,
-                 end_learn_rate=1e-7,model_type="dense",
+                 end_learn_rate=1e-7,model_type="dense_0",
                  label_threshold_less=3):
     # read in data
     (train_X, train_Y,
