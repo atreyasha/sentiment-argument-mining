@@ -7,6 +7,9 @@ import math
 import numpy as np
 import tensorflow as tf
 import tensorflow.keras.backend as K
+from tensorflow.keras.callbacks import LearningRateScheduler
+from tensorflow.keras.layers import Dense, BatchNormalization, Activation
+from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed
 from sklearn.metrics import f1_score
 
 def class_acc(label_threshold_less):
@@ -40,10 +43,10 @@ def fetch_bert_layer():
     l_bert = bert.BertModelLayer.from_params(model_params, name="albert")
     return l_bert, model_ckpt
 
-def create_learning_rate_scheduler(max_learn_rate,
-                                   end_learn_rate,
-                                   warmup_epoch_count,
-                                   total_epoch_count):
+def learning_rate_scheduler(max_learn_rate,
+                            end_learn_rate,
+                            warmup_epoch_count,
+                            total_epoch_count):
     def lr_scheduler(epoch):
         if epoch < warmup_epoch_count:
             res = (max_learn_rate/warmup_epoch_count) * (epoch + 1)
@@ -54,16 +57,21 @@ def create_learning_rate_scheduler(max_learn_rate,
                                           (total_epoch_count-
                                            warmup_epoch_count+1))
         return float(res)
-    return tf.keras.callbacks.LearningRateScheduler(lr_scheduler,
-                                                    verbose=1)
+    return LearningRateScheduler(lr_scheduler,verbose=1)
 
 def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
-                 label_threshold_less):
-    input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
+                 label_threshold_less,model_type):
+    if model_type == "dense":
+        input_ids = tf.keras.layers.Input(shape=(max_seq_len,),
                                       dtype='int32')
-    output = l_bert(input_ids)
-    logits = tf.keras.layers.Dense(units=num_labels,
-                                   activation="softmax")(output)
+        output = l_bert(input_ids)
+        output = Dense(400)(output)
+        output = BatchNormalization()(output)
+        output = Activation("relu")(output)
+        output = Dense(50)(output)
+        output = BatchNormalization()(output)
+        output = Activation("relu")(output)
+        logits = Dense(num_labels,activation="softmax")(output)
     model = tf.keras.Model(inputs=input_ids, outputs=logits)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
@@ -73,3 +81,5 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
                   metrics=[class_acc(label_threshold_less)])
     model.summary()
     return model
+
+# TODO add model types to create model to complete full pipeline, use nice defeaults from experience

@@ -14,9 +14,13 @@ Developments
     3.  **TODO** add appropriate citations for code, review
         to make sure this is done correctly
 
-    4.  when converting to graph, mask out N to zero in adjacency matrix
+    4.  add grid-search json to help with choices defined on disk
 
-    5.  look into argument structure and ensure all arguments are
+    5.  possible script for continue training if patience not triggered
+
+    6.  when converting to graph, mask out N to zero in adjacency matrix
+
+    7.  look into argument structure and ensure all arguments are
         present in same paragraph
 
 2.  Sequence encoding

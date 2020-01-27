@@ -6,6 +6,8 @@
 ***** TODO add maximum sequence option and data stats printing before pushing on with training
 ***** TODO add grid-search to workflow and add logging to csvs/folders with saved models
 ***** TODO add appropriate citations for code, review to make sure this is done correctly
+***** add grid-search json to help with choices defined on disk
+***** possible script for continue training if patience not triggered
 ***** when converting to graph, mask out N to zero in adjacency matrix
 ***** look into argument structure and ensure all arguments are present in same paragraph
 
