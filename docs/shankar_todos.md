@@ -17,7 +17,8 @@ Developments
     4.  **TODO** add appropriate citations for code, review
         to make sure this is done correctly
 
-    5.  add grid-search json to help with choices defined on disk
+    5.  **TODO** add grid-search json to help with choices
+        defined on disk
 
     6.  possible script for continue training if patience not triggered
 
