@@ -74,7 +74,7 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
         output = Activation("relu")(output)
         output = Dense(num_labels)(output)
         output = BatchNormalization()(output)
-        logits = Activation("softmax")(output)
+        prob = Activation("softmax")(output)
     elif model_type == "dense_1":
         output = TimeDistributed(Dense(512))(output)
         output = BatchNormalization()(output)
@@ -84,7 +84,7 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
         output = Activation("relu")(output)
         output = TimeDistributed(Dense(num_labels))(output)
         output = BatchNormalization()(output)
-        logits = Activation("softmax")(output)
+        prob = Activation("softmax")(output)
     elif model_type == "cnn":
         output = Conv1D(256,3,padding="same")(output)
         output = BatchNormalization()(output)
@@ -94,18 +94,17 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
         output = Activation("relu")(output)
         output = Conv1D(num_labels,3,padding="same")(output)
         output = BatchNormalization()(output)
-        logits = Activation("softmax")(output)
+        prob = Activation("softmax")(output)
     elif model_type == "lstm":
         output = LSTM(128,return_sequences=True)(output)
         output = LSTM(64,return_sequences=True)(output)
         output = LSTM(num_labels,return_sequences=True)(output)
-        logits = Activation("softmax")(output)
-    model = tf.keras.Model(inputs=input_ids, outputs=logits)
+        prob = Activation("softmax")(output)
+    model = tf.keras.Model(inputs=input_ids, outputs=prob)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
     model.compile(optimizer=tf.keras.optimizers.Adam(),
-                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits
-                                                                     =True),
+                  loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   metrics=[class_acc(label_threshold_less)])
     model.summary()
     return model

@@ -225,7 +225,7 @@ if __name__ == "__main__":
                         help="peak learning rate before exponential decay")
     single.add_argument("--end-learn-rate", type=float, default=1e-7,
                         help="final learning rate at end of planned training")
-    single.add_argument("--model-type", type=str, default="dense",
+    single.add_argument("--model-type", type=str, default="dense_0",
                         help="top layer after albert, options are"+
                         " 'dense_0', 'dense_1', 'cnn' or 'lstm'")
     args = parser.parse_args()
