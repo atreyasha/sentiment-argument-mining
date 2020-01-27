@@ -5,22 +5,25 @@ Developments
 
 1.  Training pipeline
 
-    1.  **TODO** add maximum sequence option and data stats
+    1.  **TODO** cuda comptability pipeline, contact
+        maintainer
+
+    2.  **TODO** add maximum sequence option and data stats
         printing before pushing on with training
 
-    2.  **TODO** add grid-search to workflow and add logging
+    3.  **TODO** add grid-search to workflow and add logging
         to csvs/folders with saved models
 
-    3.  **TODO** add appropriate citations for code, review
+    4.  **TODO** add appropriate citations for code, review
         to make sure this is done correctly
 
-    4.  add grid-search json to help with choices defined on disk
+    5.  add grid-search json to help with choices defined on disk
 
-    5.  possible script for continue training if patience not triggered
+    6.  possible script for continue training if patience not triggered
 
-    6.  when converting to graph, mask out N to zero in adjacency matrix
+    7.  when converting to graph, mask out N to zero in adjacency matrix
 
-    7.  look into argument structure and ensure all arguments are
+    8.  look into argument structure and ensure all arguments are
         present in same paragraph
 
 2.  Sequence encoding
