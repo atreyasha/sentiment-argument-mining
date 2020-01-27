@@ -9,7 +9,7 @@ import tensorflow as tf
 import tensorflow.keras.backend as K
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.layers import Dense, BatchNormalization, Activation
-from tensorflow.keras.layers import Conv1D, LSTM
+from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed
 from sklearn.metrics import f1_score
 
 def class_acc(label_threshold_less):
