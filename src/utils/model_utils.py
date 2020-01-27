@@ -95,8 +95,8 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
         output = BatchNormalization()(output)
         logits = Activation("softmax")(output)
     elif model_type == "lstm":
-        output = LSTM(256,return_sequences=True)(output)
         output = LSTM(128,return_sequences=True)(output)
+        output = LSTM(64,return_sequences=True)(output)
         output = LSTM(6,return_sequences=True)(output)
         logits = Activation("softmax")(output)
     model = tf.keras.Model(inputs=input_ids, outputs=logits)

@@ -122,7 +122,7 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     # get bert layer
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
-    grid = {"model_type":["dense","cnn","lstm"],
+    grid = {"model_type":["dense_0","dense_1"],
             "learn_rate_combinations":[[1e-5,1e-7],
                                        [1e-4,1e-6],
                                        [1e-3,1e-5]],
@@ -233,3 +233,6 @@ if __name__ == "__main__":
                      args.batch_size,args.warmup_epochs,
                      args.max_learn_rate,args.end_learn_rate,
                      args.model_type)
+    else:
+        grid_train(args.max_seq_length,args.max_epochs,
+                   args.batch_size)
