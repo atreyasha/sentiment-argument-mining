@@ -59,8 +59,7 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                         num_labels,label_threshold_less,model_type)
     LRScheduler = learning_rate_scheduler(max_learn_rate=max_learn_rate,
                                           end_learn_rate=end_learn_rate,
-                                          warmup_epoch_count=
-                                          warmup_epoch_count,
+                                          warmup_epoch_count=warmup_epoch_count,
                                           total_epoch_count=max_epochs)
     # train model
     history = model.fit(x=train_X,y=train_Y,
@@ -146,8 +145,7 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
                              num_labels,label_threshold_less,model_type)
         LRScheduler = learning_rate_scheduler(max_learn_rate=max_learn_rate,
                                               end_learn_rate=end_learn_rate,
-                                              warmup_epoch_count=
-                                              warmup_epoch_count,
+                                              warmup_epoch_count=warmup_epoch_count,
                                               total_epoch_count=max_epochs)
         # train model
         history = model.fit(x=train_X,y=train_Y,
