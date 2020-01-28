@@ -21,7 +21,7 @@ def getCurrentTime():
 def read_or_create_data(max_seq_length,
                         directory="./data/USElectionDebates/task_1/"):
     check = glob(directory+"*"+str(max_seq_length)+"*")
-    if len(check) != 4:
+    if len(check) < 4:
         (train_X, train_Y, test_X,
          test_Y, label_map) = corpus2tokenids(max_seq_length=max_seq_length)
     else:
@@ -70,7 +70,7 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
             epochs=max_epochs,
             callbacks=[LRScheduler,
                         EarlyStopping(monitor="val_loss",
-                                      patience=20,
+                                      patience=10,
                                       restore_best_weights
                                       =True),
                         ModelCheckpoint(monitor="val_loss",
@@ -123,10 +123,10 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
     grid = {"model_type":["dense_0","dense_1"],
-            "learn_rate_combinations":[[1e-5,1e-7],
-                                       [1e-4,1e-6],
-                                       [1e-3,1e-5]],
-            "warmup_epoch_count":[10,15,20]}
+            "learn_rate_combinations":[[1e-6,1e-8],
+                                       [1e-5,1e-7],
+                                       [1e-4,1e-6]]
+            "warmup_epoch_count":[10,20,25]}
     # create flat combinations
     iterable_grid = list(ParameterGrid(grid))
     # define starting test
@@ -157,7 +157,7 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
                             epochs=max_epochs,
                             callbacks=[LRScheduler,
                                        EarlyStopping(monitor="val_loss",
-                                                     patience=20,
+                                                     patience=10,
                                                      restore_best_weights
                                                      =True),
                                        ModelCheckpoint(monitor="val_loss",
