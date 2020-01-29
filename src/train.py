@@ -15,6 +15,8 @@ from utils.model_utils import *
 from utils.arg_metav_formatter import *
 from pre_process import *
 
+# TODO do cnn_0, cnn_1 with and with/without class weights
+
 def getCurrentTime():
     return datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 
@@ -33,10 +35,17 @@ def read_or_create_data(max_seq_length,
             label_map = json.load(f)
     return train_X, train_Y, test_X, test_Y, label_map
 
+def get_class_weights(label_set):
+    counts = np.unique(label_set, return_counts=True)
+    weights = np.sum(counts[1][3:])/counts[1][3:]
+    weights = weights/np.sum(weights)
+    weights = np.concatenate((np.repeat(weights[0],3),weights))
+    return {i:weights[i] for i in range(weights.shape[0])}
+
 def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                  warmup_epoch_count=10,max_learn_rate=1e-5,
                  end_learn_rate=1e-7,model_type="dense_0",
-                 label_threshold_less=3):
+                 label_threshold_less=3,label_weight="auto"):
     # read in data
     (train_X, train_Y,
      test_X, test_Y, label_map) = read_or_create_data(max_seq_length)
@@ -61,13 +70,19 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                                           end_learn_rate=end_learn_rate,
                                           warmup_epoch_count=warmup_epoch_count,
                                           total_epoch_count=max_epochs)
+    # define class weights
+    if label_weight == "label_weighted":
+        class_weight = get_class_weights(train_Y)
+    elif label_weight == "auto":
+        class_weight = None
     # train model
     history = model.fit(x=train_X,y=train_Y,
-            validation_split=0.15,
-            batch_size=batch_size,
-            shuffle=True,
-            epochs=max_epochs,
-            callbacks=[LRScheduler,
+                        validation_split=0.15,
+                        batch_size=batch_size,
+                        shuffle=True,
+                        class_weight=class_weight,
+                        epochs=max_epochs,
+                        callbacks=[LRScheduler,
                         EarlyStopping(monitor="val_loss",
                                       patience=10,
                                       restore_best_weights
@@ -121,11 +136,10 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     # get bert layer
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
-    grid = {"model_type":["dense_2","cnn","lstm"],
-            "learn_rate_combinations":[[1e-6,1e-8],
-                                       [1e-5,1e-7],
+    grid = {"model_type":["cnn_1"],
+            "learn_rate_combinations":[[1e-5,1e-7],
                                        [1e-4,1e-6]],
-            "warmup_epoch_count":[10,15,20]}
+            "warmup_epoch_count":[5,10]}
     # create flat combinations
     iterable_grid = list(ParameterGrid(grid))
     # define starting test
@@ -223,9 +237,14 @@ if __name__ == "__main__":
                         help="peak learning rate before exponential decay")
     single.add_argument("--end-learn-rate", type=float, default=1e-7,
                         help="final learning rate at end of planned training")
+    single.add_argument("--label_weight", type=str, default="auto",
+                        help="option to provide label weighting on loss "+
+                        "function; 'auto' for uniform label weighting "+
+                        ", 'label_weighted' for frequency label weighting")
     single.add_argument("--model-type", type=str, default="dense_0",
                         help="top layer after albert, options are"+
-                        " 'dense_0', 'dense_1', 'cnn' or 'lstm'")
+                        " 'dense_0', 'dense_1', 'dense_2', 'cnn_0', 'cnn_1' +"
+                        "or 'lstm_0'")
     args = parser.parse_args()
     if not args.grid_search:
         single_train(args.max_seq_length,args.max_epochs,

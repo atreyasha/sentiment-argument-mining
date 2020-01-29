@@ -5,24 +5,31 @@ Developments
 
 1.  Training pipeline
 
-    1.  **TODO** fix messiness of code and make things
-        logical, redo ssh connection
+    1.  **TODO** check classification reports and then try
+        class/sample weighting for better class balanced loss
 
-    2.  **TODO** cuda comptability pipeline, contact
-        maintainer and/or find workaround
+    2.  **TODO** adjust learning rates in grid-search to be
+        slightly higher than lowest bound, perhaps add batch/layer
+        normalization back to layers
 
     3.  **TODO** add grid-search json to help with choices
         defined on disk
 
-    4.  **TODO** add appropriate citations for code, review
-        to make sure this is done correctly
+    4.  **TODO** look at **run.ai** for accumulation
+        optimzers and implement training generators -\> can increase
+        batch-size for grid-search
 
-    5.  possible script for continue training if patience not triggered
+    5.  **TODO** work on task 1 and observe how multi-task
+        setting could improve both tasks, use **adjacency matrix** for
+        second task
 
-    6.  when converting to graph, mask out N to zero in adjacency matrix
+    6.  **TODO** update models in logs to have 0 index for
+        cnn and lstm **and** with/without class weights
 
-    7.  look into argument structure and ensure all arguments are
-        present in same paragraph
+    7.  possible script for continue training if patience not triggered;
+        look up model reconstruction by adding custom objects
+
+    8.  when converting to graph, mask out N to zero in adjacency matrix
 
 2.  Sequence encoding
 
@@ -33,56 +40,44 @@ Developments
     2.  **TODO** improve splits in next runs with more
         thought put behind into distribution of splits
 
-    3.  find shorter sequence candidates in UNSC corpus for testing out
+    3.  look into argument structure and ensure all arguments are
+        present in same paragraph
+
+    4.  find shorter sequence candidates in UNSC corpus for testing out
         model
 
-3.  Architecture
-
-    1.  **TODO** if there are still OOM issues -\> look at
-        **run.ai** for accumulation optimzers and implement training
-        generators
-
-    2.  **TODO** work on task 1 and observe how multi-task
-        setting could improve both tasks, use **adjacency matrix** for
-        second task
-
-4.  Domain debiasing
+3.  Domain debiasing
 
     1.  **TODO** remove capital names and references to
         reduce bias
 
-    2.  **TODO** re-sampling or gradient weighting to
-        re-train inputs with rare words more than common words
+    2.  increase sequence length by using accumulation to allow more
+        data to feed into network
 
-    3.  perhaps collapse all first, second and third-person pronouns to
-        prevent self-referential bias
+4.  Code-specifc development
 
-5.  Code-specifc development
+    1.  **TODO** find out how to include fixed names into
+        requirements.txt file such as tensorflow, despite no explicit
+        call in script, figure out pip local environment and how to fix
+        this for future development
 
-    1.  **TODO** update all readmes and pydocstrings, check
+    2.  **TODO** update all readmes and pydocstrings, check
         unused imports and code health in general
 
-    2.  add existing folder checks, creation if missing and trailing
+    3.  add appropriate citations for code, review to make sure this is
+        done correctly
+
+    4.  add existing folder checks, creation if missing and trailing
         slash addition
 
-    3.  figure out pip local environment and how to fix this for future
-        development
-
-    4.  find out how to include fixed names into requirements.txt file
-        such as tensorflow, despite no explicit call in script
-
-    5.  add log files and model folders like other ML projects, where
-        detailed reconstruction information for models can be stored
-        along with many performance metrics and example runs
-
-6.  Task construction
+5.  Task construction
 
     1.  task 1 -\> 1: claim, 2: premise, 3: non-argument
 
     2.  task 2 (dependent on task 1) -\> form argumentation structure
         with adjacency matrix, multiply input from task 1 by row
 
-7.  Story for presentation
+6.  Story for presentation
 
     1.  clause extraction did not show reliable results with benepar and
         hard to process
@@ -97,7 +92,7 @@ Developments
     4.  also shorter sequence length due to memory issues, makes for
         better toy examples
 
-8.  Ideas to explore
+7.  Ideas to explore
 
     1.  ibm argumentation dataset
 
