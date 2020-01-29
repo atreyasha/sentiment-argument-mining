@@ -8,6 +8,7 @@ import argparse
 import datetime
 import numpy as np
 import tensorflow as tf
+from collections import Counter
 from glob import glob
 from sklearn.model_selection import ParameterGrid
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, CSVLogger
@@ -35,17 +36,18 @@ def read_or_create_data(max_seq_length,
             label_map = json.load(f)
     return train_X, train_Y, test_X, test_Y, label_map
 
-def get_class_weights(label_set):
-    counts = np.unique(label_set, return_counts=True)
-    weights = np.sum(counts[1][3:])/counts[1][3:]
-    weights = weights/np.sum(weights)
-    weights = np.concatenate((np.repeat(weights[0],3),weights))
-    return {i:weights[i] for i in range(weights.shape[0])}
+def get_sample_weights(label_set):
+    count_list = [Counter(el) for el in label_set.tolist()]
+    weights = []
+    for counter in count_list:
+        weights.append(((counter[4]+counter[5])/
+                        (counter[3]+counter[4]+counter[5]))+1e-1)
+    return np.array(weights)
 
 def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                  warmup_epoch_count=10,max_learn_rate=1e-5,
                  end_learn_rate=1e-7,model_type="dense_0",
-                 label_threshold_less=3,label_weight="auto"):
+                 label_threshold_less=3,sample_weighting="auto"):
     # read in data
     (train_X, train_Y,
      test_X, test_Y, label_map) = read_or_create_data(max_seq_length)
@@ -56,7 +58,7 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
     log_dir = "./model_logs/"+getCurrentTime()+"_single_train/"
     os.makedirs(log_dir)
     with open(log_dir+"log.csv","w") as csvfile:
-        fieldnames = ["id", "model_type", "label_weight", "max_epochs",
+        fieldnames = ["id", "model_type", "sample_weight", "max_epochs",
                       "train_epochs", "batch_size", "warmup_epoch_count",
                       "max_learn_rate", "end_learn_rate", "train_f1", "test_f1"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -71,16 +73,16 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                                           warmup_epoch_count=warmup_epoch_count,
                                           total_epoch_count=max_epochs)
     # define class weights
-    if label_weight == "label_weighted":
-        class_weight = get_class_weights(train_Y)
-    elif label_weight == "auto":
-        class_weight = None
+    if sample_weighting == "sample_weighted":
+        sample_weight = get_sample_weights(train_Y)
+    elif sample_weighting == "auto":
+        sample_weight = None
     # train model
     history = model.fit(x=train_X,y=train_Y,
                         validation_split=0.15,
                         batch_size=batch_size,
                         shuffle=True,
-                        class_weight=class_weight,
+                        sample_weight=sample_weight,
                         epochs=max_epochs,
                         callbacks=[LRScheduler,
                         EarlyStopping(monitor="val_loss",
@@ -110,7 +112,7 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writerow({"id":str(0), "model_type":model_type,
                          "max_epochs":str(max_epochs),
-                         "label_weight":label_weight,
+                         "sample_weight":sample_weight,
                          "train_epochs":str(train_epochs),
                          "batch_size":str(batch_size),
                          "warmup_epoch_count":str(warmup_epoch_count),
@@ -129,7 +131,7 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     log_dir = "./model_logs/"+getCurrentTime()+"_grid_train/"
     os.makedirs(log_dir)
     with open(log_dir+"log.csv","w") as csvfile:
-        fieldnames = ["id", "model_type", "label_weight", "max_epochs",
+        fieldnames = ["id", "model_type", "sample_weight", "max_epochs",
                       "train_epochs", "batch_size", "warmup_epoch_count",
                       "max_learn_rate", "end_learn_rate", "train_f1", "test_f1"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -138,7 +140,7 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
     grid = {"model_type":["cnn_1"],
-            "label_weight":["label_weighted","auto"],
+            "sample_weighting":["sample_weighted","auto"],
             "learn_rate_combinations":[[1e-5,1e-7],
                                        [1e-4,1e-5],
                                        [1e-4,1e-6]],
@@ -163,16 +165,16 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
                                               warmup_epoch_count=warmup_epoch_count,
                                               total_epoch_count=max_epochs)
         # define class weights
-        if label_weight == "label_weighted":
-            class_weight = get_class_weights(train_Y)
-        elif label_weight == "auto":
-            class_weight = None
+        if sample_weighting == "sample_weighted":
+            sample_weight = get_sample_weights(train_Y)
+        elif sample_weighting == "auto":
+            sample_weight = None
         # train model
         history = model.fit(x=train_X,y=train_Y,
                             validation_split=0.15,
                             batch_size=batch_size,
                             shuffle=True,
-                            class_weight=class_weight,
+                            sample_weight=sample_weight,
                             epochs=max_epochs,
                             callbacks=[LRScheduler,
                                        EarlyStopping(monitor="val_loss",
@@ -203,7 +205,7 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow({"id":str(i), "model_type":model_type,
                             "max_epochs":str(max_epochs),
-                            "label_weight":label_weight,
+                            "sample_weight":sample_weight,
                             "train_epochs":str(train_epochs),
                             "batch_size":str(batch_size),
                             "warmup_epoch_count":str(warmup_epoch_count),
@@ -245,10 +247,10 @@ if __name__ == "__main__":
                         help="peak learning rate before exponential decay")
     single.add_argument("--end-learn-rate", type=float, default=1e-7,
                         help="final learning rate at end of planned training")
-    single.add_argument("--label-weight", type=str, default="auto",
-                        help="option to provide label weighting on loss "+
-                        "function; 'auto' for uniform label weighting "+
-                        ", 'label_weighted' for frequency label weighting")
+    single.add_argument("--sample-weighting", type=str, default="auto",
+                        help="option to provide sample weighting for loss "+
+                        "function; 'auto' for uniform sample weighting "+
+                        ", 'sample_weighted' for frequency sample weighting")
     single.add_argument("--model-type", type=str, default="dense_0",
                         help="top layer after albert, options are"+
                         " 'dense_0', 'dense_1', 'dense_2', 'cnn_0', 'cnn_1' +"
