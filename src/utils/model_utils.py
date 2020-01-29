@@ -91,14 +91,24 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
         output = Activation("relu")(output)
         output = Dense(num_labels)(output)
         prob = Activation("softmax")(output)
-    elif model_type == "cnn":
+    elif model_type == "cnn_0":
         output = Conv1D(256,3,padding="same")(output)
         output = Activation("relu")(output)
         output = Conv1D(64,3,padding="same")(output)
         output = Activation("relu")(output)
         output = Conv1D(num_labels,3,padding="same")(output)
         prob = Activation("softmax")(output)
-    elif model_type == "lstm":
+    elif model_type == "cnn_1":
+        output = Conv1D(256,3,padding="same")(output)
+        output = BatchNormalization()(output)
+        output = Activation("relu")(output)
+        output = Conv1D(64,3,padding="same")(output)
+        output = BatchNormalization()(output)
+        output = Activation("relu")(output)
+        output = Conv1D(num_labels,3,padding="same")(output)
+        output = BatchNormalization()(output)
+        prob = Activation("softmax")(output)
+    elif model_type == "lstm_0":
         output = LSTM(256,return_sequences=True)(output)
         output = LSTM(64,return_sequences=True)(output)
         output = Dense(num_labels)(output)

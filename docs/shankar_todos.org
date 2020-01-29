@@ -3,34 +3,30 @@
 *** Argumentation workflow
  
 **** Training pipeline
-***** TODO fix messiness of code and make things logical, redo ssh connection
-***** TODO cuda comptability pipeline, contact maintainer and/or find workaround
+***** TODO check classification reports and then try class/sample weighting for better class balanced loss
+***** TODO adjust learning rates in grid-search to be slightly higher than lowest bound, perhaps add batch/layer normalization back to layers
 ***** TODO add grid-search json to help with choices defined on disk
-***** TODO add appropriate citations for code, review to make sure this is done correctly
-***** possible script for continue training if patience not triggered
+***** TODO look at *run.ai* for accumulation optimzers and implement training generators -> can increase batch-size for grid-search
+***** TODO work on task 1 and observe how multi-task setting could improve both tasks, use *adjacency matrix* for second task
+***** TODO update models in logs to have 0 index for cnn and lstm *and* with/without class weights
+***** possible script for continue training if patience not triggered; look up model reconstruction by adding custom objects
 ***** when converting to graph, mask out N to zero in adjacency matrix
-***** look into argument structure and ensure all arguments are present in same paragraph
 
 **** Sequence encoding
 ***** TODO improve multitask data processing pipeline with task specification and complete json corpus with argument structure as matrix
 ***** TODO improve splits in next runs with more thought put behind into distribution of splits
+***** look into argument structure and ensure all arguments are present in same paragraph
 ***** find shorter sequence candidates in UNSC corpus for testing out model 
-
-**** Architecture
-***** TODO if there are still OOM issues -> look at *run.ai* for accumulation optimzers and implement training generators
-***** TODO work on task 1 and observe how multi-task setting could improve both tasks, use *adjacency matrix* for second task
 
 **** Domain debiasing
 ***** TODO remove capital names and references to reduce bias
-***** TODO re-sampling or gradient weighting to re-train inputs with rare words more than common words
-***** perhaps collapse all first, second and third-person pronouns to prevent self-referential bias 
+***** increase sequence length by using accumulation to allow more data to feed into network 
      
 **** Code-specifc development
+***** TODO find out how to include fixed names into requirements.txt file such as tensorflow, despite no explicit call in script, figure out pip local environment and how to fix this for future development
 ***** TODO update all readmes and pydocstrings, check unused imports and code health in general
+***** add appropriate citations for code, review to make sure this is done correctly
 ***** add existing folder checks, creation if missing and trailing slash addition
-***** figure out pip local environment and how to fix this for future development
-***** find out how to include fixed names into requirements.txt file such as tensorflow, despite no explicit call in script
-***** add log files and model folders like other ML projects, where detailed reconstruction information for models can be stored along with many performance metrics and example runs
 
 **** Task construction
 ***** task 1 -> 1: claim, 2: premise, 3: non-argument
