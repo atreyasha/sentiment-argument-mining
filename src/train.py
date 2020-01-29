@@ -40,8 +40,11 @@ def get_sample_weights(label_set):
     count_list = [Counter(el) for el in label_set.tolist()]
     weights = []
     for counter in count_list:
-        weights.append(((counter[4]+counter[5])/
-                        (counter[3]+counter[4]+counter[5]))+1e-1)
+        if counter[4] + counter[5] != 0:
+            weights.append(((counter[4]+counter[5])/
+                            (counter[3]+counter[4]+counter[5])))
+        else:
+            weights.append(0.33)
     return np.array(weights)
 
 def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
