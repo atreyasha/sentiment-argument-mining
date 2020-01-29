@@ -56,9 +56,9 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
     log_dir = "./model_logs/"+getCurrentTime()+"_single_train/"
     os.makedirs(log_dir)
     with open(log_dir+"log.csv","w") as csvfile:
-        fieldnames = ["id", "model_type", "max_epochs", "train_epochs",
-                      "batch_size", "warmup_epoch_count", "max_learn_rate",
-                      "end_learn_rate", "train_f1", "test_f1"]
+        fieldnames = ["id", "model_type", "label_weight", "max_epochs",
+                      "train_epochs", "batch_size", "warmup_epoch_count",
+                      "max_learn_rate", "end_learn_rate", "train_f1", "test_f1"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
     # get bert layer
@@ -109,14 +109,15 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
     with open(log_dir+"log.csv","a") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writerow({"id":str(0), "model_type":model_type,
-                        "max_epochs":str(max_epochs),
-                        "train_epochs":str(train_epochs),
-                        "batch_size":str(batch_size),
-                        "warmup_epoch_count":str(warmup_epoch_count),
-                        "max_learn_rate":str(max_learn_rate),
-                        "end_learn_rate":str(end_learn_rate),
-                        "train_f1":str(train_f1),
-                        "test_f1":str(test_f1)})
+                         "max_epochs":str(max_epochs),
+                         "label_weight":label_weight,
+                         "train_epochs":str(train_epochs),
+                         "batch_size":str(batch_size),
+                         "warmup_epoch_count":str(warmup_epoch_count),
+                         "max_learn_rate":str(max_learn_rate),
+                         "end_learn_rate":str(end_learn_rate),
+                         "train_f1":str(train_f1),
+                         "test_f1":str(test_f1)})
 
 def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
                label_threshold_less=3):
@@ -128,18 +129,20 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     log_dir = "./model_logs/"+getCurrentTime()+"_grid_train/"
     os.makedirs(log_dir)
     with open(log_dir+"log.csv","w") as csvfile:
-        fieldnames = ["id", "model_type", "max_epochs", "train_epochs",
-                      "batch_size", "warmup_epoch_count", "max_learn_rate",
-                      "end_learn_rate", "train_f1", "test_f1"]
+        fieldnames = ["id", "model_type", "label_weight", "max_epochs",
+                      "train_epochs", "batch_size", "warmup_epoch_count",
+                      "max_learn_rate", "end_learn_rate", "train_f1", "test_f1"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
     # get bert layer
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
     grid = {"model_type":["cnn_1"],
+            "label_weight":["label_weighted","auto"],
             "learn_rate_combinations":[[1e-5,1e-7],
+                                       [1e-4,1e-5],
                                        [1e-4,1e-6]],
-            "warmup_epoch_count":[5,10]}
+            "warmup_epoch_count":[5,10,15]}
     # create flat combinations
     iterable_grid = list(ParameterGrid(grid))
     # define starting test
@@ -149,11 +152,7 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
         # clear keras session
         tf.keras.backend.clear_session()
         # define grid variables
-        model_type = config["model_type"]
-        warmup_epoch_count = config["warmup_epoch_count"]
-        max_learn_rate = config["learn_rate_combinations"][0]
-        end_learn_rate = config["learn_rate_combinations"][1]
-        warmup_epoch_count = config["warmup_epoch_count"]
+        globals().update(config)
         # prepare model compilation
         model = create_model(l_bert,model_ckpt,max_seq_length,
                              num_labels,label_threshold_less,model_type)
@@ -161,11 +160,17 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
                                               end_learn_rate=end_learn_rate,
                                               warmup_epoch_count=warmup_epoch_count,
                                               total_epoch_count=max_epochs)
+        # define class weights
+        if label_weight == "label_weighted":
+            class_weight = get_class_weights(train_Y)
+        elif label_weight == "auto":
+            class_weight = None
         # train model
         history = model.fit(x=train_X,y=train_Y,
                             validation_split=0.15,
                             batch_size=batch_size,
                             shuffle=True,
+                            class_weight=class_weight,
                             epochs=max_epochs,
                             callbacks=[LRScheduler,
                                        EarlyStopping(monitor="val_loss",
@@ -196,6 +201,7 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow({"id":str(i), "model_type":model_type,
                             "max_epochs":str(max_epochs),
+                            "label_weight":label_weight,
                             "train_epochs":str(train_epochs),
                             "batch_size":str(batch_size),
                             "warmup_epoch_count":str(warmup_epoch_count),
@@ -237,7 +243,7 @@ if __name__ == "__main__":
                         help="peak learning rate before exponential decay")
     single.add_argument("--end-learn-rate", type=float, default=1e-7,
                         help="final learning rate at end of planned training")
-    single.add_argument("--label_weight", type=str, default="auto",
+    single.add_argument("--label-weight", type=str, default="auto",
                         help="option to provide label weighting on loss "+
                         "function; 'auto' for uniform label weighting "+
                         ", 'label_weighted' for frequency label weighting")
