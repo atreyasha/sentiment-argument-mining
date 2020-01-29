@@ -153,6 +153,8 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
         tf.keras.backend.clear_session()
         # define grid variables
         globals().update(config)
+        max_learn_rate = learn_rate_combinations[0]
+        end_learn_rate = learn_rate_combinations[1]
         # prepare model compilation
         model = create_model(l_bert,model_ckpt,max_seq_length,
                              num_labels,label_threshold_less,model_type)
