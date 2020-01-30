@@ -3,12 +3,13 @@
 *** Argumentation workflow
  
 **** Training pipeline
-***** TODO check classification reports and then try class/sample weighting for better class balanced loss
-***** TODO adjust learning rates in grid-search to be slightly higher than lowest bound, perhaps add batch/layer normalization back to layers
+***** TODO add classification report jsons to logging pipelines, add them manually for other cases by reconstructing model and working with it
+***** TODO check classification reports to better introspect models and their functionalities
 ***** TODO add grid-search json to help with choices defined on disk
 ***** TODO look at *run.ai* for accumulation optimzers and implement training generators -> can increase batch-size for grid-search
 ***** TODO work on task 1 and observe how multi-task setting could improve both tasks, use *adjacency matrix* for second task
 ***** TODO update models in logs to have 0 index for cnn and lstm *and* with/without class weights
+***** try out different val metric
 ***** possible script for continue training if patience not triggered; look up model reconstruction by adding custom objects
 ***** when converting to graph, mask out N to zero in adjacency matrix
 
