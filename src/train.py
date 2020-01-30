@@ -142,12 +142,12 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     # get bert layer
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
-    grid = {"model_type":["cnn_1"],
-            "sample_weighting":["sample_weighted","auto"],
+    grid = {"model_type":["cnn_0"],
+            "sample_weighting":["sample_weighted"],
             "learn_rate_combinations":[[1e-5,1e-7],
                                        [1e-4,1e-5],
                                        [1e-4,1e-6]],
-            "warmup_epoch_count":[5,10,15]}
+            "warmup_epoch_count":[10,15]}
     # create flat combinations
     iterable_grid = list(ParameterGrid(grid))
     # define starting test
