@@ -16,8 +16,6 @@ from utils.model_utils import *
 from utils.arg_metav_formatter import *
 from pre_process import *
 
-# TODO do cnn_0, cnn_1 with and with/without class weights
-
 def getCurrentTime():
     return datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 
@@ -143,7 +141,7 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
     grid = {"model_type":["dense_0","dense_1","dense_2","cnn_0","lstm_0"],
-            "sample_weighting":["sample_weighted"],
+            "sample_weighting":["auto","sample_weighted"],
             "learn_rate_combinations":[[1e-4,1e-5],
                                        [1e-4,1e-6]],
             "warmup_epoch_count":[10,15]}
@@ -179,11 +177,11 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
                             sample_weight=sample_weight,
                             epochs=max_epochs,
                             callbacks=[LRScheduler,
-                                       EarlyStopping(monitor="val_loss",
+                                       EarlyStopping(monitor="val_argument_candidate_acc",
                                                      patience=10,
                                                      restore_best_weights
                                                      =True),
-                                       ModelCheckpoint(monitor="val_loss",
+                                       ModelCheckpoint(monitor="val_argument_candidate_acc",
                                                        filepath=log_dir+
                                                        "model_"+str(i)
                                                        +".h5",
