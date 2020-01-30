@@ -5,12 +5,12 @@ Developments
 
 1.  Training pipeline
 
-    1.  **TODO** check classification reports and then try
-        class/sample weighting for better class balanced loss
+    1.  **TODO** add classification report jsons to logging
+        pipelines, add them manually for other cases by reconstructing
+        model and working with it
 
-    2.  **TODO** adjust learning rates in grid-search to be
-        slightly higher than lowest bound, perhaps add batch/layer
-        normalization back to layers
+    2.  **TODO** check classification reports to better
+        introspect models and their functionalities
 
     3.  **TODO** add grid-search json to help with choices
         defined on disk
@@ -26,10 +26,12 @@ Developments
     6.  **TODO** update models in logs to have 0 index for
         cnn and lstm **and** with/without class weights
 
-    7.  possible script for continue training if patience not triggered;
+    7.  try out different val metric
+
+    8.  possible script for continue training if patience not triggered;
         look up model reconstruction by adding custom objects
 
-    8.  when converting to graph, mask out N to zero in adjacency matrix
+    9.  when converting to graph, mask out N to zero in adjacency matrix
 
 2.  Sequence encoding
 
