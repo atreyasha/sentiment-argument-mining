@@ -48,7 +48,8 @@ def get_sample_weights(label_set):
 def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                  warmup_epoch_count=10,max_learn_rate=1e-5,
                  end_learn_rate=1e-7,model_type="dense_0",
-                 label_threshold_less=3,sample_weighting="auto"):
+                 label_threshold_less=3,sample_weighting="auto",
+                 stopping_criterion="loss"):
     # read in data
     (train_X, train_Y,
      test_X, test_Y, label_map) = read_or_create_data(max_seq_length)
@@ -59,9 +60,10 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
     log_dir = "./model_logs/"+getCurrentTime()+"_single_train/"
     os.makedirs(log_dir)
     with open(log_dir+"log.csv","w") as csvfile:
-        fieldnames = ["id", "model_type", "sample_weight", "max_epochs",
-                      "train_epochs", "batch_size", "warmup_epoch_count",
-                      "max_learn_rate", "end_learn_rate", "train_f1", "test_f1"]
+        fieldnames = ["id", "model_type", "sample_weight", "stopping_criterion",
+                      "max_epochs", "train_epochs", "batch_size",
+                      "warmup_epoch_count", "max_learn_rate", "end_learn_rate",
+                      "train_f1", "test_f1"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
     # get bert layer
@@ -78,6 +80,13 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
         sample_weight = get_sample_weights(train_Y)
     elif sample_weighting == "auto":
         sample_weight = None
+    # redefine stopping criterion
+    if stopping_criterion == "loss":
+        monitor = "val_loss"
+        mode = "min"
+    elif stopping_criterion == "acc":
+        monitor = "val_argument_candidate_acc"
+        mode = "max"
     # train model
     history = model.fit(x=train_X,y=train_Y,
                         validation_split=0.15,
@@ -86,11 +95,13 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                         sample_weight=sample_weight,
                         epochs=max_epochs,
                         callbacks=[LRScheduler,
-                        EarlyStopping(monitor="val_loss",
+                        EarlyStopping(monitor=monitor,
+                                      mode=mode,
                                       patience=10,
                                       restore_best_weights
                                       =True),
-                        ModelCheckpoint(monitor="val_loss",
+                        ModelCheckpoint(monitor=monitor,
+                                        mode=mode
                                         filepath=log_dir+
                                         "model_0.h5",
                                         save_best_only
@@ -114,6 +125,7 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
         writer.writerow({"id":str(0), "model_type":model_type,
                          "max_epochs":str(max_epochs),
                          "sample_weight":sample_weighting,
+                         "stopping_criterion":monitor,
                          "train_epochs":str(train_epochs),
                          "batch_size":str(batch_size),
                          "warmup_epoch_count":str(warmup_epoch_count),
@@ -132,9 +144,10 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     log_dir = "./model_logs/"+getCurrentTime()+"_grid_train/"
     os.makedirs(log_dir)
     with open(log_dir+"log.csv","w") as csvfile:
-        fieldnames = ["id", "model_type", "sample_weight", "max_epochs",
-                      "train_epochs", "batch_size", "warmup_epoch_count",
-                      "max_learn_rate", "end_learn_rate", "train_f1", "test_f1"]
+        fieldnames = ["id", "model_type", "sample_weight", "stopping_criterion",
+                      "max_epochs", "train_epochs", "batch_size",
+                      "warmup_epoch_count", "max_learn_rate",
+                      "end_learn_rate", "train_f1", "test_f1"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
     # get bert layer
@@ -142,6 +155,8 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     # define grid-search dictionary
     grid = {"model_type":["dense_0","dense_1","dense_2","cnn_0","lstm_0"],
             "sample_weighting":["auto","sample_weighted"],
+            "stopping_criterion":[["val_loss","min"],
+                                  ["val_argument_candidate_acc","max"]],
             "learn_rate_combinations":[[1e-4,1e-5],
                                        [1e-4,1e-6]],
             "warmup_epoch_count":[10,15]}
@@ -157,6 +172,8 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
         globals().update(config)
         max_learn_rate = learn_rate_combinations[0]
         end_learn_rate = learn_rate_combinations[1]
+        monitor = stopping_criterion[0]
+        mode = stopping_criterion[1]
         # prepare model compilation
         model = create_model(l_bert,model_ckpt,max_seq_length,
                              num_labels,label_threshold_less,model_type)
@@ -177,11 +194,13 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
                             sample_weight=sample_weight,
                             epochs=max_epochs,
                             callbacks=[LRScheduler,
-                                       EarlyStopping(monitor="val_argument_candidate_acc",
+                                       EarlyStopping(monitor=monitor,
+                                                     mode=mode,
                                                      patience=10,
                                                      restore_best_weights
                                                      =True),
-                                       ModelCheckpoint(monitor="val_argument_candidate_acc",
+                                       ModelCheckpoint(monitor=monitor,
+                                                       mode=mode,
                                                        filepath=log_dir+
                                                        "model_"+str(i)
                                                        +".h5",
@@ -204,15 +223,16 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
         with open(log_dir+"log.csv","a") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow({"id":str(i), "model_type":model_type,
-                            "max_epochs":str(max_epochs),
-                            "sample_weight":sample_weighting,
-                            "train_epochs":str(train_epochs),
-                            "batch_size":str(batch_size),
-                            "warmup_epoch_count":str(warmup_epoch_count),
-                            "max_learn_rate":str(max_learn_rate),
-                            "end_learn_rate":str(end_learn_rate),
-                            "train_f1":str(train_f1),
-                            "test_f1":str(test_f1)})
+                             "max_epochs":str(max_epochs),
+                             "sample_weight":sample_weighting,
+                             "stopping_criterion":monitor,
+                             "train_epochs":str(train_epochs),
+                             "batch_size":str(batch_size),
+                             "warmup_epoch_count":str(warmup_epoch_count),
+                             "max_learn_rate":str(max_learn_rate),
+                             "end_learn_rate":str(end_learn_rate),
+                             "train_f1":str(train_f1),
+                             "test_f1":str(test_f1)})
         # clear memory
         del model
         # filter out best model and history
@@ -251,6 +271,9 @@ if __name__ == "__main__":
                         help="option to provide sample weighting for loss "+
                         "function; 'auto' for uniform sample weighting "+
                         ", 'sample_weighted' for frequency sample weighting")
+    single.add_argument("--stopping-criterion", type=str, default="loss",
+                        help="stopping criterion on validation set during "+
+                        "training; either 'loss' or 'acc'")
     single.add_argument("--model-type", type=str, default="dense_0",
                         help="top layer after albert, options are"+
                         " 'dense_0', 'dense_1', 'dense_2', 'cnn_0', 'cnn_1' +"
