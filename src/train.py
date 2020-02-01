@@ -101,7 +101,7 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                                       restore_best_weights
                                       =True),
                         ModelCheckpoint(monitor=monitor,
-                                        mode=mode
+                                        mode=mode,
                                         filepath=log_dir+
                                         "model_0.h5",
                                         save_best_only
