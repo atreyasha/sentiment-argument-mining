@@ -276,7 +276,7 @@ if __name__ == "__main__":
                         "training; either 'loss' or 'acc'")
     single.add_argument("--model-type", type=str, default="dense_0",
                         help="top layer after albert, options are"+
-                        " 'dense_0', 'dense_1', 'dense_2', 'cnn_0', 'cnn_1' +"
+                        " 'dense_0', 'dense_1', 'dense_2', 'cnn_0', 'cnn_1' "+
                         "or 'lstm_0'")
     args = parser.parse_args()
     if not args.grid_search:
