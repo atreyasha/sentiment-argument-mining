@@ -5,33 +5,39 @@ Developments
 
 1.  Training pipeline
 
-    1.  **TODO** add classification report jsons to logging
+    1.  **TODO** make automated script to repeat tests for
+        best performing n models to get statistical variations
+
+    2.  **TODO** edit all log csvs to incorporate all
+        relevant information
+
+    3.  **TODO** add classification report jsons to logging
         pipelines, add them manually for other cases by reconstructing
         model and working with it
 
-    2.  **TODO** check classification reports to better
+    4.  **TODO** check classification reports to better
         introspect models and their functionalities
 
-    3.  **TODO** add grid-search json to help with choices
+    5.  **TODO** add grid-search json to help with choices
         defined on disk
 
-    4.  **TODO** look at **run.ai** for accumulation
+    6.  **TODO** look at **run.ai** for accumulation
         optimzers and implement training generators -\> can increase
         batch-size for grid-search
 
-    5.  **TODO** work on task 1 and observe how multi-task
+    7.  **TODO** work on task 1 and observe how multi-task
         setting could improve both tasks, use **adjacency matrix** for
         second task
 
-    6.  **TODO** update models in logs to have 0 index for
+    8.  **TODO** update models in logs to have 0 index for
         cnn and lstm **and** with/without class weights
 
-    7.  try out different val metric
+    9.  try out different val metric
 
-    8.  possible script for continue training if patience not triggered;
+    10. possible script for continue training if patience not triggered;
         look up model reconstruction by adding custom objects
 
-    9.  when converting to graph, mask out N to zero in adjacency matrix
+    11. when converting to graph, mask out N to zero in adjacency matrix
 
 2.  Sequence encoding
 
