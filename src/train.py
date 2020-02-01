@@ -283,8 +283,8 @@ if __name__ == "__main__":
         single_train(args.max_seq_length,args.max_epochs,
                      args.batch_size,args.warmup_epochs,
                      args.max_learn_rate,args.end_learn_rate,
-                     args.model_type,label_threshold_less=3,
-                     args.sample_weighting,args.stopping_criterion)
+                     args.model_type,3,args.sample_weighting,
+                     args.stopping_criterion)
     else:
         grid_train(args.max_seq_length,args.max_epochs,
                    args.batch_size)
