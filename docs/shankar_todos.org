@@ -5,6 +5,7 @@
 **** Training pipeline
 ***** TODO make automated script to repeat tests for best performing n models to get statistical variations
 ***** TODO edit all log csvs to incorporate all relevant information 
+***** TODO consider looking into aur/auc scores if that would help with evaluation
 ***** TODO add classification report jsons to logging pipelines, add them manually for other cases by reconstructing model and working with it
 ***** TODO check classification reports to better introspect models and their functionalities
 ***** TODO add grid-search json to help with choices defined on disk

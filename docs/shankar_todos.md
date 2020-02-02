@@ -11,33 +11,36 @@ Developments
     2.  **TODO** edit all log csvs to incorporate all
         relevant information
 
-    3.  **TODO** add classification report jsons to logging
+    3.  **TODO** consider looking into aur/auc scores if that
+        would help with evaluation
+
+    4.  **TODO** add classification report jsons to logging
         pipelines, add them manually for other cases by reconstructing
         model and working with it
 
-    4.  **TODO** check classification reports to better
+    5.  **TODO** check classification reports to better
         introspect models and their functionalities
 
-    5.  **TODO** add grid-search json to help with choices
+    6.  **TODO** add grid-search json to help with choices
         defined on disk
 
-    6.  **TODO** look at **run.ai** for accumulation
+    7.  **TODO** look at **run.ai** for accumulation
         optimzers and implement training generators -\> can increase
         batch-size for grid-search
 
-    7.  **TODO** work on task 1 and observe how multi-task
+    8.  **TODO** work on task 1 and observe how multi-task
         setting could improve both tasks, use **adjacency matrix** for
         second task
 
-    8.  **TODO** update models in logs to have 0 index for
+    9.  **TODO** update models in logs to have 0 index for
         cnn and lstm **and** with/without class weights
 
-    9.  try out different val metric
+    10. try out different val metric
 
-    10. possible script for continue training if patience not triggered;
+    11. possible script for continue training if patience not triggered;
         look up model reconstruction by adding custom objects
 
-    11. when converting to graph, mask out N to zero in adjacency matrix
+    12. when converting to graph, mask out N to zero in adjacency matrix
 
 2.  Sequence encoding
 
