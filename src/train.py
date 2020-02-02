@@ -153,7 +153,7 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     # get bert layer
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
-    grid = {"model_type":["dense_0","dense_1","dense_2","cnn_0","lstm_0"],
+    grid = {"model_type":["lstm_1","dense_3"],
             "sample_weighting":["auto","sample_weighted"],
             "stopping_criterion":[["val_loss","min"],
                                   ["val_argument_candidate_acc","max"]],
@@ -270,7 +270,8 @@ if __name__ == "__main__":
     single.add_argument("--sample-weighting", type=str, default="auto",
                         help="option to provide sample weighting for loss "+
                         "function; 'auto' for uniform sample weighting "+
-                        ", 'sample_weighted' for frequency sample weighting")
+                        ", 'sample_weighted' for minority-class-based"+
+                        " sample weighting")
     single.add_argument("--stopping-criterion", type=str, default="loss",
                         help="stopping criterion on validation set during "+
                         "training; either 'loss' or 'acc'")
