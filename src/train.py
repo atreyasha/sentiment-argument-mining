@@ -153,13 +153,13 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     # get bert layer
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
-    grid = {"model_type":["lstm_1","dense_3"],
-            "sample_weighting":["auto","sample_weighted"],
+    grid = {"model_type":["dense_1","dense_3"],
+            "sample_weighting":["auto"],
             "stopping_criterion":[["val_loss","min"],
                                   ["val_argument_candidate_acc","max"]],
             "learn_rate_combinations":[[1e-4,1e-5],
                                        [1e-4,1e-6]],
-            "warmup_epoch_count":[10,15]}
+            "warmup_epoch_count":[10,15,20]}
     # create flat combinations
     iterable_grid = list(ParameterGrid(grid))
     # define starting test
@@ -277,8 +277,8 @@ if __name__ == "__main__":
                         "training; either 'loss' or 'acc'")
     single.add_argument("--model-type", type=str, default="dense_0",
                         help="top layer after albert, options are"+
-                        " 'dense_0', 'dense_1', 'dense_2', 'cnn_0', 'cnn_1' "+
-                        "or 'lstm_0'")
+                        " 'dense_0', 'dense_1', 'dense_2', 'dense_3'" +
+                        "'cnn_0', 'cnn_1 or 'lstm_0'")
     args = parser.parse_args()
     if not args.grid_search:
         single_train(args.max_seq_length,args.max_epochs,
