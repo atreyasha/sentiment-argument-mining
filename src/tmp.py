@@ -50,7 +50,7 @@ def quick_eval(direct,max_seq_length=128):
     # get bert layer
     l_bert, model_ckpt = fetch_bert_layer()
     model_path = glob(direct+"/*h5")
-    model = load_model(model_path,
+    model = load_model(model_path[0],
                        custom_objects={"BertModelLayer":l_bert,
                                        "argument_candidate_acc":class_acc(3)})
     y_pred = model.predict(test_X)
