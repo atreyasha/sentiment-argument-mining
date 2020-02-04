@@ -61,3 +61,6 @@ def quick_eval(direct,max_seq_length=128):
 
 logs = glob("./model_logs/*")
 [quick_eval(el) for el in logs]
+
+
+tf.keras.utils.plot_model(model,show_shapes=True)

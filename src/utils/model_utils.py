@@ -4,6 +4,7 @@
 import os
 import bert
 import math
+import runai.ga
 import numpy as np
 import tensorflow as tf
 import tensorflow.keras.backend as K
@@ -124,7 +125,8 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
     model = tf.keras.Model(inputs=input_ids, outputs=prob)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
-    model.compile(optimizer=tf.keras.optimizers.Adam(),
+    optimizer = runai.ga.keras.optimizers.Adam(32)
+    model.compile(optimizer=optimizer,
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   metrics=[class_acc(label_threshold_less)])
     model.summary()
