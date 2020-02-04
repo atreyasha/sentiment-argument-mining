@@ -5,42 +5,55 @@ Developments
 
 1.  Training pipeline
 
-    1.  **TODO** make automated script to repeat tests for
+    1.  consider how to deal with extra calls to corpus, perhaps better
+        to merge all
+
+    2.  add class f1s to grid searches later on and replace them in the
+        meantime where possible
+
+    3.  consider using aur or auc within models
+
+    4.  **TODO** possibly create explicit validation set
+
+    5.  **TODO** replace model names to follow ordering and
+        sorting with batch norm or without
+
+    6.  **TODO** make automated script to repeat tests for
         best performing n models to get statistical variations
 
-    2.  **TODO** edit all log csvs to incorporate all
+    7.  **TODO** edit all log csvs to incorporate all
         relevant information
 
-    3.  **TODO** consider looking into aur/auc scores if that
+    8.  **TODO** consider looking into aur/auc scores if that
         would help with evaluation
 
-    4.  **TODO** add classification report jsons to logging
+    9.  **TODO** add classification report jsons to logging
         pipelines, add them manually for other cases by reconstructing
         model and working with it
 
-    5.  **TODO** check classification reports to better
+    10. **TODO** check classification reports to better
         introspect models and their functionalities
 
-    6.  **TODO** add grid-search json to help with choices
+    11. **TODO** add grid-search json to help with choices
         defined on disk
 
-    7.  **TODO** look at **run.ai** for accumulation
+    12. **TODO** look at **run.ai** for accumulation
         optimzers and implement training generators -\> can increase
         batch-size for grid-search
 
-    8.  **TODO** work on task 1 and observe how multi-task
+    13. **TODO** work on task 1 and observe how multi-task
         setting could improve both tasks, use **adjacency matrix** for
         second task
 
-    9.  **TODO** update models in logs to have 0 index for
+    14. **TODO** update models in logs to have 0 index for
         cnn and lstm **and** with/without class weights
 
-    10. try out different val metric
+    15. try out different val metric
 
-    11. possible script for continue training if patience not triggered;
+    16. possible script for continue training if patience not triggered;
         look up model reconstruction by adding custom objects
 
-    12. when converting to graph, mask out N to zero in adjacency matrix
+    17. when converting to graph, mask out N to zero in adjacency matrix
 
 2.  Sequence encoding
 
