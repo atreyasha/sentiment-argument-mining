@@ -49,7 +49,7 @@ def quick_eval(direct,max_seq_length=128):
     tf.keras.backend.clear_session()
     # get bert layer
     l_bert, model_ckpt = fetch_bert_layer()
-    model_path = glob(direct+"*h5")
+    model_path = glob(direct+"*h5")[0]
     model = load_model(model_path,
                        custom_objects={"BertModelLayer":l_bert,
                                        "argument_candidate_acc":class_acc(3)})
@@ -60,4 +60,4 @@ def quick_eval(direct,max_seq_length=128):
         json.dump(out_dict,f)
 
 logs = glob("./model_logs/*")
-[quick_eval(logs) for el in logs]
+[quick_eval(el) for el in logs]
