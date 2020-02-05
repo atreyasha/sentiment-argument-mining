@@ -60,8 +60,10 @@ names(agg)[1] <- "bin"
 names(agg)[c(2,3,4)] <- c("None","Claim","Premise")
 levels(agg$bin)
 agg <- rbind(agg,c("(1000,1100]",0,0,0))
+agg <- rbind(agg,c("(1100,1200]",0,0,0))
 agg <- rbind(agg,c("(1200,1300]",0,0,0))
 agg <- rbind(agg,c("(1300,1400]",0,0,0))
+agg <- rbind(agg,c("(1500,1600]",0,0,0))
 agg <- melt(agg,id.vars ="bin")
 agg$value <- as.numeric(agg$value)
 # create file
@@ -96,11 +98,15 @@ to_add$type <- "Filtered"
 stats <- rbind(stats,to_add)
 agg <- aggregate(stats[c("N","C","P")],by=list(stats$bin,stats$type),FUN=sum)
 agg <- rbind(agg,c("(1000,1100]","Filtered",0,0,0))
+agg <- rbind(agg,c("(1100,1200]","Filtered",0,0,0))
 agg <- rbind(agg,c("(1200,1300]","Filtered",0,0,0))
 agg <- rbind(agg,c("(1300,1400]","Filtered",0,0,0))
+agg <- rbind(agg,c("(1500,1600]","Filtered",0,0,0))
 agg <- rbind(agg,c("(1000,1100]","Unfiltered",0,0,0))
+agg <- rbind(agg,c("(1100,1200]","Unfiltered",0,0,0))
 agg <- rbind(agg,c("(1200,1300]","Unfiltered",0,0,0))
 agg <- rbind(agg,c("(1300,1400]","Unfiltered",0,0,0))
+agg <- rbind(agg,c("(1500,1600]","Unfiltered",0,0,0))
 names(agg)[1] <- "bin"
 names(agg)[2] <- "type"
 names(agg)[c(3,4,5)] <- c("None","Claim","Premise")
