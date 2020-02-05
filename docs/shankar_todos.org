@@ -1,8 +1,17 @@
 ** Developments 
-
+   
 *** Argumentation workflow
- 
+
 **** Training pipeline
+***** save and load presentation in locations in github repo
+***** fix f1 scoring issue where non-critical labels are macro-averaged, not necessary (perhaps do it in grid-search and normal training for all cases in order to prevent skewing of results)
+***** where possible, flatten before applying dense, otherwise don't apply it
+***** sync presentation and new bibtex file to github, make code better and clean up mess
+***** consider how to deal with extra calls to corpus, perhaps better to merge all
+***** add class f1s to grid searches later on and replace them in the meantime where possible
+***** consider using aur or auc within models
+***** TODO possibly create explicit validation set
+***** TODO replace model names to follow ordering and sorting with batch norm or without
 ***** TODO make automated script to repeat tests for best performing n models to get statistical variations
 ***** TODO edit all log csvs to incorporate all relevant information 
 ***** TODO consider looking into aur/auc scores if that would help with evaluation
