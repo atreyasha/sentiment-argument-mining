@@ -16,6 +16,7 @@ A list of documents outlining our methodologies can be found below:
 * [Argumentation mining brainstorming](/docs/arguments.md)
 * [Project proposal](/docs/project_description/main.pdf)
 * [Preliminary presentation](/docs/prelim_presentation/main.pdf)
+* [Progress-update presentation](/docs/progress_presentation/main.pdf)
 
 A formal description of our code and results can be found in the [src](/src) directory.
 
