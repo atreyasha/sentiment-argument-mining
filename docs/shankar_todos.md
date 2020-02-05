@@ -3,137 +3,116 @@ Developments
 
 ### Argumentation workflow
 
-1.  Training pipeline
+1.  Architecture
 
-    1.  save and load presentation in locations in github repo
+    1.  **TODO** make balanced datasets for checking, think
+        of appropriate training metrics
 
-    2.  fix f1 scoring issue where non-critical labels are
-        macro-averaged, not necessary (perhaps do it in grid-search and
-        normal training for all cases in order to prevent skewing of
-        results)
+    2.  **TODO** split data into various sets and think of
+        useful means of evaluating results, add various parameters such
+        as window size for errors, perplexity and other useful
+        parameters
 
-    3.  where possible, flatten before applying dense, otherwise don\'t
-        apply it
+    3.  **TODO** add checkpoints and early stoppage to find
+        better models in training, find ways to integrate bert into
+        training procedure
 
-    4.  sync presentation and new bibtex file to github, make code
-        better and clean up mess
+    4.  **TODO** port transformer code to pytorch and attempt
+        running on colab, useful with bert
 
-    5.  consider how to deal with extra calls to corpus, perhaps better
-        to merge all
+    5.  **TODO** perform single task first, and then multi
+        task to check performance
 
-    6.  add class f1s to grid searches later on and replace them in the
-        meantime where possible
+    6.  consider non-transformer approach for character data due to GPU
+        OOM issues -\> perhaps adding more features to unknown words
 
-    7.  consider using aur or auc within models
+    7.  try novel architectures for seq2seq task, egs. GRU, transformer,
+        BERT pre-trained models
 
-    8.  **TODO** possibly create explicit validation set
+    8.  think of best unique tree structure classification, perhaps with
+        argument connection distances
 
-    9.  **TODO** replace model names to follow ordering and
-        sorting with batch norm or without
-
-    10. **TODO** make automated script to repeat tests for
-        best performing n models to get statistical variations
-
-    11. **TODO** edit all log csvs to incorporate all
-        relevant information
-
-    12. **TODO** consider looking into aur/auc scores if that
-        would help with evaluation
-
-    13. **TODO** add classification report jsons to logging
-        pipelines, add them manually for other cases by reconstructing
-        model and working with it
-
-    14. **TODO** check classification reports to better
-        introspect models and their functionalities
-
-    15. **TODO** add grid-search json to help with choices
-        defined on disk
-
-    16. **TODO** look at **run.ai** for accumulation
-        optimzers and implement training generators -\> can increase
-        batch-size for grid-search
-
-    17. **TODO** work on task 1 and observe how multi-task
-        setting could improve both tasks, use **adjacency matrix** for
-        second task
-
-    18. **TODO** update models in logs to have 0 index for
-        cnn and lstm **and** with/without class weights
-
-    19. try out different val metric
-
-    20. possible script for continue training if patience not triggered;
-        look up model reconstruction by adding custom objects
-
-    21. when converting to graph, mask out N to zero in adjacency matrix
+    9.  if working with three-way task, need to think of how to pass a
+        gradient on non-existent examples -\> perhaps some kind of
+        negative sampling procedure
 
 2.  Sequence encoding
 
-    1.  **TODO** improve multitask data processing pipeline
-        with task specification and complete json corpus with argument
-        structure as matrix
+    1.  **TODO** add data options with both cased and
+        non-cased views
 
-    2.  **TODO** improve splits in next runs with more
-        thought put behind into distribution of splits
+    2.  **TODO** redefine padding length based on UNSC
+        dataset paragraph or processing lengths
 
-    3.  look into argument structure and ensure all arguments are
-        present in same paragraph
+    3.  **TODO** consider allowing for vocabulary pruning and
+        flexible padding
 
-    4.  find shorter sequence candidates in UNSC corpus for testing out
-        model
+    4.  need to split UNSC smaller speech segments or paragraphs to pass
+        into pipeline
+
+    5.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
+
+    6.  tree (task 1) -\> 1: claim, 2: aux claim connecting to same
+        claim (behind), 3: premise connecting to claim, 4: aux premise
+        connecting to same premise (behind), 5: non-argument
+
+    7.  tree (task 2) -\> distances to connective argument components
+        which can help form tree
 
 3.  Domain debiasing
 
     1.  **TODO** remove capital names and references to
         reduce bias
 
-    2.  increase sequence length by using accumulation to allow more
-        data to feed into network
+    2.  **TODO** consider using special word embeddings and
+        keep unmodified to retain word relationships
 
-4.  Code-specifc development
+    3.  **TODO** re-sampling procedure to re-train inputs
+        with rare words more than common words
 
-    1.  **TODO** find out how to include fixed names into
+    4.  **TODO** possibly add unknown token types eg.
+        pos-tags, ner taggers, verb types, etc.
+
+    5.  experiment specific entity/token masking to prevent
+        domain-specific bias from training vocabulary
+
+    6.  perhaps collapse all first, second and third-person pronouns to
+        prevent self-referential bias
+
+    7.  add different classes in unknown vocabulary -\> such as unknown
+        noun, unknown adjective etc.
+
+4.  Local development
+
+    1.  **TODO** figure out pip local environment for earlier
+        tensorflow version
+
+    2.  **TODO** find out how to include fixed names into
         requirements.txt file such as tensorflow, despite no explicit
-        call in script, figure out pip local environment and how to fix
-        this for future development
+        call in script
 
-    2.  **TODO** update all readmes and pydocstrings, check
-        unused imports and code health in general
+    3.  add log files and model folders like other ML projects, where
+        detailed reconstruction information for models can be stored
+        along with many performance metrics and example runs
 
-    3.  add appropriate citations for code, review to make sure this is
-        done correctly
+5.  Ideas to extrapolate
 
-    4.  add existing folder checks, creation if missing and trailing
-        slash addition
+    1.  OOM issues for character-transformer model
 
-5.  Task construction
+    2.  ibm argumentation dataset
 
-    1.  task 1 -\> 1: claim, 2: premise, 3: non-argument
+    3.  coreference resolution for tree structures
 
-    2.  task 2 (dependent on task 1) -\> form argumentation structure
-        with adjacency matrix, multiply input from task 1 by row
-
-6.  Story for presentation
-
-    1.  clause extraction did not show reliable results with benepar and
-        hard to process
-
-    2.  mention using various \[SEP\] indicators for flipping sentences
-        (need some more backup information for this process)
-
-    3.  mention memory issues related to bert, therefore trying albert
-        with single gpu -\> talk about differences between albert and
-        bert
-
-    4.  also shorter sequence length due to memory issues, makes for
-        better toy examples
-
-7.  Ideas to explore
-
-    1.  ibm argumentation dataset
-
-    2.  coreference resolution for tree structures
-
-    3.  try genereous claims and premises creation and map via negative
+    4.  try genereous claims and premises creation and map via negative
         sampling to actual trees and redundant candidates
+
+6.  Documentation
+
+    1.  redo colab notebook to clone and reset from master branch when
+        publishing
+
+    2.  fill up pydocstrings for publishable functions
+
+    3.  add all dependencies and information on how to install
+
+    4.  add information on init.sh and how to use
