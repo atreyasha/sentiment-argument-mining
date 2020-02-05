@@ -12,8 +12,6 @@ It could be very interesting to conduct sentiment and argumentation analysis on 
 
 A list of documents outlining our methodologies can be found below:
 
-* [Sentiment analysis brainstorming](/docs/sentiment.md)
-* [Argumentation mining brainstorming](/docs/arguments.md)
 * [Project proposal](/docs/project_description/main.pdf)
 * [Preliminary presentation](/docs/prelim_presentation/main.pdf)
 * [Progress-update presentation](/docs/progress_presentation/main.pdf)
