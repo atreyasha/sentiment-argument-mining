@@ -10,6 +10,7 @@ import tensorflow.keras.backend as K
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.layers import Dense, BatchNormalization, Activation
 from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed, Input
+from keras_gradient_accumulation.optimizer_v2 import AdamAccumulated
 from sklearn.metrics import f1_score
 
 def class_acc(label_threshold_less):
@@ -124,7 +125,7 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
     model = tf.keras.Model(inputs=input_ids, outputs=prob)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
-    model.compile(optimizer=tf.keras.optimizers.Adam(),
+    model.compile(optimizer=AdamAccumulated(accumulation_steps=16),
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   metrics=[class_acc(label_threshold_less)])
     model.summary()

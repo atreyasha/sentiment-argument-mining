@@ -8,15 +8,17 @@ Developments
     1.  **TODO** develop gradient accumulator in optimizer to
         save memory and use most of data available
 
-    2.  **TODO** add all relevant metrics into evaluation
+    2.  **TODO** consider switching to fit generator instead
+
+    3.  **TODO** add all relevant metrics into evaluation
         step so they can be re-used
 
-    3.  **TODO** use smaller or narrower search space in
+    4.  **TODO** use smaller or narrower search space in
         grid-search, only use val~loss~ to simplify code
 
-    4.  first develop full baseline for task 1, then proceed to task 2
+    5.  first develop full baseline for task 1, then proceed to task 2
 
-    5.  make homogeneous train/validation/test datasets for appropriate
+    6.  make homogeneous train/validation/test datasets for appropriate
         evaluation
 
 2.  Domain debiasing

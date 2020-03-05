@@ -4,6 +4,7 @@
 
 **** Architecture
 ***** TODO develop gradient accumulator in optimizer to save memory and use most of data available
+***** TODO consider switching to fit generator instead
 ***** TODO add all relevant metrics into evaluation step so they can be re-used
 ***** TODO use smaller or narrower search space in grid-search, only use val_loss to simplify code
 ***** first develop full baseline for task 1, then proceed to task 2
