@@ -34,7 +34,7 @@ description = "A TensorFlow 2.0 Keras implementation of BERT."
 name = "bert-for-tf2"
 optional = false
 python-versions = ">=3.5"
-version = "0.13.5"
+version = "0.13.2"
 
 [package.dependencies]
 params-flow = ">=0.7.1"
@@ -406,7 +406,7 @@ description = "TensorBoard lets you watch Tensors Flow"
 name = "tensorboard"
 optional = false
 python-versions = ">= 2.7, != 3.0.*, != 3.1.*"
-version = "2.1.1"
+version = "2.0.2"
 
 [package.dependencies]
 absl-py = ">=0.4"
@@ -431,7 +431,7 @@ description = "TensorFlow Estimator."
 name = "tensorflow-estimator"
 optional = false
 python-versions = "*"
-version = "2.1.0"
+version = "2.0.1"
 
 [[package]]
 category = "main"
@@ -439,7 +439,7 @@ description = "TensorFlow is an open source machine learning framework for every
 name = "tensorflow-gpu"
 optional = false
 python-versions = "*"
-version = "2.1.0"
+version = "2.0.1"
 
 [package.dependencies]
 absl-py = ">=0.7.0"
@@ -448,19 +448,15 @@ gast = "0.2.2"
 google-pasta = ">=0.1.6"
 grpcio = ">=1.8.6"
 keras-applications = ">=1.0.8"
-keras-preprocessing = ">=1.1.0"
+keras-preprocessing = ">=1.0.5"
 numpy = ">=1.16.0,<2.0"
 opt-einsum = ">=2.3.2"
-protobuf = ">=3.8.0"
-six = ">=1.12.0"
-tensorboard = ">=2.1.0,<2.2.0"
-tensorflow-estimator = ">=2.1.0rc0,<2.2.0"
+protobuf = ">=3.6.1"
+six = ">=1.10.0"
+tensorboard = ">=2.0.0,<2.1.0"
+tensorflow-estimator = ">=2.0.0,<2.1.0"
 termcolor = ">=1.1.0"
 wrapt = ">=1.11.1"
-
-[package.dependencies.scipy]
-python = ">=3"
-version = "1.4.1"
 
 [package.dependencies.wheel]
 python = ">=3"
@@ -531,7 +527,7 @@ python-versions = "*"
 version = "1.12.0"
 
 [metadata]
-content-hash = "682b55dd662da9f690481a278274a184f6b106fd16a0c483d3a853fa703ca368"
+content-hash = "e7cca409a9095ed925b8d0c341b504f924e415904a4cf4d21f86fb741ded467a"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -546,7 +542,7 @@ bert = [
     {file = "bert-2.2.0.tar.gz", hash = "sha256:c8192fb7abd7fb112ad13b08b46f7d390a671cba5b2c43e9c519e06caa8da732"},
 ]
 bert-for-tf2 = [
-    {file = "bert-for-tf2-0.13.5.tar.gz", hash = "sha256:f7f7c9aab656bf4724d00b1ffdbc78e4a84879044fc27c9ea93bde481cf67c6d"},
+    {file = "bert-for-tf2-0.13.2.tar.gz", hash = "sha256:a5c8a78ce2ce122a1ec75c11071c88ceb31680dd6927f4df2e219a9fa218bfe4"},
 ]
 cachetools = [
     {file = "cachetools-4.0.0-py3-none-any.whl", hash = "sha256:b304586d357c43221856be51d73387f93e2a961598a9b6b6670664746f3b6c6c"},
@@ -858,19 +854,19 @@ six = [
     {file = "six-1.14.0.tar.gz", hash = "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"},
 ]
 tensorboard = [
-    {file = "tensorboard-2.1.1-py3-none-any.whl", hash = "sha256:3a36da59d4e13fb140d04636aaf544f1a38364a7e3609a15cdaf01a5d3073b37"},
+    {file = "tensorboard-2.0.2-py2-none-any.whl", hash = "sha256:32d9dec38d053d7d75796eb7c2e0d77285af35f69ee1a6796ab5ecc896679fb3"},
+    {file = "tensorboard-2.0.2-py3-none-any.whl", hash = "sha256:ccae56f01acc78a138474081b631af52017c2075ffe1c453d58c49d5046ef081"},
 ]
 tensorflow-estimator = [
-    {file = "tensorflow_estimator-2.1.0-py2.py3-none-any.whl", hash = "sha256:e5c5f648a636f18d1be4cf7ed46132b108a2f0f3fd9f1c850eba924263dc6972"},
+    {file = "tensorflow_estimator-2.0.1-py2.py3-none-any.whl", hash = "sha256:aa8deab25d09a9730dfbae8ec58f4eb00ec2a90b5ca3dcbd8fa0717103d3bbb3"},
 ]
 tensorflow-gpu = [
-    {file = "tensorflow_gpu-2.1.0-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:abbaeb2f17b0774ff75704d5b2450f18b49b0b547ad87418329ae6b64f86969e"},
-    {file = "tensorflow_gpu-2.1.0-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:5e7f1d9e419496bd8a75c53f011754f53a19dde77fe4f83875f536046c404027"},
-    {file = "tensorflow_gpu-2.1.0-cp35-cp35m-win_amd64.whl", hash = "sha256:f87bf18b79d82d95e47100a7f951792578e1a359cd976c477077c0485489b72a"},
-    {file = "tensorflow_gpu-2.1.0-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:ec0381359f68d20cbd55be7f533d8f353aa0e93057ee12c2d8892e49010217b7"},
-    {file = "tensorflow_gpu-2.1.0-cp36-cp36m-win_amd64.whl", hash = "sha256:70630aab93e9280d66b1fd6c48b7b1f1fcabfaadcf5a1373c0b5c6d1b50d0f91"},
-    {file = "tensorflow_gpu-2.1.0-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:1e3e407b310e615bc63afc34b64157895a64181e1aebf9013f265f56fba04b79"},
-    {file = "tensorflow_gpu-2.1.0-cp37-cp37m-win_amd64.whl", hash = "sha256:d148aec22687e53f59e86e70563cbc7d62021db40a05332865f9262315b93e60"},
+    {file = "tensorflow_gpu-2.0.1-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:71027ad413ebf221c4a3cb379e60ac2444b127220ab701ff0c011b9d4640eac8"},
+    {file = "tensorflow_gpu-2.0.1-cp35-cp35m-win_amd64.whl", hash = "sha256:7eeeb04d54a65e3557988a90937abe92030a0869f8f360978fb2c409c1087646"},
+    {file = "tensorflow_gpu-2.0.1-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:7348c02c34591a0942b446586585f20b2be213b1cb38fce661ab7fba8483784d"},
+    {file = "tensorflow_gpu-2.0.1-cp36-cp36m-win_amd64.whl", hash = "sha256:efe7b42b729dc5a994834456c30e9bdf073fa3f9690c0737161417697535a5d4"},
+    {file = "tensorflow_gpu-2.0.1-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:bdbe4027061b1fec275bac57fa70521ed199981dc95b2d60ecb3f2f8606bca7d"},
+    {file = "tensorflow_gpu-2.0.1-cp37-cp37m-win_amd64.whl", hash = "sha256:9ebe6e1797b0682306b178f971d11be40c850ab738a14566e5e65e749297f6f8"},
 ]
 termcolor = [
     {file = "termcolor-1.1.0.tar.gz", hash = "sha256:1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"},
