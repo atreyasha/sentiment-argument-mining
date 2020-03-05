@@ -9,6 +9,7 @@ import nltk
 import codecs
 import argparse
 import numpy as np
+import tensorflow as tf
 from glob import glob
 from tqdm import tqdm
 from collections import Counter
