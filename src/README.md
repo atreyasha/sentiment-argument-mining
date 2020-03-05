@@ -9,12 +9,25 @@ This readme will summarize our code and results in conducting sentiment analysis
 
 ### 1. Dependencies
 
-To install python-based dependencies, simply run the following command (optionally within a virtual environment):
+1. In order to set up this repository, we would need to satisfy local pythonic dependencies. If `poetry` is installed on your system, you can install dependencies and create a virtual environment automatically via the following command:
+
+```shell
+$ poetry install
+```
+
+Alternatively, you can install dependencies with `pip`:
 
 ```shell
 $ pip install -r requirements.txt
 ```
 
+**Note**: Your python version must be `3.7.*` in order to install certain dependencies in this repository. 
+
+2. In this repository, we use `R` and `ggplot` for visualization. Execute the following within your R console to get the dependencies:
+
+```r
+> install.packages(c("ggplot2","tikzDevice","reshape2","optparse"))
+```
 ### 2. Repository initialization
 
 In order to initialize this repository, simply run `init.sh` as shown below:
@@ -26,5 +39,3 @@ $ ./init.sh
 i. Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
 
 ii. Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
-
-More developments underway :snail:
