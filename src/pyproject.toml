@@ -13,6 +13,7 @@ bert_for_Tf2 = "^0.13.5"
 tqdm = "^4.43.0"
 scikit_learn = "^0.22.2"
 tensorflow-gpu = "^2.1.0"
+sentencepiece = "^0.1.85"
 
 [tool.poetry.dev-dependencies]
 
