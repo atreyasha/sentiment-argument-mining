@@ -3,25 +3,24 @@ Developments
 
 ### Argumentation workflow
 
-if code works, keep in local repo perhaps
-=========================================
+change metrics after checking that optimizer works
+==================================================
 
 Architecture
 
-1.  **TODO** develop gradient accumulator in optimizer to
-    save memory and use most of data available
-
-2.  **TODO** consider switching to fit generator instead
-
-3.  **TODO** add all relevant metrics into evaluation step so
+1.  **TODO** add all relevant metrics into evaluation step so
     they can be re-used
 
-4.  **TODO** use smaller or narrower search space in
+2.  **TODO** use smaller or narrower search space in
     grid-search, only use val~loss~ to simplify code
 
-5.  first develop full baseline for task 1, then proceed to task 2
+3.  **TODO** first develop full baseline for task 1, then
+    proceed to task 2
 
-6.  make homogeneous train/validation/test datasets for appropriate
+4.  develop gradient accumulator in optimizer to save memory and use
+    most of data available
+
+5.  make homogeneous train/validation/test datasets for appropriate
     evaluation
 
 Domain debiasing

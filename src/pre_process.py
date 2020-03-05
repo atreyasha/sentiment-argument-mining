@@ -292,6 +292,9 @@ def initialize_bert_tokenizer():
                                                        spm_model_file=spm)
     return Tokenizer
 
+def convert_to_one_hot(sparse):
+    pass
+
 def project_to_ids(Tokenizer,train_data,label_id_map,max_seq_length=128):
     input_ids = []
     label_ids = []
@@ -370,6 +373,8 @@ def corpus2tokenids(max_seq_length=128,
                                          max_seq_length)
     test_X, test_Y, _ = project_to_ids(Tokenizer,test,label_map,
                                        max_seq_length)
+    train_Y = tf.keras.utils.to_categorical(train_Y)
+    test_Y = tf.keras.utils.to_categorical(test_Y)
     np.save(directory+"train_X_"+str(max_seq_length)+".npy",train_X)
     np.save(directory+"train_Y_"+str(max_seq_length)+".npy",train_Y)
     np.save(directory+"test_X_"+str(max_seq_length)+".npy",test_X)
