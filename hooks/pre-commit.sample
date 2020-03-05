@@ -9,7 +9,7 @@
 
 test_pipreqs=$(command -v pipreqs)
 test_poetry=$(command -v poetry)
-$dir="src"
+dir="src"
 
 if [ -f "$dir/poetry.lock" ] && [ -n $test_poetry ]; then
 	cd "$dir"
