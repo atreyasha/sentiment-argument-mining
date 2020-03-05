@@ -2,6 +2,8 @@
    
 *** Argumentation workflow
 
+* if code works, keep in local repo perhaps
+
 **** Architecture
 ***** TODO develop gradient accumulator in optimizer to save memory and use most of data available
 ***** TODO consider switching to fit generator instead

@@ -3,48 +3,51 @@ Developments
 
 ### Argumentation workflow
 
-1.  Architecture
+if code works, keep in local repo perhaps
+=========================================
 
-    1.  **TODO** develop gradient accumulator in optimizer to
-        save memory and use most of data available
+Architecture
 
-    2.  **TODO** consider switching to fit generator instead
+1.  **TODO** develop gradient accumulator in optimizer to
+    save memory and use most of data available
 
-    3.  **TODO** add all relevant metrics into evaluation
-        step so they can be re-used
+2.  **TODO** consider switching to fit generator instead
 
-    4.  **TODO** use smaller or narrower search space in
-        grid-search, only use val~loss~ to simplify code
+3.  **TODO** add all relevant metrics into evaluation step so
+    they can be re-used
 
-    5.  first develop full baseline for task 1, then proceed to task 2
+4.  **TODO** use smaller or narrower search space in
+    grid-search, only use val~loss~ to simplify code
 
-    6.  make homogeneous train/validation/test datasets for appropriate
-        evaluation
+5.  first develop full baseline for task 1, then proceed to task 2
 
-2.  Domain debiasing
+6.  make homogeneous train/validation/test datasets for appropriate
+    evaluation
 
-    1.  **TODO** remove capital names and references to
-        reduce bias
+Domain debiasing
 
-    2.  perhaps dropout would assist in training
+1.  **TODO** remove capital names and references to reduce
+    bias
 
-3.  Sequence encoding
+2.  perhaps dropout would assist in training
 
-    1.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
+Sequence encoding
 
-    2.  tree (task 2) -\> adjacency matrix connecting to various heads
-        which could be claims or connecting premise
+1.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
 
-    3.  need to split UNSC smaller speech segments or paragraphs to pass
-        into pipeline
+2.  tree (task 2) -\> adjacency matrix connecting to various heads which
+    could be claims or connecting premise
 
-4.  Documentation
+3.  need to split UNSC smaller speech segments or paragraphs to pass
+    into pipeline
 
-    1.  fix up all readmes for clarity
+Documentation
 
-    2.  fill up pydocstrings in appropriate style for all functions
+1.  fix up all readmes for clarity
 
-    3.  add all dependencies and information on how to install, test
-        venv on cluster
+2.  fill up pydocstrings in appropriate style for all functions
 
-    4.  add information on init.sh and how to use
+3.  add all dependencies and information on how to install, test venv on
+    cluster
+
+4.  add information on init.sh and how to use
