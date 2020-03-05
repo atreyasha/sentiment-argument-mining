@@ -3,14 +3,7 @@ Developments
 
 ### Argumentation workflow
 
-1.  Local development
-
-    1.  **TODO** develop appropriate virtual environment to
-        keep everything succinct with requirements.txt
-
-    2.  add improved readme with full construction details
-
-2.  Architecture
+1.  Architecture
 
     1.  **TODO** develop gradient accumulator in optimizer to
         save memory and use most of data available
@@ -26,14 +19,14 @@ Developments
     5.  make homogeneous train/validation/test datasets for appropriate
         evaluation
 
-3.  Domain debiasing
+2.  Domain debiasing
 
     1.  **TODO** remove capital names and references to
         reduce bias
 
     2.  perhaps dropout would assist in training
 
-4.  Sequence encoding
+3.  Sequence encoding
 
     1.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
 
@@ -43,12 +36,13 @@ Developments
     3.  need to split UNSC smaller speech segments or paragraphs to pass
         into pipeline
 
-5.  Documentation
+4.  Documentation
 
     1.  fix up all readmes for clarity
 
     2.  fill up pydocstrings in appropriate style for all functions
 
-    3.  add all dependencies and information on how to install
+    3.  add all dependencies and information on how to install, test
+        venv on cluster
 
     4.  add information on init.sh and how to use

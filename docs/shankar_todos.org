@@ -2,10 +2,6 @@
    
 *** Argumentation workflow
 
-**** Local development
-***** TODO develop appropriate virtual environment to keep everything succinct with requirements.txt
-***** add improved readme with full construction details
-
 **** Architecture
 ***** TODO develop gradient accumulator in optimizer to save memory and use most of data available
 ***** TODO add all relevant metrics into evaluation step so they can be re-used
@@ -25,5 +21,5 @@
 **** Documentation
 ***** fix up all readmes for clarity
 ***** fill up pydocstrings in appropriate style for all functions
-***** add all dependencies and information on how to install
+***** add all dependencies and information on how to install, test venv on cluster
 ***** add information on init.sh and how to use
