@@ -1,5 +1,5 @@
 bert_for_tf2==0.13.2
-numpy==1.18.1
 tensorflow==2.1.0
+numpy==1.18.1
 bert==2.2.0
 scikit_learn==0.22.2.post1
