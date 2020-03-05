@@ -9,15 +9,16 @@
 
 test_pipreqs=$(command -v pipreqs)
 test_poetry=$(command -v poetry)
+$dir="src"
 
-if [ -f "./src/poetry.lock" ] && [ -n "$test_poetry" ]; then
-	cd "./src"
+if [ -f "$dir/poetry.lock" ] && [ -n $test_poetry ]; then
+	cd "$dir"
 	poetry export -f requirements.txt --without-hashes -o requirements.txt
 	git add "requirements.txt"
 	cd ../..
-elif [ ! -f "./src/poetry.lock" ] && [ -n "$test_pipreqs" ]; then
-	pipreqs --force "./src"
-	git add "./src/requirements.txt"
+elif [ ! -f "$dir/poetry.lock" ] && [ -n $test_pipreqs ]; then
+	pipreqs --force "$dir"
+	git add "$dir/requirements.txt"
 fi
 
 if [ -f ./docs/shankar_todos.org ]; then
