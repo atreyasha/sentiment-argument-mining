@@ -6,17 +6,28 @@ This readme will summarize our code and results in conducting sentiment analysis
 
 1. [Dependencies](#1-Dependencies)
 2. [Repository initialization](#2-Repository-initialization)
-3. [Pre-process data](#3-Pre-process-data)
-4. [Run models](#4-Run-models)
 
 ### 1. Dependencies
 
-To install python-based dependencies, simply run the following command (optionally within a virtual environment):
+1. In order to set up this repository, we would need to satisfy local pythonic dependencies. If `poetry` is installed on your system, you can install dependencies and create a virtual environment automatically via the following command:
+
+```shell
+$ poetry install
+```
+
+Alternatively, you can install dependencies with `pip`:
 
 ```shell
 $ pip install -r requirements.txt
 ```
 
+**Note**: Your python version must be `3.7.*` in order to install certain dependencies in this repository. 
+
+2. In this repository, we use `R` and `ggplot` for visualization. Execute the following within your R console to get the dependencies:
+
+```r
+> install.packages(c("ggplot2","tikzDevice","reshape2","optparse"))
+```
 ### 2. Repository initialization
 
 In order to initialize this repository, simply run `init.sh` as shown below:
@@ -28,44 +39,3 @@ $ ./init.sh
 i. Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
 
 ii. Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
-
-### 3. Pre-process data
-
-#### i. Argumentation
-
-In order to pre-process and encode US election debate data, use the script `pre_process_argumentation.py`. Usage documentation for this script is shown below: 
-
-```
-$ python3 pre_process_argumentation.py --help
-
-usage: pre_process_argumentation.py [-h] [--dtype str]
-
-optional arguments:
-  -h, --help   show this help message and exit
-  --dtype str  which type of data pre-processing; either 'tokens', 'char' or 'both' (default: tokens)
-```
-
-Run the following script to produce both character and word encodings for model training:
-
-```shell
-$ python3 pre_process_argumentation.py --dtype both
-```
-
-### 4. Run models
-
-#### i. Argumentation
-
-To test a basic transformer model in the seq2seq argumentation task, one can use the script `train_argumentation.py`:
-
-```
-$ python3 train_argumentation.py --help
-
-usage: train_argumentation.py [-h] [--epochs int] [--batch-size int]
-
-optional arguments:
-  -h, --help        show this help message and exit
-  --epochs int      maximum number of training epochs (default: 50)
-  --batch-size int  batch size in stochastic gradient descent (default: 5)
-```
-
-The resulting model after training will be saved in the `models` directory.
