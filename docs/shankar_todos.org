@@ -9,7 +9,6 @@
 ***** make homogeneous train/validation/test datasets for appropriate evaluation
 
 **** Domain debiasing
-***** TODO remove capital names and references to reduce bias
 ***** perhaps dropout would assist in training
 
 **** Sequence encoding

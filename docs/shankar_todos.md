@@ -19,10 +19,7 @@ Developments
 
 2.  Domain debiasing
 
-    1.  **TODO** remove capital names and references to
-        reduce bias
-
-    2.  perhaps dropout would assist in training
+    1.  perhaps dropout would assist in training
 
 3.  Sequence encoding
 

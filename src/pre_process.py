@@ -292,7 +292,7 @@ def initialize_bert_tokenizer():
                                                        spm_model_file=spm)
     return Tokenizer
 
-def project_to_ids(Tokenizer,train_data,label_id_map,max_seq_length=128):
+def project_to_ids(Tokenizer,train_data,label_id_map,max_seq_length=512):
     input_ids = []
     label_ids = []
     output_mask = []
@@ -323,7 +323,7 @@ def project_to_ids(Tokenizer,train_data,label_id_map,max_seq_length=128):
         output_mask.append(output_mask_sub)
     return np.array(input_ids), np.array(label_ids), np.array(output_mask)
 
-def corpus2tokenids(max_seq_length=128,
+def corpus2tokenids(max_seq_length=512,
                     directory="./data/USElectionDebates/task_1/"):
     label_map = {"<pad>":0,"[CLS]":1,"[SEP]":2,"N":3,"C":4,"P":5}
     corpus = read_us_election_corpus()
@@ -332,6 +332,16 @@ def corpus2tokenids(max_seq_length=128,
     flat_ann = flatten(tagged)
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=True)
+    for i, text in enumerate(flat_text):
+        span = re.search("^[A-Z]*\\:\\s",text)
+        if span is None:
+            continue
+        else:
+            span = span.span()
+            if span[0] == 0:
+                flat_text[i] = flat_text[i][span[1]:]
+                flat_ann[i] = flat_ann[i][span[1]:]
+                assert len(flat_text[i]) == len(flat_ann[i])
     collection = []
     print("splitting and tokenizing sentences")
     Tokenizer = initialize_bert_tokenizer()
@@ -384,7 +394,7 @@ if __name__ == "__main__":
     parser.add_argument("--dtype", type=str, default="all",
                         help="which dtype to process, either 'corpus',"+
                         " 'token_ids' or 'all'")
-    parser.add_argument("--max-seq-length", type=int, default=128,
+    parser.add_argument("--max-seq-length", type=int, default=512,
                         help="maximum sequence length of tokenized id's")
     parser.add_argument("--no-spaces", action="store_true", default=False,
                         help="if True, spaces will be annotated as arguments"+
