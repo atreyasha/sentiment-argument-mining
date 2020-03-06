@@ -35,9 +35,9 @@ def read_or_create_data(max_seq_length,
     return train_X, train_Y, test_X, test_Y, label_map
 
 def mean_labels(input_dict):
-    sum_f1 = (float(input_dict["N"]["f1_score"])+
-              float(input_dict["C"]["f1_score"])+
-              float(input_dict["P"]["f1_score"]))
+    sum_f1 = (float(input_dict["3"]["f1_score"])+
+              float(input_dict["4"]["f1_score"])+
+              float(input_dict["5"]["f1_score"]))
     return sum_f1/3
 
 def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
@@ -115,9 +115,9 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                          "end_learn_rate":str(end_learn_rate),
                          "train_f1":str(train_f1),
                          "test_f1":str(test_f1),
-                         "test_f1_N":str(test_out_dict["N"]["f1_score"]),
-                         "test_f1_C":str(test_out_dict["C"]["f1_score"]),
-                         "test_f1_P":str(test_out_dict["P"]["f1_score"])})
+                         "test_f1_N":str(test_out_dict["3"]["f1_score"]),
+                         "test_f1_C":str(test_out_dict["4"]["f1_score"]),
+                         "test_f1_P":str(test_out_dict["5"]["f1_score"])})
 
 def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
                label_threshold_less=3):
@@ -208,9 +208,9 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
                              "end_learn_rate":str(end_learn_rate),
                              "train_f1":str(train_f1),
                              "test_f1":str(test_f1),
-                             "test_f1_N":str(test_out_dict["N"]["f1_score"]),
-                             "test_f1_C":str(test_out_dict["C"]["f1_score"]),
-                             "test_f1_P":str(test_out_dict["P"]["f1_score"])})
+                             "test_f1_N":str(test_out_dict["3"]["f1_score"]),
+                             "test_f1_C":str(test_out_dict["4"]["f1_score"]),
+                             "test_f1_P":str(test_out_dict["5"]["f1_score"])})
         # clear memory
         del model
         # filter out best model and history
