@@ -140,8 +140,8 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
     grid = {"model_type":["TD_Dense","1D_Conv","Stacked_LSTM"],
-            "learn_rate_combinations":[[1e-4,1e-5],
-                                       [1e-4,1e-6]],
+            "learn_rate_combinations":[[1e-5,1e-6],
+                                       [1e-5,1e-7]],
             "warmup_epoch_count":[10,15,20]}
     # create flat combinations
     iterable_grid = list(ParameterGrid(grid))
