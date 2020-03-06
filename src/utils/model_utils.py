@@ -128,7 +128,7 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
     model.compile(optimizer=
-                  extend_with_gradient_accumulation_v2(Adam)(grad_accum_steps=16),
+                  extend_with_gradient_accumulation_v2(tf.keras.optimizers.Adam)(grad_accum_steps=16),
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   metrics=[class_acc(label_threshold_less)])
     model.summary()
