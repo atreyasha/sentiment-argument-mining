@@ -6,9 +6,6 @@ Developments
 simplify all metrics to the simplest forms
 ==========================================
 
-add tasks to training options, also to output files
-===================================================
-
 make appropriate grid-search paramters
 ======================================
 
@@ -18,8 +15,8 @@ simplify code and architecture to palatable scale before running grid-search aga
 reduce learning rates in LR scheduler given small batch size, change batch size and max seq length
 ==================================================================================================
 
-add all necessary documentation to code, remove redundant code
-==============================================================
+add tasks to training options, also to output files
+===================================================
 
 Architecture
 
