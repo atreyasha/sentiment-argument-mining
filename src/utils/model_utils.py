@@ -7,6 +7,9 @@ import math
 import numpy as np
 import tensorflow as tf
 import tensorflow.keras.backend as K
+os.environ["TF_KERAS"] = "1"
+from bert4keras.optimizers import Adam
+from bert4keras.optimizers import extend_with_gradient_accumulation_v2
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.layers import Dense, BatchNormalization, Activation
 from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed, Input
@@ -124,7 +127,8 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
     model = tf.keras.Model(inputs=input_ids, outputs=prob)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
-    model.compile(optimizer=tf.keras.optimizers.Adam(),
+    model.compile(optimizer=
+                  extend_with_gradient_accumulation_v2(Adam)(grad_accum_steps=16),
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   metrics=[class_acc(label_threshold_less)])
     model.summary()

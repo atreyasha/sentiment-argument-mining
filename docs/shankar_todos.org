@@ -2,8 +2,6 @@
    
 *** Argumentation workflow
 
-* change metrics after checking that optimizer works
-
 **** Architecture
 ***** TODO add all relevant metrics into evaluation step so they can be re-used
 ***** TODO use smaller or narrower search space in grid-search, only use val_loss to simplify code
