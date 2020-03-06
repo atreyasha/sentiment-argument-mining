@@ -40,7 +40,7 @@ def mean_labels(input_dict):
               float(input_dict["5"]["f1-score"]))
     return sum_f1/3
 
-def single_train(max_seq_length=512,max_epochs=100,batch_size=3,
+def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
                  warmup_epoch_count=10,max_learn_rate=1e-5,
                  end_learn_rate=1e-7,model_type="TD_Dense",
                  label_threshold_less=3):
@@ -119,7 +119,7 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=3,
                          "test_f1_C":str(test_out_dict["4"]["f1-score"]),
                          "test_f1_P":str(test_out_dict["5"]["f1-score"])})
 
-def grid_train(max_seq_length=512,max_epochs=100,batch_size=3,
+def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
                label_threshold_less=3):
     # read in data
     (train_X, train_Y,
@@ -236,7 +236,7 @@ if __name__ == "__main__":
                         "otherwise single training session will commence")
     parser.add_argument("--max-epochs", type=int, default=100,
                         help="maximum number of training epochs")
-    parser.add_argument("--batch-size", type=int, default=3,
+    parser.add_argument("--batch-size", type=int, default=10,
                         help="batch-size for training procedure")
     single = parser.add_argument_group("arguments specific to single training")
     single.add_argument("--warmup-epochs", type=int, default=10,
