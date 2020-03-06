@@ -2,19 +2,10 @@
    
 *** Argumentation workflow
 
-* simplify all metrics to the simplest forms
-
-* make appropriate grid-search paramters
-* simplify code and architecture to palatable scale before running grid-search again
-* reduce learning rates in LR scheduler given small batch size, change batch size and max seq length
-
-* add tasks to training options, also to output files
-
 **** Architecture
-***** TODO add all relevant metrics into evaluation step so they can be re-used
-***** TODO use smaller or narrower search space in grid-search, only use val_loss to simplify code
 ***** TODO first develop full baseline for task 1, then proceed to task 2
-***** develop gradient accumulator in optimizer to save memory and use most of data available      
+***** TODO add tasks to training options, also to output files
+***** develop gradient accumulator/checkpointer in optimizer to save memory and use most of data available      
 ***** make homogeneous train/validation/test datasets for appropriate evaluation
 
 **** Domain debiasing

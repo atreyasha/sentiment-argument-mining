@@ -40,7 +40,7 @@ def mean_labels(input_dict):
               float(input_dict["5"]["f1-score"]))
     return sum_f1/3
 
-def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
+def single_train(max_seq_length=512,max_epochs=100,batch_size=3,
                  warmup_epoch_count=10,max_learn_rate=1e-5,
                  end_learn_rate=1e-7,model_type="TD_Dense",
                  label_threshold_less=3):
@@ -119,7 +119,7 @@ def single_train(max_seq_length=128,max_epochs=100,batch_size=48,
                          "test_f1_C":str(test_out_dict["4"]["f1-score"]),
                          "test_f1_P":str(test_out_dict["5"]["f1-score"])})
 
-def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
+def grid_train(max_seq_length=512,max_epochs=100,batch_size=3,
                label_threshold_less=3):
     # read in data
     (train_X, train_Y,
@@ -139,9 +139,9 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
     # get bert layer
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
-    grid = {"model_type":["dense_1","dense_3"],
-            "learn_rate_combinations":[[1e-4,1e-5],
-                                       [1e-4,1e-6]],
+    grid = {"model_type":["TD_Dense","1D_Conv","Stacked_LSTM"],
+            "learn_rate_combinations":[[1e-5,1e-6],
+                                       [1e-5,1e-7]],
             "warmup_epoch_count":[10,15,20]}
     # create flat combinations
     iterable_grid = list(ParameterGrid(grid))
@@ -229,14 +229,14 @@ def grid_train(max_seq_length=128,max_epochs=100,batch_size=48,
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
-    parser.add_argument("--max-seq-length", type=int, default=128,
+    parser.add_argument("--max-seq-length", type=int, default=512,
                         help="maximum sequence length of tokenized id's")
     parser.add_argument("--grid-search", action="store_true", default=False,
                         help="True if grid search should be performed, "+
                         "otherwise single training session will commence")
     parser.add_argument("--max-epochs", type=int, default=100,
                         help="maximum number of training epochs")
-    parser.add_argument("--batch-size", type=int, default=48,
+    parser.add_argument("--batch-size", type=int, default=3,
                         help="batch-size for training procedure")
     single = parser.add_argument_group("arguments specific to single training")
     single.add_argument("--warmup-epochs", type=int, default=10,
