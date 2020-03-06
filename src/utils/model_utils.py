@@ -7,13 +7,10 @@ import math
 import numpy as np
 import tensorflow as tf
 import tensorflow.keras.backend as K
-os.environ["TF_KERAS"] = "1"
-from bert4keras.optimizers import Adam
-from bert4keras.optimizers import extend_with_gradient_accumulation_v2
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.layers import Dense, BatchNormalization, Activation
 from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed, Input
-from sklearn.metrics import f1_score
+from sklearn.metrics import classification_report
 
 def class_acc(label_threshold_less):
     def argument_candidate_acc(y_true, y_pred):
@@ -30,13 +27,13 @@ def class_acc(label_threshold_less):
         return class_accuracy
     return argument_candidate_acc
 
-def filtered_f1(y_true,y_pred,greater_than_equal=3):
+def class_report(y_true,y_pred,greater_than_equal=3):
     y_pred = y_pred.flatten()
     y_true = y_true.flatten()
     relevant_indices = np.where(y_true >= greater_than_equal)[0]
     y_pred = y_pred[relevant_indices]
     y_true = y_true[relevant_indices]
-    return f1_score(y_true,y_pred,average="macro")
+    return classification_report(y_true,y_pred,output_dict=True)
 
 def fetch_bert_layer():
     model_name = "albert_base_v2"
@@ -67,68 +64,38 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
     input_ids = Input(shape=(max_seq_len,),
                       dtype='int32')
     output = l_bert(input_ids)
-    if model_type == "dense_0":
-        output = Dense(512)(output)
-        output = BatchNormalization()(output)
-        output = Activation("relu")(output)
-        output = Dense(64)(output)
-        output = BatchNormalization()(output)
-        output = Activation("relu")(output)
-        output = Dense(num_labels)(output)
-        output = BatchNormalization()(output)
-    elif model_type == "dense_1":
+    if model_type == "TD_Dense":
         output = TimeDistributed(Dense(512))(output)
-        output = BatchNormalization()(output)
         output = Activation("relu")(output)
-        output = TimeDistributed(Dense(64))(output)
-        output = BatchNormalization()(output)
+        output = TimeDistributed(Dense(256))(output)
         output = Activation("relu")(output)
-        output = TimeDistributed(Dense(num_labels))(output)
-        output = BatchNormalization()(output)
-    elif model_type == "dense_2":
-        output = Dense(512)(output)
-        output = Activation("relu")(output)
-        output = Dense(64)(output)
-        output = Activation("relu")(output)
-        output = Dense(num_labels)(output)
-    elif model_type == "dense_3":
-        output = TimeDistributed(Dense(512))(output)
+        output = TimeDistributed(Dense(128))(output)
         output = Activation("relu")(output)
         output = TimeDistributed(Dense(64))(output)
         output = Activation("relu")(output)
         output = TimeDistributed(Dense(num_labels))(output)
-    elif model_type == "cnn_0":
+    elif model_type == "1D_CNN":
+        output = Conv1D(512,3,padding="same")(output)
+        output = Activation("relu")(output)
         output = Conv1D(256,3,padding="same")(output)
+        output = Activation("relu")(output)
+        output = Conv1D(128,3,padding="same")(output)
         output = Activation("relu")(output)
         output = Conv1D(64,3,padding="same")(output)
         output = Activation("relu")(output)
         output = Conv1D(num_labels,3,padding="same")(output)
-    elif model_type == "cnn_1":
-        output = Conv1D(256,3,padding="same")(output)
-        output = BatchNormalization()(output)
-        output = Activation("relu")(output)
-        output = Conv1D(64,3,padding="same")(output)
-        output = BatchNormalization()(output)
-        output = Activation("relu")(output)
-        output = Conv1D(num_labels,3,padding="same")(output)
-        output = BatchNormalization()(output)
-    elif model_type == "lstm_0":
+    elif model_type == "Stacked_LSTM":
+        output = LSTM(512,return_sequences=True)(output)
         output = LSTM(256,return_sequences=True)(output)
-        output = LSTM(64,return_sequences=True)(output)
+        output = LSTM(128,return_sequences=True)(output)
+        output = TimeDistributed(Dense(64))(output)
+        output = Activation("relu")(output)
         output = Dense(num_labels)(output)
-    elif model_type == "lstm_1":
-        output = LSTM(256,return_sequences=True)(output)
-        output = BatchNormalization()(output)
-        output = LSTM(64,return_sequences=True)(output)
-        output = BatchNormalization()(output)
-        output = Dense(num_labels)(output)
-        output = BatchNormalization()(output)
     prob = Activation("softmax")(output)
     model = tf.keras.Model(inputs=input_ids, outputs=prob)
     model.build(input_shape=(None, max_seq_len))
     bert.load_albert_weights(l_bert, model_ckpt)
-    model.compile(optimizer=
-                  extend_with_gradient_accumulation_v2(tf.keras.optimizers.Adam)(grad_accum_steps=16),
+    model.compile(optimizer=tf.keras.optimizers.Adam(),
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   metrics=[class_acc(label_threshold_less)])
     model.summary()
