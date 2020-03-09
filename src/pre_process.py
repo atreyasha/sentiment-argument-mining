@@ -284,6 +284,12 @@ def corpus2char(directory="./data/USElectionDebates/corpus/",
     write_to_json(corpus,directory,"corpus.json")
 
 def initialize_bert_tokenizer():
+    """
+    Function to initialize the bert tokenizer
+
+    Returns:
+        Tokenizer (bert.tokenization.albert_tokenization.FullTokenizer)
+    """
     model_name = "albert_base_v2"
     model_dir = bert.fetch_google_albert_model(model_name, ".models")
     spm = os.path.join(model_dir,"30k-clean.model")
@@ -332,6 +338,7 @@ def corpus2tokenids(max_seq_length=512,
     flat_ann = flatten(tagged)
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=True)
+    # remove initial capitalized NER reference, might assist with debiasing
     for i, text in enumerate(flat_text):
         span = re.search("^[A-Z]*\\:\\s",text)
         if span is None:

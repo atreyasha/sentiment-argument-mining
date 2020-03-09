@@ -90,7 +90,7 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
         output = LSTM(128,return_sequences=True)(output)
         output = TimeDistributed(Dense(64))(output)
         output = Activation("relu")(output)
-        output = Dense(num_labels)(output)
+        output = TimeDistributed(Dense(num_labels))(output)
     prob = Activation("softmax")(output)
     model = tf.keras.Model(inputs=input_ids, outputs=prob)
     model.build(input_shape=(None, max_seq_len))
