@@ -14,13 +14,13 @@ from sklearn.model_selection import ParameterGrid
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, CSVLogger
 from utils.model_utils import *
 from utils.arg_metav_formatter import *
-from pre_process import *
+from pre_process_USElectionDebates import *
 
 def getCurrentTime():
     return datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 
 def read_or_create_data(max_seq_length,
-                        directory="./data/USElectionDebates/task_1/"):
+                        directory="./data/USElectionDebates/training/"):
     check = glob(directory+"*"+str(max_seq_length)+"*")
     if len(check) < 4:
         (train_X, train_Y, test_X,

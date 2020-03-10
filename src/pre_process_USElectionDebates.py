@@ -3,6 +3,7 @@
 
 import os
 import re
+import csv
 import bert
 import json
 import nltk
@@ -21,8 +22,8 @@ def read_us_election_corpus():
     check on text vs. annotations to ensure data makes sense.
 
     Returns:
-        raw (list): raw text in corpus
-        ann (list): annotations in corpus
+        raw (list[str]): raw text in corpus
+        ann (list[str]): annotations in corpus
     """
     # read raw text into memory by sorting first through indices
     files_raw = glob("./data/USElectionDebates/*.txt")
@@ -62,12 +63,12 @@ def char_tag(corpus,spaces=False):
     and annotations into tagged character sequence
 
     Args:
-        corpus (list,list): output of "read_us_election_corpus"
+        corpus (list[str],list[str]): output of "read_us_election_corpus"
         spaces (bool): True if spaces should be marked, False if
         they should be marked same as span
 
     Returns:
-        (list): each component contains annotated characters
+        (list[str]): each component contains annotated characters
     """
     # create empty list
     tagged = []
@@ -116,12 +117,12 @@ def flatten(char_sequences,indices=False):
     Function to split and flatten character sequences
 
     Args:
-        char_sequences (list): character sequences
+        char_sequences (list[str]): character sequences
         indices (bool): True to return a list of indices
 
     Returns:
-        flat (list): flattened arguments character sequences
-        indices (list): optional list of indices
+        flat (list[str]): flattened arguments character sequences
+        indices (list[int]): optional list of indices
     """
     flat = []
     if indices:
@@ -147,13 +148,13 @@ def correct_periods(flat_text,flat_ann,spaces=False):
     Function to add spaces where incorrect periods are present
 
     Args:
-        flat_text (list): character sequences for raw rext from "flatten"
-        flat_ann (list): character sequences for tagged text from "flatten"
+        flat_text (list[str]): character sequences for raw rext from "flatten"
+        flat_ann (list[str]): character sequences for tagged text from "flatten"
         spaces (bool): True if spaces are to be annotated, False if not
 
     Returns:
-        flat_text (list): corrected version of flat_text
-        flat_ann (list): corrected version of flat_ann
+        flat_text (list[str]): corrected version of flat_text
+        flat_ann (list[str]): corrected version of flat_ann
     """
     for i in range(len(flat_text)):
         run = True
@@ -178,12 +179,14 @@ def tokenize(flat_text,flat_ann,Tokenizer):
     Function to prune and tokenize corpus
 
     Args:
-        flat_text (list): character sequences for raw rext from "flatten"
-        flat_ann (list): character sequences for tagged text from "flatten"
-        Tokenizer (object): tokenizer class for bert tokenizer
+        flat_text (list[str]): character sequences for raw rext from "flatten"
+        flat_ann (list[str]): character sequences for tagged text from "flatten"
+        Tokenizer (bert.tokenization.albert_tokenization.FullTokenizer):
+        tokenizer class for bert tokenizer
 
     Returns:
-        split_combined_pruned (list): pruned list of tokens and associated annotations
+        split_combined_pruned (list[str]): pruned list of tokens and associated
+        annotations
     """
     # first loop to zip results and check for equal length initial tokens
     split_combined = []
@@ -244,13 +247,12 @@ def post_process(data):
 
 def write_to_json(data,directory,name):
     """
-    Function to write parsed text to CoNLL file format
+    Function to write parsed text to JSON file
 
     Args:
-        data (list): output from corpus2char/corpus2tokens
+        data (list): output from corpus2char
         directory (str): directory to store files
         name (str): name of file
-        header (str): header of CoNLL stored files
     """
     char_dict = {}
     for i,j,text,ann in data:
@@ -299,6 +301,23 @@ def initialize_bert_tokenizer():
     return Tokenizer
 
 def project_to_ids(Tokenizer,train_data,label_id_map,max_seq_length=512):
+    """
+    Function to map data to indices in the albert vocabulary, as well as
+    adding special bert tokens such as [CLS] and [SEP]
+
+    Args:
+        Tokenizer (bert.tokenization.albert_tokenization.FullTokenizer):
+        tokenizer class for bert tokenizer
+        train_data (list): input data containing albert tokens and label types
+        label_id_map (dict): dictionary mapping label type to integer
+        max_seq_length (int): maximum sequence length to be used in training
+
+    Returns:
+        (np.ndarray): input albert IDs
+        (np.ndarray): output label IDs
+        (np.ndarray): output mask indicating which token is relevant to outcome,
+        this includes all corpus tokens and excludes all bert special tokens
+    """
     input_ids = []
     label_ids = []
     output_mask = []
@@ -329,12 +348,65 @@ def project_to_ids(Tokenizer,train_data,label_id_map,max_seq_length=512):
         output_mask.append(output_mask_sub)
     return np.array(input_ids), np.array(label_ids), np.array(output_mask)
 
+def summary_info(collection,indices,
+                 directory="./data/USElectionDebates/corpus/"):
+    """
+    Function to write summary statistics on token types to file
+
+    Args:
+        collection (list): data containing token and types
+        indices (int): mapping of `collection` to debate segments
+        directory (str): directory to output files
+    """
+    new_collection = []
+    # get respective token counts
+    for i,el in enumerate(collection):
+        new_collection.append([indices[i][0]])
+        tmp = []
+        for sub_el in el:
+            for sub_sub_el in sub_el:
+                tmp.append(sub_sub_el[1])
+        local_dict = dict(Counter(tmp))
+        try:
+            N = local_dict["N"]
+        except KeyError:
+            N = 0
+        try:
+            C = local_dict["C"]
+        except KeyError:
+            C = 0
+        try:
+            P = local_dict["P"]
+        except KeyError:
+            P = 0
+        new_collection[i].extend([N,C,P])
+    # write to csv file
+    with open(directory+"stats_tokens.csv","w") as f:
+        writer = csv.writer(f)
+        writer.writerow(["debate","N","C","P"])
+        writer.writerows(new_collection)
+
 def corpus2tokenids(max_seq_length=512,
-                    directory="./data/USElectionDebates/task_1/"):
+                    directory="./data/USElectionDebates/training/"):
+    """
+    Aggregate function to produce bert-operational training data from
+    US-Election-Debate corpus
+
+    Args:
+        max_seq_length (int): maximum sequence length to be used in training
+        directory (str): directory to output files
+
+    Returns:
+        train_X (np.ndarray): training data IDs
+        train_Y (np.ndarray): training data labels
+        test_X (np.ndarray): testing data IDs
+        test_Y (np.ndarray): testing data labels
+        label_map (dict): mapping from label to integer ID for labels
+    """
     label_map = {"<pad>":0,"[CLS]":1,"[SEP]":2,"N":3,"C":4,"P":5}
     corpus = read_us_election_corpus()
     tagged = char_tag(corpus,spaces=True)
-    flat_text = flatten(corpus[0])
+    indices,flat_text = flatten(corpus[0],indices=True)
     flat_ann = flatten(tagged)
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=True)
@@ -354,7 +426,7 @@ def corpus2tokenids(max_seq_length=512,
     Tokenizer = initialize_bert_tokenizer()
     # ensure nltk sentence tokenizer is present
     try:
-        nltk.tokenize.sent_tokenize("testing. hello")
+        nltk.tokenize.sent_tokenize("testing. testing")
     except LookupError:
         nltk.download('punkt')
     # enter main loop
@@ -368,6 +440,8 @@ def corpus2tokenids(max_seq_length=512,
             flat_text[i] = flat_text[i][span[1]:]
             flat_ann[i] = flat_ann[i][span[1]:]
         collection.append(tokenize(sub_text,sub_ann,Tokenizer))
+    # print out summary info for later visualization
+    summary_info(collection,indices)
     # check data length and remove long sentences
     to_remove = []
     for i,sent_set in enumerate(collection):
@@ -398,21 +472,8 @@ def corpus2tokenids(max_seq_length=512,
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
-    parser.add_argument("--dtype", type=str, default="all",
-                        help="which dtype to process, either 'corpus',"+
-                        " 'token_ids' or 'all'")
     parser.add_argument("--max-seq-length", type=int, default=512,
                         help="maximum sequence length of tokenized id's")
-    parser.add_argument("--no-spaces", action="store_true", default=False,
-                        help="if True, spaces will be annotated as arguments"+
-                        " in overall span. If False, spaces will be tagged"+
-                        " as 'S'.")
     args = parser.parse_args()
-    assert args.dtype in ["all","corpus","token_ids"]
-    if args.dtype == "corpus":
-        corpus2char(spaces=(not args.no_spaces))
-    elif args.dtype == "token_ids":
-        corpus2tokenids(max_seq_length=args.max_seq_length)
-    else:
-        corpus2char(spaces=(not args.no_spaces))
-        corpus2tokenids(max_seq_length=args.max_seq_length)
+    corpus2char()
+    corpus2tokenids(max_seq_length=args.max_seq_length)
