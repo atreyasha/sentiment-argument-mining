@@ -8,8 +8,8 @@ import argparse
 import datetime
 import numpy as np
 import tensorflow as tf
-from glob import glob
 from collections import Counter
+from glob import glob
 from sklearn.model_selection import ParameterGrid
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, CSVLogger
 from utils.model_utils import *
@@ -17,10 +17,31 @@ from utils.arg_metav_formatter import *
 from pre_process_USElectionDebates import *
 
 def getCurrentTime():
+    """
+    Function to print a current date-time string
+
+    Returns:
+        (str): date-time string
+    """
     return datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 
 def read_or_create_data(max_seq_length,
                         directory="./data/USElectionDebates/training/"):
+    """
+    Function either loads cached training data or re-executes
+    pre-processing pipeline to generate training data
+
+    Args:
+        max_seq_length (int): maximum sequence length for training data
+        directory (str): directory in which to search for data
+
+    Returns:
+        train_X (np.ndarray): training data IDs
+        train_Y (np.ndarray): training data labels
+        test_X (np.ndarray): testing data IDs
+        test_Y (np.ndarray): testing data labels
+        label_map (dict): mapping from label to integer ID for labels
+    """
     check = glob(directory+"*"+str(max_seq_length)+"*")
     if len(check) < 4:
         (train_X, train_Y, test_X,
@@ -35,6 +56,15 @@ def read_or_create_data(max_seq_length,
     return train_X, train_Y, test_X, test_Y, label_map
 
 def mean_labels(input_dict):
+    """
+    Function to calculate the macro-F1 score from labels
+
+    Args:
+        input_dict (dict): classification report dictionary
+
+    Returns:
+        (float): macro-F1 score
+    """
     sum_f1 = (float(input_dict["3"]["f1-score"])+
               float(input_dict["4"]["f1-score"])+
               float(input_dict["5"]["f1-score"]))
@@ -44,6 +74,24 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
                  warmup_epoch_count=10,max_learn_rate=1e-5,
                  end_learn_rate=1e-7,model_type="TD_Dense",
                  label_threshold_less=3):
+    """
+    Function to conduct single model training on the pre-processed
+    US Election Debate corpus
+
+    Args:
+        max_seq_length (int): maximum sequence length for training data
+        max_epochs (int): maximum training epochs
+        batch_size (int): batch-size for stochastic gradient descent
+        warmup_epoch_count (int): number of epochs where learning rate rises
+        max_learn_rate (float): maximum possible learning rate (achieved at peak
+        of warmup epochs)
+        end_learn_rate (float): minimum learning rate (achieved at end of
+        maximum training epochs)
+        model_type (str): type of model decoder to use, see
+        './utils/model_utils.py'
+        label_threshold_less (int): all label IDs strictly less than this number
+        will be ignored in class accuracy calculations
+    """
     # read in data
     (train_X, train_Y,
      test_X, test_Y, label_map) = read_or_create_data(max_seq_length)
@@ -65,7 +113,7 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
     l_bert, model_ckpt = fetch_bert_layer()
     # prepare model compilation
     model = create_model(l_bert,model_ckpt,max_seq_length,
-                        num_labels,label_threshold_less,model_type)
+                         num_labels,label_threshold_less,model_type)
     LRScheduler = learning_rate_scheduler(max_learn_rate=max_learn_rate,
                                           end_learn_rate=end_learn_rate,
                                           warmup_epoch_count=warmup_epoch_count,
@@ -96,12 +144,12 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
     # find train f1
     y_pred = model.predict(train_X)
     y_pred = np.argmax(y_pred,axis=-1)
-    train_out_dict = class_report(train_Y,y_pred)
+    train_out_dict = class_report(train_Y,y_pred,label_threshold_less)
     train_f1 = mean_labels(train_out_dict)
     # find test f1
     y_pred = model.predict(test_X)
     y_pred = np.argmax(y_pred,axis=-1)
-    test_out_dict = class_report(test_Y,y_pred)
+    test_out_dict = class_report(test_Y,y_pred,label_threshold_less)
     test_f1 = mean_labels(test_out_dict)
     # write to log file
     with open(log_dir+"log.csv","a") as csvfile:
@@ -121,6 +169,17 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
 
 def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
                label_threshold_less=3):
+    """
+    Function to conduct grid-search on model training on the pre-processed
+    US Election Debate corpus
+
+    Args:
+        max_seq_length (int): maximum sequence length for training data
+        max_epochs (int): maximum training epochs
+        batch_size (int): batch-size for stochastic gradient descent
+        label_threshold_less (int): all label IDs strictly less than this number
+        will be ignored in class accuracy calculations
+    """
     # read in data
     (train_X, train_Y,
      test_X, test_Y, label_map) = read_or_create_data(max_seq_length)
@@ -189,12 +248,12 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
         # find train f1
         y_pred = model.predict(train_X)
         y_pred = np.argmax(y_pred,axis=-1)
-        train_out_dict = class_report(train_Y,y_pred)
+        train_out_dict = class_report(train_Y,y_pred,label_threshold_less)
         train_f1 = mean_labels(train_out_dict)
         # find test f1
         y_pred = model.predict(test_X)
         y_pred = np.argmax(y_pred,axis=-1)
-        test_out_dict = class_report(test_Y,y_pred)
+        test_out_dict = class_report(test_Y,y_pred,label_threshold_less)
         test_f1 = mean_labels(test_out_dict)
         # write to log file
         with open(log_dir+"log.csv","a") as csvfile:
@@ -240,7 +299,7 @@ if __name__ == "__main__":
                         help="batch-size for training procedure")
     single = parser.add_argument_group("arguments specific to single training")
     single.add_argument("--warmup-epochs", type=int, default=10,
-                        help="warmup or high learning rate epochs")
+                        help="warmup or increasing learning rate epochs")
     single.add_argument("--max-learn-rate", type=float, default=1e-5,
                         help="peak learning rate before exponential decay")
     single.add_argument("--end-learn-rate", type=float, default=1e-7,

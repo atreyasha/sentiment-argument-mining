@@ -8,32 +8,27 @@ Developments
     1.  **TODO** fill up pydocstrings in appropriate style
         for all functions
 
-    2.  **TODO** check that training script only executes
-        corpus2tokenids if data missing
+    2.  **TODO** add workflow for plotting results/data and
+        figure out optparse arguments/help for R
 
-    3.  **TODO** add workflow for plotting results/data and
-        figure out optparse for R
+    3.  **TODO** add section for final evaluation on UNSC
+        corpus, with new pre~processing~ script
 
-    4.  **TODO** fix up all readmes for clarity, add section
-        for final evaluation on UNSC corpus
+    4.  fix up all readmes for clarity, update R requirements in readme
 
-    5.  **TODO** update all information to indicate
-        procedures and articles involved, so users can find relevant
-        information
+    5.  update all information to indicate procedures and articles
+        involved, so users can find relevant information
 
     6.  make final pull request when all is complete
 
 2.  Sequence encoding
 
-    1.  **TODO** need to split UNSC smaller speech segments
-        or paragraphs to pass into pipeline
+    1.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
 
-    2.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
-
-    3.  tree (task 2) -\> adjacency matrix connecting to various heads
+    2.  tree (task 2) -\> adjacency matrix connecting to various heads
         which could be claims or connecting premise
 
-    4.  minor debiasing done with removal of capital references
+    3.  minor debiasing done with removal of capital references
 
 3.  Architecture
 
