@@ -5,16 +5,17 @@ Developments
 
 1.  Documentation/Visualization
 
-    1.  **TODO** fill up pydocstrings in appropriate style
-        for all functions
-
-    2.  **TODO** add workflow for plotting results/data and
+    1.  **TODO** add workflow for plotting results/data and
         figure out optparse arguments/help for R
+
+    2.  **TODO** fix up all readmes for clarity, update R
+        requirements in readme, push readme with comprehensive
+        infomration minus evaluation on UNSC corpus first
 
     3.  **TODO** add section for final evaluation on UNSC
         corpus, with new pre~processing~ script
 
-    4.  fix up all readmes for clarity, update R requirements in readme
+    4.  fill up pydocstrings in appropriate style for all functions
 
     5.  update all information to indicate procedures and articles
         involved, so users can find relevant information
@@ -52,5 +53,8 @@ Developments
     4.  think about all other optimizations worth mentioning, talk about
         problem with size 128 reduction
 
-    5.  mention all limitations and recommendations for things to do;
+    5.  concede to using low batch size to allow for more data, add
+        comparison with majority class classifier as baseline
+
+    6.  mention all limitations and recommendations for things to do;
         along with using pytorch instead of tensorflow

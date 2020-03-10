@@ -26,8 +26,9 @@ $ pip install -r requirements.txt
 2. In this repository, we use `R` and `ggplot` for visualization. Execute the following within your R console to get the dependencies:
 
 ```r
-> install.packages(c("ggplot2","tikzDevice","reshape2","optparse"))
+> install.packages(c("ggplot2","tikzDevice","reshape2","optparse","ggsci"))
 ```
+
 ### 2. Repository initialization
 
 In order to initialize this repository, simply run `init.sh` as shown below:

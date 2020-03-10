@@ -2,17 +2,15 @@
    
 *** Argumentation workflow
 
-
 **** Documentation/Visualization
-***** TODO fill up pydocstrings in appropriate style for all functions
-***** TODO check that training script only executes corpus2tokenids if data missing
-***** TODO add workflow for plotting results/data and figure out optparse for R
-***** TODO fix up all readmes for clarity, add section for final evaluation on UNSC corpus
-***** TODO update all information to indicate procedures and articles involved, so users can find relevant information
+***** TODO add workflow for plotting results/data and figure out optparse arguments/help for R
+***** TODO fix up all readmes for clarity, update R requirements in readme, push readme with comprehensive infomration minus evaluation on UNSC corpus first
+***** TODO add section for final evaluation on UNSC corpus, with new pre_processing script
+***** fill up pydocstrings in appropriate style for all functions
+***** update all information to indicate procedures and articles involved, so users can find relevant information
 ***** make final pull request when all is complete
 
 **** Sequence encoding
-***** TODO need to split UNSC smaller speech segments or paragraphs to pass into pipeline
 ***** simple (task 1) -> 1: claim, 2: premise, 3: non-argument
 ***** tree (task 2) -> adjacency matrix connecting to various heads which could be claims or connecting premise
 ***** minor debiasing done with removal of capital references
@@ -27,4 +25,5 @@
 ***** mention domain debiasing with removal of references
 ***** compare with scores in paper and talk about how paper made much simplifications
 ***** think about all other optimizations worth mentioning, talk about problem with size 128 reduction
+***** concede to using low batch size to allow for more data, add comparison with majority class classifier as baseline
 ***** mention all limitations and recommendations for things to do; along with using pytorch instead of tensorflow
