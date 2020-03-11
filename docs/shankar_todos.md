@@ -5,22 +5,26 @@ Developments
 
 1.  Documentation/Visualization
 
-    1.  **TODO** add workflow for plotting results/data and
+    1.  **TODO** add max sequence length to model logs
+
+    2.  **TODO** add workflow for plotting results/data and
         figure out optparse arguments/help for R
 
-    2.  **TODO** fix up all readmes for clarity, update R
+    3.  **TODO** fix up all readmes for clarity, update R
         requirements in readme, push readme with comprehensive
         infomration minus evaluation on UNSC corpus first
 
-    3.  **TODO** add section for final evaluation on UNSC
+    4.  **TODO** add git lfs for best model (\~140 Mb)
+
+    5.  **TODO** add section for final evaluation on UNSC
         corpus, with new pre~processing~ script
 
-    4.  fill up pydocstrings in appropriate style for all functions
+    6.  fill up pydocstrings in appropriate style for all functions
 
-    5.  update all information to indicate procedures and articles
+    7.  update all information to indicate procedures and articles
         involved, so users can find relevant information
 
-    6.  make final pull request when all is complete
+    8.  make final pull request when all is complete
 
 2.  Sequence encoding
 

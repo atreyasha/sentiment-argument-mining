@@ -126,10 +126,6 @@ plot_token_dist <- function(){
   file.rename("token_dist_length_combined.pdf","./img/token_dist_length_combined.pdf")
 }
 
-# TODO put in intersection for lowest val, change colors and make legend prettier
-# TODO use geom_blank to extend range of y axes
-# TODO control these via file checking and optparse cli arguments with defaults
-
 plot_model_evolution <- function(directory){
   file <- list.files(directory,pattern="^model\\_history",full.names = TRUE)
   stats <- read.csv(file,stringsAsFactors=FALSE)
@@ -150,11 +146,11 @@ plot_model_evolution <- function(directory){
   stats$type <- factor(stats$type, levels=c("lr","accuracy","loss"))
   stats$variable <- factor(stats$variable, levels=c("training","validation","lr"))
   levels(stats$type) <- c("Learning Rate Profile", "Classification Accuracy",
-                          "Model Loss")
+                          "Cross-Entropy Loss")
   levels(stats$variable) <- c("Training", "Validation",
                               "Learning Rate")
-  stop_epoch <- stats[which(stats[which(stats[,2] == "Model Loss" & stats[,3] == "Validation"),] ==
-                              min(stats[which(stats[,2] == "Model Loss" & stats[,3] == "Validation"),4])),1]
+  stop_epoch <- stats[which(stats[which(stats[,2] == "Cross-Entropy Loss" & stats[,3] == "Validation"),] ==
+                              min(stats[which(stats[,2] == "Cross-Entropy Loss" & stats[,3] == "Validation"),4])),1]
   # create file
   tikz("model_training_evolution.tex", width=20, height=14, standAlone = TRUE)
   # make ggplot object
@@ -179,7 +175,7 @@ plot_model_evolution <- function(directory){
                                   "Learning Rate"="#619CFF",
                                   "Model Checkpoint"="black"),
                        breaks = c("Training","Validation","Learning Rate",
-                                  "Model Checkpoint")) +
+                                  "Model Checkpoint"))+
     ## ggtitle("Token Type Distribution by Utterance Length") +
     ## scale_fill_npg(name="Token\nType",alpha=0.8) +
     facet_wrap(~type,scales="free_y",nrow=3) +
@@ -190,4 +186,22 @@ plot_model_evolution <- function(directory){
   texi2pdf("model_training_evolution.tex",clean=TRUE)
   file.remove("model_training_evolution.tex")
   file.rename("model_training_evolution.pdf","./img/model_training_evolution.pdf")
+}
+
+# parse command-line arguments
+parser <- OptionParser()
+parser <- add_option(parser, c("-m", "--model-dir"),
+                     default=NULL, help="Plot model evolution for specified model directory")
+args <- parse_args(parser)
+# manage arguments and overall workflow
+if(!is.null(args$m)){
+   if(file.exists(args$m)){
+     print("Producing model plot")
+     plot_model_evolution(args$m)
+  }
+} else {
+  if(file.exists("./data/USElectionDebates/corpus/stats_tokens.csv")){
+    print("Producing token distribution plots")
+    plot_token_dist()
+  }
 }
