@@ -5,26 +5,22 @@ Developments
 
 1.  Documentation/Visualization
 
-    1.  **TODO** add max sequence length to model logs
-
-    2.  **TODO** add workflow for plotting results/data and
-        figure out optparse arguments/help for R
-
-    3.  **TODO** fix up all readmes for clarity, update R
+    1.  **TODO** fix up all readmes for clarity, update R
         requirements in readme, push readme with comprehensive
-        infomration minus evaluation on UNSC corpus first
+        infomration minus evaluation on UNSC corpus first, add
+        descriptions of US election debates into readme
 
-    4.  **TODO** add git lfs for best model (\~140 Mb)
+    2.  **TODO** add git lfs for best model (\~140 Mb)
 
-    5.  **TODO** add section for final evaluation on UNSC
+    3.  **TODO** add section for final evaluation on UNSC
         corpus, with new pre~processing~ script
 
-    6.  fill up pydocstrings in appropriate style for all functions
+    4.  fill up pydocstrings in appropriate style for all functions
 
-    7.  update all information to indicate procedures and articles
+    5.  update all information to indicate procedures and articles
         involved, so users can find relevant information
 
-    8.  make final pull request when all is complete
+    6.  make final pull request when all is complete
 
 2.  Sequence encoding
 

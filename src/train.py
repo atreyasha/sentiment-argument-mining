@@ -99,10 +99,11 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
     # clear keras session
     tf.keras.backend.clear_session()
     # create log directory and log file
-    log_dir = "./model_logs/"+getCurrentTime()+"_single_train/"
+    log_dir = ("./model_logs/"+getCurrentTime()+"_MSL"+str(max_seq_length)
+               +"_single_train/")
     os.makedirs(log_dir)
     with open(log_dir+"log.csv","w") as csvfile:
-        fieldnames = ["id", "model_type",
+        fieldnames = ["id", "max_seq_length", "model_type",
                       "max_epochs", "train_epochs", "batch_size",
                       "warmup_epoch_count", "max_learn_rate", "end_learn_rate",
                       "train_f1", "test_f1", "test_f1_N", "test_f1_C",
@@ -154,7 +155,9 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
     # write to log file
     with open(log_dir+"log.csv","a") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writerow({"id":str(0), "model_type":model_type,
+        writer.writerow({"id":str(0),
+                         "max_seq_length":str(max_seq_length),
+                         "model_type":model_type,
                          "max_epochs":str(max_epochs),
                          "train_epochs":str(train_epochs),
                          "batch_size":str(batch_size),
@@ -185,10 +188,11 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
      test_X, test_Y, label_map) = read_or_create_data(max_seq_length)
     num_labels = len(label_map.keys())
     # create log directory and log file
-    log_dir = "./model_logs/"+getCurrentTime()+"_grid_train/"
+    log_dir = ("./model_logs/"+getCurrentTime()+"_MSL"+str(max_seq_length)
+               +"_grid_train/")
     os.makedirs(log_dir)
     with open(log_dir+"log.csv","w") as csvfile:
-        fieldnames = ["id", "model_type",
+        fieldnames = ["id", "max_seq_length", "model_type",
                       "max_epochs", "train_epochs", "batch_size",
                       "warmup_epoch_count", "max_learn_rate", "end_learn_rate",
                       "train_f1", "test_f1", "test_f1_N", "test_f1_C",
@@ -258,7 +262,9 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
         # write to log file
         with open(log_dir+"log.csv","a") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writerow({"id":str(i), "model_type":model_type,
+            writer.writerow({"id":str(i),
+                             "max_seq_length":str(max_seq_length),
+                             "model_type":model_type,
                              "max_epochs":str(max_epochs),
                              "train_epochs":str(train_epochs),
                              "batch_size":str(batch_size),
@@ -298,11 +304,11 @@ if __name__ == "__main__":
     parser.add_argument("--batch-size", type=int, default=10,
                         help="batch-size for training procedure")
     single = parser.add_argument_group("arguments specific to single training")
-    single.add_argument("--warmup-epochs", type=int, default=10,
+    single.add_argument("--warmup-epochs", type=int, default=20,
                         help="warmup or increasing learning rate epochs")
     single.add_argument("--max-learn-rate", type=float, default=1e-5,
                         help="peak learning rate before exponential decay")
-    single.add_argument("--end-learn-rate", type=float, default=1e-7,
+    single.add_argument("--end-learn-rate", type=float, default=1e-6,
                         help="final learning rate at end of planned training")
     single.add_argument("--model-type", type=str, default="TD_Dense",
                         help="top layer after albert, options are"+
