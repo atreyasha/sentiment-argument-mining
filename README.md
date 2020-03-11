@@ -40,18 +40,18 @@ Haddadan et al. 2019 (paper describing US Election Debate corpus)
 
 ```
 @inproceedings{haddadan-etal-2019-yes,
-    title = "Yes, we can! Mining Arguments in 50 Years of {US} Presidential Campaign Debates",
-    author = "Haddadan, Shohreh  and
+    title="Yes, we can! Mining Arguments in 50 Years of {US} Presidential Campaign Debates",
+    author="Haddadan, Shohreh  and
       Cabrio, Elena  and
       Villata, Serena",
-    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
-    month = jul,
-    year = "2019",
-    address = "Florence, Italy",
-    publisher = "Association for Computational Linguistics",
-    url = "https://www.aclweb.org/anthology/P19-1463",
-    doi = "10.18653/v1/P19-1463",
-    pages = "4684--4690"
+    booktitle="Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
+    month=jul,
+    year="2019",
+    address="Florence, Italy",
+    publisher="Association for Computational Linguistics",
+    url="https://www.aclweb.org/anthology/P19-1463",
+    doi="10.18653/v1/P19-1463",
+    pages="4684--4690"
 }
 ```
 

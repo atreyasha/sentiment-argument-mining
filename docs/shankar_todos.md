@@ -22,6 +22,8 @@ Developments
 
     6.  make final pull request when all is complete
 
+    7.  push final paper and bibtex when all is done
+
 2.  Sequence encoding
 
     1.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument

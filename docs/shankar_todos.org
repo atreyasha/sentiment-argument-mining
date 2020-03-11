@@ -9,6 +9,7 @@
 ***** fill up pydocstrings in appropriate style for all functions
 ***** update all information to indicate procedures and articles involved, so users can find relevant information
 ***** make final pull request when all is complete
+***** push final paper and bibtex when all is done
 
 **** Sequence encoding
 ***** simple (task 1) -> 1: claim, 2: premise, 3: non-argument
