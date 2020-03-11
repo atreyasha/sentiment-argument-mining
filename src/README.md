@@ -89,7 +89,7 @@ usage: train.py [-h] [--max-seq-length int] [--grid-search] [--max-epochs int]
 optional arguments:
   -h, --help            show this help message and exit
   --max-seq-length int  maximum sequence length of tokenized id's (default: 512)
-  --grid-search         True if grid search should be performed, otherwise single
+  --grid-search         option for grid search to be performed, otherwise single
                         training session will commence (default: False)
   --max-epochs int      maximum number of training epochs (default: 100)
   --batch-size int      batch-size for training procedure (default: 10)

@@ -296,7 +296,7 @@ if __name__ == "__main__":
     parser.add_argument("--max-seq-length", type=int, default=512,
                         help="maximum sequence length of tokenized id's")
     parser.add_argument("--grid-search", action="store_true", default=False,
-                        help="True if grid search should be performed, "+
+                        help="option for grid search to be performed, "+
                         "otherwise single training session will commence")
     parser.add_argument("--max-epochs", type=int, default=100,
                         help="maximum number of training epochs")

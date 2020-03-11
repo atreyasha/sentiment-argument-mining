@@ -5,22 +5,18 @@ Developments
 
 1.  Documentation/Visualization
 
-    1.  **TODO** fix up all readmes for clarity, update R
-        requirements in readme, push readme with comprehensive
-        infomration minus evaluation on UNSC corpus first, add
-        descriptions of US election debates into readme
-
-    2.  **TODO** add section for final evaluation on UNSC
+    1.  **TODO** add section for final evaluation on UNSC
         corpus, with new pre~processing~ script in older section
 
-    3.  fill up pydocstrings in appropriate style for all functions
+    2.  **TODO** fill up pydocstrings in appropriate style
+        for all functions
 
-    4.  update all information to indicate procedures and articles
+    3.  update all information to indicate procedures and articles
         involved, so users can find relevant information
 
-    5.  make final pull request when all is complete
+    4.  make final pull request when all is complete
 
-    6.  push final paper and bibtex when all is done, add global
+    5.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding
