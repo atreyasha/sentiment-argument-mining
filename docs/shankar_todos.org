@@ -4,9 +4,8 @@
 
 **** Documentation/Visualization
 ***** TODO fix up all readmes for clarity, update R requirements in readme, push readme with comprehensive infomration minus evaluation on UNSC corpus first, add descriptions of US election debates into readme
-***** TODO add acknowledgements to kpe for library
 ***** TODO add git lfs for best model (~140 Mb)
-***** TODO add section for final evaluation on UNSC corpus, with new pre_processing script
+***** TODO add section for final evaluation on UNSC corpus, with new pre_processing script in older section
 ***** fill up pydocstrings in appropriate style for all functions
 ***** update all information to indicate procedures and articles involved, so users can find relevant information
 ***** make final pull request when all is complete
