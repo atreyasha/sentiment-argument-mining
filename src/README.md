@@ -6,6 +6,7 @@ This readme will summarize our code and results in conducting sentiment analysis
 
 1. [Dependencies](#1-Dependencies)
 2. [Repository initialization](#2-Repository-initialization)
+3. [Preprocessing](#3-Preprocessing)
 
 ### 1. Dependencies
 
@@ -40,3 +41,25 @@ $ ./init.sh
 1. Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
 
 2. Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
+
+### 3. Preprocessing
+
+For the training of the argumentation classifier model (which uses [ALBERT](https://github.com/google-research/ALBERT) for the encoder segment), we must perform significant pre-processing on the US Election Debate corpus. For this, we have created the script `pre_process_USElectionDebates.py` with dedicated functions.
+
+```
+$ python3 pre_process_USElectionDebates.py --help
+
+usage: pre_process_USElectionDebates.py [-h] [--max-seq-length int]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --max-seq-length int  maximum sequence length of tokenized id's (default: 512)
+```
+
+In our training process, we assume the maximum possible sequence length of `512` tokens for the `ALBERT` encoder model. In order to conduct pre-processing, simply execute the following:
+
+```shell
+$ python3 pre_process_USElectionDebates.py
+```
+
+This process will produce respective `json`, `csv` and `npy` files in the `./data` directory; all of which will be later utilized in training and evaluation. 
