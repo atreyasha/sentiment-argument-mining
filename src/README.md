@@ -33,7 +33,11 @@ $ pip install -r requirements.txt
 > install.packages(c("ggplot2","tikzDevice","reshape2","optparse","ggsci"))
 ```
 
-**iii.** If you want to use or reference the best model in this repository (which is stored in a `git-lfs` entry), you would need to install `git-lfs` for your system. If you installed `git-lfs` after cloning this repository, execute `git lfs pull` in order to recover the large model data, as per suggestions [here](https://github.com/git-lfs/git-lfs/issues/325).
+**iii.** If you want to use or reference the best model in this repository (which is stored in a `git-lfs` entry), you would need to install `git-lfs` for your system.
+
+If you already had `git-lfs` installed before cloning the repository, the best model data would be downloaded alongside the clone.
+
+If you installed `git-lfs` after cloning this repository, execute `git lfs pull` in order to recover the large model data, as per suggestions [here](https://github.com/git-lfs/git-lfs/issues/325).
 
 ### 2. Repository initialization
 
