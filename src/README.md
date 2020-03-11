@@ -7,13 +7,13 @@ This readme will summarize our code and results in conducting sentiment analysis
 1. [Dependencies](#1-Dependencies)
 2. [Repository initialization](#2-Repository-initialization)
 3. [Preprocessing](#3-Preprocessing)
-4. [Training](#4-Training/Evaluation)
+4. [Training & Evaluation](#4-Training-&-Evaluation)
 5. [Visualization](#5-Visualization)
 6. [Acknowledgments](#6-Acknowledgments)
 
 ### 1. Dependencies
 
-i. In order to set up this repository, we would need to satisfy local pythonic dependencies. If `poetry` is installed on your system, you can install dependencies and create a virtual environment automatically via the following command:
+1. In order to set up this repository, we would need to satisfy local pythonic dependencies. If `poetry` is installed on your system, you can install dependencies and create a virtual environment automatically via the following command:
 
 ```shell
 $ poetry install
@@ -27,7 +27,7 @@ $ pip install -r requirements.txt
 
 **Note**: Your python version must be `3.7.*` in order to install certain dependencies in this repository. 
 
-ii. In this repository, we use `R` and `ggplot` for visualization. Execute the following within your R console to get the dependencies:
+2. In this repository, we use `R` and `ggplot` for visualization. Execute the following within your R console to get the dependencies:
 
 ```r
 > install.packages(c("ggplot2","tikzDevice","reshape2","optparse","ggsci"))
@@ -41,9 +41,9 @@ In order to initialize this repository, simply run `init.sh` as shown below:
 $ ./init.sh
 ```
 
-i. Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
+1. Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
 
-ii. Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
+2. Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
 
 ### 3. Preprocessing
 
@@ -67,7 +67,7 @@ $ python3 pre_process_USElectionDebates.py
 
 This process will produce respective `json`, `csv` and `npy` files in the `./data` directory; all of which will be later utilized in training and evaluation.
 
-### 4. Training/Evaluation
+### 4. Training & Evaluation
 
 ### 5. Visualization
 
