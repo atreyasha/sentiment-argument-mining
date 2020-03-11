@@ -69,7 +69,7 @@ This process will produce respective `json`, `csv` and `npy` files in the `./dat
 
 ### 4. Training and Evaluation
 
-For training, we use the base version 2 of `ALBERT` and fine-tune it on the US Election Debate corpus in the form of a sequence tagging task. Within this task, each token of the US Election Debate corpus must be classified into one of three argument candidates; specifically "None" (N), "Claim" (C) or "Premise" (P). This is very similar to a Natural Entity Recognition (NER) task. This workflow is encompassed in `train.py`.
+For training, we use the base version 2 of [ALBERT](https://github.com/google-research/ALBERT) and fine-tune it on the US Election Debate corpus in the form of a sequence tagging task. Within this task, each token of the US Election Debate corpus must be classified into one of three argument candidates; specifically "None" (N), "Claim" (C) or "Premise" (P). This is very similar to a Natural Entity Recognition (NER) task. This workflow is encompassed in `train.py`.
 
 ```
 $ python3 train.py --help
@@ -97,11 +97,11 @@ arguments specific to single training:
                         'Stacked_LSTM' (default: TD_Dense)
 ```
 
-In our training regime, we assume a warmup-cooldown learning rate profile which entails a linear learning rate increase frrom `end-learn-rate` to `max-learn-rate` within the first `warmup-epochs`. Then, the learning rate exponentially decays over the remaining epochs until `max-epochs` towards `end-learn-rate`.
+In our training regime, we assume a warmup-cooldown learning rate profile which entails a linear learning rate increase from `end-learn-rate` to `max-learn-rate` within the first `warmup-epochs`. Then, the learning rate exponentially decays over the remaining epochs until `max-epochs` towards `end-learn-rate`.
 
 Furthermore, we provide 3 pre-defined simple decoder models named as `TD_Dense`, `1D_CNN` and `Stacked_LSTM`. More details on these can be seen in [model_utils.py](./utils/model_utils.py).
 
-**i.** Under this training scheme, a user can run both single and grid-search model trainings. Under the single model training scheme, the model will be trained given a suppled set of parameters. Relevant performance histories and evaluation metrics will be stored in `./model_logs`.
+**i.** Under the single model training scheme, the model will be trained given a suppled set of parameters. Relevant performance histories and evaluation metrics will be stored in `./model_logs`.
 
 An example of executing a single model training is shown below:
 
@@ -109,7 +109,7 @@ An example of executing a single model training is shown below:
 $ python3 train.py --model-type Stacked_LSTM --batch-size 50
 ```
 
-**ii.** Under the grid-search model training scheme, models will be trained with various hyperparameters, which are defined as in the `grid` dictionary in `train.py`. Relevant performance histories and evaluation metrics of the best performing model (on the test set) will be stored in `./model_logs`.
+**ii.** Under the grid-search model training scheme, models will be trained with various hyperparameters, which are defined as in the `grid` dictionary in `train.py`. Relevant evaluation metrics of all models and the performance history of the best model will be stored in `./model_logs`.
 
 An example of executing a grid-search model training is shown below:
 
