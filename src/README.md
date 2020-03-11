@@ -33,6 +33,8 @@ $ pip install -r requirements.txt
 > install.packages(c("ggplot2","tikzDevice","reshape2","optparse","ggsci"))
 ```
 
+**Note:** R-scripts were tested with R versions `3.6.*`.
+
 **iii.** If you want to use or reference the best model in this repository (which is stored in a `git-lfs` entry), you would need to install `git-lfs` for your system.
 
 If you already had `git-lfs` installed before cloning the repository, the best model data would be downloaded alongside the clone.
@@ -111,7 +113,7 @@ In our training regime, we assume a warmup-cooldown learning rate profile which 
 
 Furthermore, we provide 3 pre-defined simple decoder models named as `TD_Dense`, `1D_CNN` and `Stacked_LSTM`. More details on these can be seen in [model_utils.py](./utils/model_utils.py).
 
-**i.** Under the single model training scheme, the model will be trained given a suppled set of parameters. Relevant performance histories and evaluation metrics will be stored in `./model_logs`.
+**i.** Under the single model training scheme, the model will be trained given a supplied set of parameters. Relevant performance histories and evaluation metrics will be stored in `./model_logs`.
 
 An example of executing a single model training is shown below:
 

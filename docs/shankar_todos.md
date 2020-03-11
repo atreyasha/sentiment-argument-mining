@@ -10,19 +10,17 @@ Developments
         infomration minus evaluation on UNSC corpus first, add
         descriptions of US election debates into readme
 
-    2.  **TODO** add git lfs for best model (\~140 Mb)
-
-    3.  **TODO** add section for final evaluation on UNSC
+    2.  **TODO** add section for final evaluation on UNSC
         corpus, with new pre~processing~ script in older section
 
-    4.  fill up pydocstrings in appropriate style for all functions
+    3.  fill up pydocstrings in appropriate style for all functions
 
-    5.  update all information to indicate procedures and articles
+    4.  update all information to indicate procedures and articles
         involved, so users can find relevant information
 
-    6.  make final pull request when all is complete
+    5.  make final pull request when all is complete
 
-    7.  push final paper and bibtex when all is done, add global
+    6.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding
