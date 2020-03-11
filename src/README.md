@@ -129,9 +129,36 @@ An example of executing a grid-search model training is shown below:
 $ python3 train.py --grid-search --batch-size 30
 ```
 
-**iii.** This workflow was tested on a single NVIDIA GeForce GTX 1080 Ti GPU with 12 GB RAM. Due to limited-memory issues, we had to use a low default batch-size of `10`. Our best model weights and evaluation metrics can be found in `./model_logs/2020_03_06_16_19_03_MSL512_grid_train`. Our best model with the `TD_Dense` decoder achieved a `69%` F\_1 score on the test dataset.
+**iii.** This workflow was tested on a single NVIDIA GeForce GTX 1080 Ti GPU with 12 GB RAM. Due to limited-memory issues, we had to use a low default batch-size of `10`. Our best model weights and evaluation metrics can be found in `./model_logs/2020_03_06_16_19_03_MSL512_grid_train`. Our best model with the `TD_Dense` decoder achieved a `69%` Macro-F\_1 score on the test dataset.
 
 ### 5. Visualization
+
+In order to visualize the US Election Debate corpus and model results, we created functions in the `vis.R` script.
+
+```
+$ Rscript vis.R --help
+
+Usage: vis.R [options]
+
+Options:
+	-h, --help
+		Show this help message and exit
+
+	-m MODEL-DIR, --model-dir=MODEL-DIR
+		Plot model evolution for specified model directory
+```
+
+**i.** In order to construct plots of the US Election Debate corpus and respective token frequencies, simply execute as follows:
+
+```shell
+$ Rscript vis.R
+```
+
+**ii.** In order to construct a plot of a model's performance history, simply append the path of the model log file as shown below:
+
+```shell
+$ Rscript vis.R --model-dir ./model_logs/2020_03_06_16_19_03_MSL512_grid_train
+```
 
 ### 6. Acknowledgments
 
