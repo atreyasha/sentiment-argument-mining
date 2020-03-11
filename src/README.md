@@ -33,7 +33,7 @@ $ pip install -r requirements.txt
 > install.packages(c("ggplot2","tikzDevice","reshape2","optparse","ggsci"))
 ```
 
-**Note:** R-scripts were tested with R versions `3.6.*`.
+**Note:** R-scripts were tested with R version `3.6.*`.
 
 **iii.** If you want to use or reference the best model in this repository (which is stored in a `git-lfs` entry), you would need to install `git-lfs` for your system.
 
