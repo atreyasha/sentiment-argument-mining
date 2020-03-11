@@ -28,7 +28,8 @@ Documentation/Visualization
 
 6.  make final pull request when all is complete
 
-7.  push final paper and bibtex when all is done
+7.  push final paper and bibtex when all is done, add global references
+    to results from paper
 
 Sequence encoding
 
