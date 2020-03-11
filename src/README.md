@@ -7,7 +7,7 @@ This readme will summarize our code and results in conducting sentiment analysis
 1. [Dependencies](#1-Dependencies)
 2. [Repository initialization](#2-Repository-initialization)
 3. [Preprocessing](#3-Preprocessing)
-4. [Training & Evaluation](#4-Training-&-Evaluation)
+4. [Training and Evaluation](#4-Training-and-Evaluation)
 5. [Visualization](#5-Visualization)
 6. [Acknowledgments](#6-Acknowledgments)
 
@@ -67,7 +67,7 @@ $ python3 pre_process_USElectionDebates.py
 
 This process will produce respective `json`, `csv` and `npy` files in the `./data` directory; all of which will be later utilized in training and evaluation.
 
-### 4. Training & Evaluation
+### 4. Training and Evaluation
 
 ### 5. Visualization
 
