@@ -3,67 +3,61 @@ Developments
 
 ### Argumentation workflow
 
-add information on grid-search techniques, memory issues, single-GPU issues etc. in training segment
-====================================================================================================
+1.  Documentation/Visualization
 
-mention how evaluation and model selection is done on-the-fly
-=============================================================
+    1.  **TODO** fix up all readmes for clarity, update R
+        requirements in readme, push readme with comprehensive
+        infomration minus evaluation on UNSC corpus first, add
+        descriptions of US election debates into readme
 
-Documentation/Visualization
+    2.  **TODO** add git lfs for best model (\~140 Mb)
 
-1.  **TODO** fix up all readmes for clarity, update R
-    requirements in readme, push readme with comprehensive infomration
-    minus evaluation on UNSC corpus first, add descriptions of US
-    election debates into readme
+    3.  **TODO** add section for final evaluation on UNSC
+        corpus, with new pre~processing~ script in older section
 
-2.  **TODO** add git lfs for best model (\~140 Mb)
+    4.  fill up pydocstrings in appropriate style for all functions
 
-3.  **TODO** add section for final evaluation on UNSC corpus,
-    with new pre~processing~ script in older section
+    5.  update all information to indicate procedures and articles
+        involved, so users can find relevant information
 
-4.  fill up pydocstrings in appropriate style for all functions
+    6.  make final pull request when all is complete
 
-5.  update all information to indicate procedures and articles involved,
-    so users can find relevant information
+    7.  push final paper and bibtex when all is done, add global
+        references to results from paper
 
-6.  make final pull request when all is complete
+2.  Sequence encoding
 
-7.  push final paper and bibtex when all is done, add global references
-    to results from paper
+    1.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
 
-Sequence encoding
+    2.  tree (task 2) -\> adjacency matrix connecting to various heads
+        which could be claims or connecting premise
 
-1.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
+    3.  minor debiasing done with removal of capital references
 
-2.  tree (task 2) -\> adjacency matrix connecting to various heads which
-    could be claims or connecting premise
+3.  Architecture
 
-3.  minor debiasing done with removal of capital references
+    1.  limited time issue: make homogeneous train/validation/test
+        datasets for appropriate evaluation
 
-Architecture
+    2.  limited time issue: multi-task setting with argumentation tree
 
-1.  limited time issue: make homogeneous train/validation/test datasets
-    for appropriate evaluation
+    3.  limited time issue: develop gradient accumulator/checkpointer in
+        optimizer to save memory and use most of data available
 
-2.  limited time issue: multi-task setting with argumentation tree
+4.  Paper
 
-3.  limited time issue: develop gradient accumulator/checkpointer in
-    optimizer to save memory and use most of data available
+    1.  motivate with all methods tried
 
-Paper
+    2.  mention domain debiasing with removal of references
 
-1.  motivate with all methods tried
+    3.  compare with scores in paper and talk about how paper made much
+        simplifications
 
-2.  mention domain debiasing with removal of references
+    4.  think about all other optimizations worth mentioning, talk about
+        problem with size 128 reduction
 
-3.  compare with scores in paper and talk about how paper made much
-    simplifications
+    5.  concede to using low batch size to allow for more data, add
+        comparison with majority class classifier as baseline
 
-4.  think about all other optimizations worth mentioning, talk about
-    problem with size 128 reduction
-
-5.  concede to using low batch size to allow for more data, add
-    comparison with majority class classifier as baseline
-
-6.  mention all limitations and recommendations for things to do; along
-    with using pytorch instead of tensorflow
+    6.  mention all limitations and recommendations for things to do;
+        along with using pytorch instead of tensorflow

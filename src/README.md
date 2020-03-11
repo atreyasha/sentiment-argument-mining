@@ -33,6 +33,8 @@ $ pip install -r requirements.txt
 > install.packages(c("ggplot2","tikzDevice","reshape2","optparse","ggsci"))
 ```
 
+**iii.** If you want to use or reference the best model in this repository (which is stored in a `git-lfs` entry), you would need to install `git-lfs` for your system. If you installed `git-lfs` after cloning this repository, execute `git lfs pull` in order to recover the large model data, as per suggestions [here](https://github.com/git-lfs/git-lfs/issues/325).
+
 ### 2. Repository initialization
 
 In order to initialize this repository, simply run `init.sh` as shown below:
@@ -121,7 +123,7 @@ An example of executing a grid-search model training is shown below:
 $ python3 train.py --grid-search --batch-size 30
 ```
 
-**iii.** This code was tested on a single NVIDIA GeForce GTX 1080 Ti GPU with 12 GB RAM. Due to limited-memory issues, we had to use a low default batch-size of `10`.
+**iii.** This workflow was tested on a single NVIDIA GeForce GTX 1080 Ti GPU with 12 GB RAM. Due to limited-memory issues, we had to use a low default batch-size of `10`. Our best model weights and evaluation metrics can be found in `./model_logs/2020_03_06_16_19_03_MSL512_grid_train`. Our best model with the `TD_Dense` decoder achieved a `69%` F\_1 score on the test dataset.
 
 ### 5. Visualization
 

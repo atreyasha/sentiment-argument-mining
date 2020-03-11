@@ -2,9 +2,6 @@
  
 *** Argumentation workflow
 
-* add information on grid-search techniques, memory issues, single-GPU issues etc. in training segment
-* mention how evaluation and model selection is done on-the-fly
-
 **** Documentation/Visualization
 ***** TODO fix up all readmes for clarity, update R requirements in readme, push readme with comprehensive infomration minus evaluation on UNSC corpus first, add descriptions of US election debates into readme
 ***** TODO add git lfs for best model (~140 Mb)
