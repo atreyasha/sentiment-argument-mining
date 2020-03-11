@@ -62,4 +62,8 @@ In our training process, we assume the maximum possible sequence length of `512`
 $ python3 pre_process_USElectionDebates.py
 ```
 
-This process will produce respective `json`, `csv` and `npy` files in the `./data` directory; all of which will be later utilized in training and evaluation. 
+This process will produce respective `json`, `csv` and `npy` files in the `./data` directory; all of which will be later utilized in training and evaluation.
+
+### Acknowledgments
+
+**@kpe** for BERT/ALBERT code in [bert-for-tf2](https://github.com/kpe/bert-for-tf2)
