@@ -13,7 +13,7 @@ This readme will summarize our code and results in conducting sentiment analysis
 
 ### 1. Dependencies
 
-1. In order to set up this repository, we would need to satisfy local pythonic dependencies. If `poetry` is installed on your system, you can install dependencies and create a virtual environment automatically via the following command:
+**i.** In order to set up this repository, we would need to satisfy local pythonic dependencies. If `poetry` is installed on your system, you can install dependencies and create a virtual environment automatically via the following command:
 
 ```shell
 $ poetry install
@@ -27,7 +27,7 @@ $ pip install -r requirements.txt
 
 **Note**: Your python version must be `3.7.*` in order to install certain dependencies in this repository. 
 
-2. In this repository, we use `R` and `ggplot` for visualization. Execute the following within your R console to get the dependencies:
+**ii.** In this repository, we use `R` and `ggplot` for visualization. Execute the following within your R console to get the dependencies:
 
 ```r
 > install.packages(c("ggplot2","tikzDevice","reshape2","optparse","ggsci"))
@@ -41,9 +41,9 @@ In order to initialize this repository, simply run `init.sh` as shown below:
 $ ./init.sh
 ```
 
-1. Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
+**i.** Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
 
-2. Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
+**ii.** Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
 
 ### 3. Preprocessing
 
@@ -101,17 +101,17 @@ In our training regime, we assume a warmup-cooldown learning rate profile which 
 
 Furthermore, we provide 3 pre-defined simple decoder models named as `TD_Dense`, `1D_CNN` and `Stacked_LSTM`. More details on these can be seen in [model_utils.py](./utils/model_utils.py).
 
-1. Under this training scheme, a user can run both single and grid-search model trainings. Under the single model training scheme, the model will be trained given a suppled set of parameters. Relevant performance histories and evaluation metrics will be stored in `./model_logs`.
+**i.** Under this training scheme, a user can run both single and grid-search model trainings. Under the single model training scheme, the model will be trained given a suppled set of parameters. Relevant performance histories and evaluation metrics will be stored in `./model_logs`.
 
-    An example of executing a single model training is shown below:
+An example of executing a single model training is shown below:
 
 ```shell
 $ python3 train.py --model-type Stacked_LSTM --batch-size 50
 ```
 
-2. Under the grid-search model training scheme, models will be trained with various hyperparameters, which are defined as in the `grid` dictionary in `train.py`. Relevant performance histories and evaluation metrics of the best performing model (on the test set) will be stored in `./model_logs`.
+**ii.** Under the grid-search model training scheme, models will be trained with various hyperparameters, which are defined as in the `grid` dictionary in `train.py`. Relevant performance histories and evaluation metrics of the best performing model (on the test set) will be stored in `./model_logs`.
 
-    An example of executing a grid-search model training is shown below:
+An example of executing a grid-search model training is shown below:
 
 ```shell
 $ python3 train.py --grid-search --batch-size 50
