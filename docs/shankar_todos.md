@@ -3,46 +3,59 @@ Developments
 
 ### Argumentation workflow
 
-1.  Architecture
+1.  Documentation/Visualization
 
-    1.  **TODO** develop gradient accumulator in optimizer to
-        save memory and use most of data available
+    1.  **TODO** fix up all readmes for clarity, update R
+        requirements in readme, push readme with comprehensive
+        infomration minus evaluation on UNSC corpus first, add
+        descriptions of US election debates into readme
 
-    2.  **TODO** add all relevant metrics into evaluation
-        step so they can be re-used
+    2.  **TODO** add section for final evaluation on UNSC
+        corpus, with new pre~processing~ script in older section
 
-    3.  **TODO** use smaller or narrower search space in
-        grid-search, only use val~loss~ to simplify code
+    3.  fill up pydocstrings in appropriate style for all functions
 
-    4.  first develop full baseline for task 1, then proceed to task 2
+    4.  update all information to indicate procedures and articles
+        involved, so users can find relevant information
 
-    5.  make homogeneous train/validation/test datasets for appropriate
-        evaluation
+    5.  make final pull request when all is complete
 
-2.  Domain debiasing
+    6.  push final paper and bibtex when all is done, add global
+        references to results from paper
 
-    1.  **TODO** remove capital names and references to
-        reduce bias
-
-    2.  perhaps dropout would assist in training
-
-3.  Sequence encoding
+2.  Sequence encoding
 
     1.  simple (task 1) -\> 1: claim, 2: premise, 3: non-argument
 
     2.  tree (task 2) -\> adjacency matrix connecting to various heads
         which could be claims or connecting premise
 
-    3.  need to split UNSC smaller speech segments or paragraphs to pass
-        into pipeline
+    3.  minor debiasing done with removal of capital references
 
-4.  Documentation
+3.  Architecture
 
-    1.  fix up all readmes for clarity
+    1.  limited time issue: make homogeneous train/validation/test
+        datasets for appropriate evaluation
 
-    2.  fill up pydocstrings in appropriate style for all functions
+    2.  limited time issue: multi-task setting with argumentation tree
 
-    3.  add all dependencies and information on how to install, test
-        venv on cluster
+    3.  limited time issue: develop gradient accumulator/checkpointer in
+        optimizer to save memory and use most of data available
 
-    4.  add information on init.sh and how to use
+4.  Paper
+
+    1.  motivate with all methods tried
+
+    2.  mention domain debiasing with removal of references
+
+    3.  compare with scores in paper and talk about how paper made much
+        simplifications
+
+    4.  think about all other optimizations worth mentioning, talk about
+        problem with size 128 reduction
+
+    5.  concede to using low batch size to allow for more data, add
+        comparison with majority class classifier as baseline
+
+    6.  mention all limitations and recommendations for things to do;
+        along with using pytorch instead of tensorflow
