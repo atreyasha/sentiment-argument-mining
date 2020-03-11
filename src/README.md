@@ -7,6 +7,9 @@ This readme will summarize our code and results in conducting sentiment analysis
 1. [Dependencies](#1-Dependencies)
 2. [Repository initialization](#2-Repository-initialization)
 3. [Preprocessing](#3-Preprocessing)
+4. [Training](#4-Training)
+5. [Visualization](#5-Visualization)
+6. [Acknowledgments](#6-Acknowledgments)
 
 ### 1. Dependencies
 
@@ -64,6 +67,10 @@ $ python3 pre_process_USElectionDebates.py
 
 This process will produce respective `json`, `csv` and `npy` files in the `./data` directory; all of which will be later utilized in training and evaluation.
 
-### Acknowledgments
+### 4. Training
+
+### 5. Visualization
+
+### 6. Acknowledgments
 
 **@kpe** for BERT/ALBERT code in [bert-for-tf2](https://github.com/kpe/bert-for-tf2)
