@@ -1,0 +1,1 @@
+{"model_type": ["TD_Dense", "1D_Conv", "Stacked_LSTM"], "learn_rate_combinations": [[1e-05, 1e-06], [1e-05, 1e-07]], "warmup_epoch_count": [10, 15, 20]}

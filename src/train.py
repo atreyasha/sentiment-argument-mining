@@ -171,7 +171,7 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
                          "test_f1_P":str(test_out_dict["5"]["f1-score"])})
 
 def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
-               label_threshold_less=3):
+               json_path="./utils/grid.json",label_threshold_less=3):
     """
     Function to conduct grid-search on model training on the pre-processed
     US Election Debate corpus
@@ -180,6 +180,7 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
         max_seq_length (int): maximum sequence length for training data
         max_epochs (int): maximum training epochs
         batch_size (int): batch-size for stochastic gradient descent
+        json_path (str): path to json file indicating hyperparameter ranges
         label_threshold_less (int): all label IDs strictly less than this number
         will be ignored in class accuracy calculations
     """
@@ -202,10 +203,8 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
     # get bert layer
     l_bert, model_ckpt = fetch_bert_layer()
     # define grid-search dictionary
-    grid = {"model_type":["TD_Dense","1D_Conv","Stacked_LSTM"],
-            "learn_rate_combinations":[[1e-5,1e-6],
-                                       [1e-5,1e-7]],
-            "warmup_epoch_count":[10,15,20]}
+    with open(json_path,"r") as f:
+        grid = json.load(f)
     # create flat combinations
     iterable_grid = list(ParameterGrid(grid))
     # define starting test
@@ -313,6 +312,9 @@ if __name__ == "__main__":
     single.add_argument("--model-type", type=str, default="TD_Dense",
                         help="top layer after albert, options are"+
                         " 'TD_Dense', '1D_CNN' or 'Stacked_LSTM'")
+    grid = parser.add_argument_group("arguments specific to grid-search training")
+    grid.add_argument("--json", type=str, default="./utils/grid.json",
+                      help="path to json file for hyperparameter ranges")
     args = parser.parse_args()
     if not args.grid_search:
         single_train(args.max_seq_length,args.max_epochs,
@@ -321,4 +323,4 @@ if __name__ == "__main__":
                      args.model_type)
     else:
         grid_train(args.max_seq_length,args.max_epochs,
-                   args.batch_size)
+                   args.batch_size,args.json)

@@ -76,7 +76,7 @@ $ python3 train.py --help
 
 usage: train.py [-h] [--max-seq-length int] [--grid-search] [--max-epochs int]
                 [--batch-size int] [--warmup-epochs int] [--max-learn-rate float]
-                [--end-learn-rate float] [--model-type str]
+                [--end-learn-rate float] [--model-type str] [--json str]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -95,6 +95,10 @@ arguments specific to single training:
                         1e-06)
   --model-type str      top layer after albert, options are 'TD_Dense', '1D_CNN' or
                         'Stacked_LSTM' (default: TD_Dense)
+
+arguments specific to grid-search training:
+  --json str            path to json file for hyperparameter ranges (default:
+                        ./utils/grid.json)
 ```
 
 In our training regime, we assume a warmup-cooldown learning rate profile which entails a linear learning rate increase from `end-learn-rate` to `max-learn-rate` within the first `warmup-epochs`. Then, the learning rate exponentially decays over the remaining epochs until `max-epochs` towards `end-learn-rate`.
@@ -109,15 +113,15 @@ An example of executing a single model training is shown below:
 $ python3 train.py --model-type Stacked_LSTM --batch-size 50
 ```
 
-**ii.** Under the grid-search model training scheme, models will be trained with various hyperparameters, which are defined as in the `grid` dictionary in `train.py`. Relevant evaluation metrics of all models and the performance history of the best model will be stored in `./model_logs`.
+**ii.** Under the grid-search model training scheme, models will be trained with various hyperparameters, which are defined in `./utils/grid.json`. Relevant evaluation metrics of all models and the performance history of the best model will be stored in `./model_logs`.
 
 An example of executing a grid-search model training is shown below:
 
 ```shell
-$ python3 train.py --grid-search --batch-size 50
+$ python3 train.py --grid-search --batch-size 30
 ```
 
-**Note:** In order to modify the grid-search hyperparameters, the user would have to edit the `grid` variable in `train.py`.
+**iii.** This code was tested on a single NVIDIA GeForce GTX 1080 Ti GPU with 12 GB RAM. Due to limited-memory issues, we had to use a low default batch-size of `10`.
 
 ### 5. Visualization
 
