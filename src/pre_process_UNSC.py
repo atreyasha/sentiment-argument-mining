@@ -40,12 +40,12 @@ def project_to_ids(Tokenizer,data,max_seq_length=512):
     Args:
         Tokenizer (bert.tokenization.albert_tokenization.FullTokenizer):
         tokenizer class for bert tokenizer
-        data (list): input data containing albert tokens and label types
+        data (list): input data containing albert tokens
         max_seq_length (int): maximum sequence length to be used in training
 
     Returns:
         (np.ndarray): input albert IDs
-        (np.ndarray): output mask indicating which token is relevant to outcome,
+        (np.ndarray): input mask indicating which token is relevant to outcome,
         this includes all corpus tokens and excludes all bert special tokens
     """
     input_ids = []
@@ -111,3 +111,10 @@ def corpus2tokenids(max_seq_length=512,
                               max_seq_length)
     np.save(directory+"input_X_"+str(max_seq_length)+".npy",input_ids)
     np.save(directory+"input_mask_"+str(max_seq_length)+".npy",input_mask)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
+    parser.add_argument("--max-seq-length", type=int, default=512,
+                        help="maximum sequence length of tokenized id's")
+    args = parser.parse_args()
+    corpus2tokenids(max_seq_length=args.max_seq_length)
