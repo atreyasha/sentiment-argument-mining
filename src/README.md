@@ -77,14 +77,16 @@ This process will produce respective `json`, `csv` and `npy` files in the `./dat
 
 ### 4. Training and Evaluation
 
-For training, we use the base version 2 of [ALBERT](https://github.com/google-research/ALBERT) and fine-tune it on the US Election Debate corpus in the form of a sequence tagging task. Within this task, each token of the US Election Debate corpus must be classified into one of three argument candidates; specifically "None" (N), "Claim" (C) or "Premise" (P). This is very similar to a Natural Entity Recognition (NER) task. This workflow is encompassed in `train.py`.
+For training, we use the base version 2 of [ALBERT](https://github.com/google-research/ALBERT) and fine-tune it on the US Election Debate corpus in the form of a sequence tagging task. Within this task, each token of the US Election Debate corpus must be classified into one of three argument candidates; specifically "None" (N), "Claim" (C) or "Premise" (P). This is very similar to a Natural Entity Recognition (NER) task. This workflow is encompassed in `train_USElectionDebates.py`.
 
 ```
-$ python3 train.py --help
+$ python3 train_USElectionDebates.py --help
 
-usage: train.py [-h] [--max-seq-length int] [--grid-search] [--max-epochs int]
-                [--batch-size int] [--warmup-epochs int] [--max-learn-rate float]
-                [--end-learn-rate float] [--model-type str] [--json str]
+usage: train_USElectionDebates.py [-h] [--max-seq-length int] [--grid-search]
+                                  [--max-epochs int] [--batch-size int]
+                                  [--warmup-epochs int] [--max-learn-rate float]
+                                  [--end-learn-rate float] [--model-type str]
+                                  [--json str]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -118,7 +120,7 @@ Furthermore, we provide 3 pre-defined simple decoder models named as `TD_Dense`,
 An example of executing a single model training is shown below:
 
 ```shell
-$ python3 train.py --model-type Stacked_LSTM --batch-size 50
+$ python3 train_USElectionDebates.py --model-type Stacked_LSTM --batch-size 50
 ```
 
 **ii.** Under the grid-search model training scheme, models will be trained with various hyperparameters, which are defined in `./utils/grid.json`. Relevant evaluation metrics of all models and the performance history of the best model will be stored in `./model_logs`.
@@ -126,7 +128,7 @@ $ python3 train.py --model-type Stacked_LSTM --batch-size 50
 An example of executing a grid-search model training is shown below:
 
 ```shell
-$ python3 train.py --grid-search --batch-size 30
+$ python3 train_USElectionDebatespy --grid-search --batch-size 30
 ```
 
 **iii.** This workflow was tested on a single NVIDIA GeForce GTX 1080 Ti GPU with 12 GB RAM. Due to limited-memory issues, we had to use a low default batch-size of `10`. Our best model weights and evaluation metrics can be found in `./model_logs/2020_03_06_16_19_03_MSL512_grid_train`. Our best model with the `TD_Dense` decoder achieved a `69%` Macro-F\_1 score on the test dataset.
