@@ -11,12 +11,18 @@ Developments
     2.  **TODO** fill up pydocstrings in appropriate style
         for all functions
 
-    3.  update all information to indicate procedures and articles
+    3.  **TODO** squeeze in sentiment methodologies into
+        repository when done, install sentiment dependencies onto venv
+        for global tracking, perhaps add sentiment analysis on jupyter
+        notebook with shared dependencies
+
+    4.  update all information to indicate procedures and articles
         involved, so users can find relevant information
 
-    4.  make final pull request when all is complete
+    5.  include overview section in ./src to summarize all sentiment and
+        argumentation techniques
 
-    5.  push final paper and bibtex when all is done, add global
+    6.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding

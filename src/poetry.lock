@@ -263,6 +263,22 @@ tests = ["pytest", "pytest-cov", "pytest-pep8"]
 
 [[package]]
 category = "main"
+description = "Powerful data structures for data analysis, time series, and statistics"
+name = "pandas"
+optional = false
+python-versions = ">=3.6.1"
+version = "1.0.1"
+
+[package.dependencies]
+numpy = ">=1.13.3"
+python-dateutil = ">=2.6.1"
+pytz = ">=2017.2"
+
+[package.extras]
+test = ["pytest (>=4.0.2)", "pytest-xdist", "hypothesis (>=3.58)"]
+
+[[package]]
+category = "main"
 description = "Tensorflow Keras utilities for reducing boilerplate code."
 name = "params-flow"
 optional = false
@@ -312,6 +328,36 @@ version = "0.2.8"
 
 [package.dependencies]
 pyasn1 = ">=0.4.6,<0.5.0"
+
+[[package]]
+category = "main"
+description = "Reads/writes R RData and Rds files into/from pandas data frames."
+name = "pyreadr"
+optional = false
+python-versions = "*"
+version = "0.2.6"
+
+[package.dependencies]
+pandas = "*"
+
+[[package]]
+category = "main"
+description = "Extensions to the standard Python datetime module"
+name = "python-dateutil"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+version = "2.8.1"
+
+[package.dependencies]
+six = ">=1.5"
+
+[[package]]
+category = "main"
+description = "World timezone definitions, modern and historical"
+name = "pytz"
+optional = false
+python-versions = "*"
+version = "2019.3"
 
 [[package]]
 category = "main"
@@ -527,7 +573,7 @@ python-versions = "*"
 version = "1.12.0"
 
 [metadata]
-content-hash = "e7cca409a9095ed925b8d0c341b504f924e415904a4cf4d21f86fb741ded467a"
+content-hash = "65acdefef7e707fcaf38fa5097b0a4bb6f273c06fe3e2a4fb504bed49cbf6845"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -706,6 +752,22 @@ opt-einsum = [
     {file = "opt_einsum-3.2.0-py3-none-any.whl", hash = "sha256:f6fbfbb759e670305c5c9a4dc4432e30f65e06fede88293dacfe19915af73386"},
     {file = "opt_einsum-3.2.0.tar.gz", hash = "sha256:738b0a1db1d3084d360081bb64d826f9db06d2df7cc0bf8e2c9356028da1fa31"},
 ]
+pandas = [
+    {file = "pandas-1.0.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:74a470d349d52b9d00a2ba192ae1ee22155bb0a300fd1ccb2961006c3fa98ed3"},
+    {file = "pandas-1.0.1-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:e2140e1bbf9c46db9936ee70f4be6584d15ff8dc3dfff1da022d71227d53bad3"},
+    {file = "pandas-1.0.1-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:d10e83866b48c0cdb83281f786564e2a2b51a7ae7b8a950c3442ad3c9e36b48c"},
+    {file = "pandas-1.0.1-cp36-cp36m-win32.whl", hash = "sha256:303827f0bb40ff610fbada5b12d50014811efcc37aaf6ef03202dc3054bfdda1"},
+    {file = "pandas-1.0.1-cp36-cp36m-win_amd64.whl", hash = "sha256:6f38969e2325056f9959efbe06c27aa2e94dd35382265ad0703681d993036052"},
+    {file = "pandas-1.0.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:2530aea4fe46e8df7829c3f05e0a0f821c893885d53cb8ac9b89cc67c143448c"},
+    {file = "pandas-1.0.1-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:3b019e3ea9f5d0cfee0efabae2cfd3976874e90bcc3e97b29600e5a9b345ae3d"},
+    {file = "pandas-1.0.1-cp37-cp37m-win32.whl", hash = "sha256:23e177d43e4bf68950b0f8788b6a2fef2f478f4ec94883acb627b9264522a98a"},
+    {file = "pandas-1.0.1-cp37-cp37m-win_amd64.whl", hash = "sha256:a9fbe41663416bb70ed05f4e16c5f377519c0dc292ba9aa45f5356e37df03a38"},
+    {file = "pandas-1.0.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:7f9a509f6f11fa8b9313002ebdf6f690a7aa1dd91efd95d90185371a0d68220e"},
+    {file = "pandas-1.0.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:942b5d04762feb0e55b2ad97ce2b254a0ffdd344b56493b04a627266e24f2d82"},
+    {file = "pandas-1.0.1-cp38-cp38-win32.whl", hash = "sha256:7d77034e402165b947f43050a8a415aa3205abfed38d127ea66e57a2b7b5a9e0"},
+    {file = "pandas-1.0.1-cp38-cp38-win_amd64.whl", hash = "sha256:5036d4009012a44aa3e50173e482b664c1fae36decd277c49e453463798eca4e"},
+    {file = "pandas-1.0.1.tar.gz", hash = "sha256:3c07765308f091d81b6735d4f2242bb43c332cc3461cae60543df6b10967fe27"},
+]
 params-flow = [
     {file = "params-flow-0.7.4.tar.gz", hash = "sha256:150e0fa66dd869eeb00535daa74c8c36b24ef6aec9fbae10b1f36414a4a8fc83"},
 ]
@@ -762,6 +824,31 @@ pyasn1-modules = [
     {file = "pyasn1_modules-0.2.8-py3.5.egg", hash = "sha256:426edb7a5e8879f1ec54a1864f16b882c2837bfd06eee62f2c982315ee2473ed"},
     {file = "pyasn1_modules-0.2.8-py3.6.egg", hash = "sha256:cbac4bc38d117f2a49aeedec4407d23e8866ea4ac27ff2cf7fb3e5b570df19e0"},
     {file = "pyasn1_modules-0.2.8-py3.7.egg", hash = "sha256:c29a5e5cc7a3f05926aff34e097e84f8589cd790ce0ed41b67aed6857b26aafd"},
+]
+pyreadr = [
+    {file = "pyreadr-0.2.6-cp35-cp35m-macosx_10_6_intel.whl", hash = "sha256:dcbfb3447c577e7cae5ffd0c3e0a1191462ea8466776f2838ef0c3d10488e06b"},
+    {file = "pyreadr-0.2.6-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:9241cc118b9821cf36446c88e0a4074a17028908d4a20c7c184fc1930515c008"},
+    {file = "pyreadr-0.2.6-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:9e54d2393f2c8e507ed0c5f5b8ea2878b0b51f82818f01e07e461341b6cd3f79"},
+    {file = "pyreadr-0.2.6-cp35-none-win_amd64.whl", hash = "sha256:756d9798bad1f21b6910948fc0e58add5c93b4fb37c5c68dcbd4f41b118fd9bd"},
+    {file = "pyreadr-0.2.6-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:16b49ae50741731315f77059ef50c180d25251e595e0fd9869ae14abf98559aa"},
+    {file = "pyreadr-0.2.6-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:4937d3336135a6621e517bebec5660bd1964f63249f961a078bf84874af0f075"},
+    {file = "pyreadr-0.2.6-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:b06ae69ef19a7a0ffb46f3b600abfc081837a8ecabfa7842d0d70643d507fe59"},
+    {file = "pyreadr-0.2.6-cp36-none-win_amd64.whl", hash = "sha256:0db3dea8ac2d87040ea1eb1db52d6333b958fdef9b8bec2d121df071ea905886"},
+    {file = "pyreadr-0.2.6-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:b04d42204cc3ad43d60f93548b700c64a6e5448f7b5ad7dee1865e367ed2f390"},
+    {file = "pyreadr-0.2.6-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:f2b803903a4e3b12781ff625dc8a3b48c861f95603341a16affa7e42647eaf4a"},
+    {file = "pyreadr-0.2.6-cp37-none-win_amd64.whl", hash = "sha256:955026ec4475039a5695d0c4b3ee0a02a9d140aeef97f0c736530f8e8e82b0f0"},
+    {file = "pyreadr-0.2.6-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:d4b757f99fb43661f652706954235340ead6adfd28e24fe62f569d15a2490a01"},
+    {file = "pyreadr-0.2.6-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:31af1a2a14d5fdf43d1cfd7f7ea14de36bb6190fb5b3eee3962fa4990e14ede0"},
+    {file = "pyreadr-0.2.6-cp38-none-win_amd64.whl", hash = "sha256:1e90855bed8de204d46e86254338e9ac62a51a19a9c902ec7f9c679066f3204b"},
+    {file = "pyreadr-0.2.6.tar.gz", hash = "sha256:9b9e2a1da89044cf4daf8c9e03b95b6ceb9139f82c037cfb607e607243534b75"},
+]
+python-dateutil = [
+    {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
+    {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
+]
+pytz = [
+    {file = "pytz-2019.3-py2.py3-none-any.whl", hash = "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"},
+    {file = "pytz-2019.3.tar.gz", hash = "sha256:b02c06db6cf09c12dd25137e563b31700d3b80fcc4ad23abb7a315f2789819be"},
 ]
 requests = [
     {file = "requests-2.23.0-py2.py3-none-any.whl", hash = "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee"},
