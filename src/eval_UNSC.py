@@ -30,7 +30,7 @@ def eval_model_UNSC(direct_model,max_seq_length=512,
                     direct_save="./data/UNSC/eval/"):
     eval_X = read_or_create_data(max_seq_length)
     model = load_saved_model(direct_model)
-    y_pred = model.predict(eval_X,batch_size=256)
+    y_pred = model.predict(eval_X,batch_size=128)
     y_pred = np.argmax(y_pred,axis=-1)
     np.save(direct_save+"eval_Yhat_"+str(max_seq_length)+".npy",y_pred)
 
