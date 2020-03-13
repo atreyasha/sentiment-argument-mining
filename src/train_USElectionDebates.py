@@ -25,8 +25,8 @@ def getCurrentTime():
     """
     return datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 
-def read_or_create_data(max_seq_length,
-                        directory="./data/USElectionDebates/training/"):
+def read_or_create_data_US(max_seq_length,
+                           directory="./data/USElectionDebates/training/"):
     """
     Function either loads cached training data or re-executes
     pre-processing pipeline to generate training data
@@ -94,7 +94,7 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
     """
     # read in data
     (train_X, train_Y,
-     test_X, test_Y, label_map) = read_or_create_data(max_seq_length)
+     test_X, test_Y, label_map) = read_or_create_data_US(max_seq_length)
     num_labels = len(label_map.keys())
     # clear keras session
     tf.keras.backend.clear_session()
@@ -186,7 +186,7 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
     """
     # read in data
     (train_X, train_Y,
-     test_X, test_Y, label_map) = read_or_create_data(max_seq_length)
+     test_X, test_Y, label_map) = read_or_create_data_US(max_seq_length)
     num_labels = len(label_map.keys())
     # create log directory and log file
     log_dir = ("./model_logs/"+getCurrentTime()+"_MSL"+str(max_seq_length)

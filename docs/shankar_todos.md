@@ -8,24 +8,27 @@ Developments
     1.  **TODO** add section for final evaluation on UNSC
         corpus, with new pre~processing~ script in older section
 
-    2.  **TODO** fill up pydocstrings in appropriate style
+    2.  **TODO** add retokenization and sense-making pipeline
+        for UNSC predictions
+
+    3.  **TODO** fill up pydocstrings in appropriate style
         for all functions
 
-    3.  **TODO** squeeze in sentiment methodologies into
+    4.  **TODO** squeeze in sentiment methodologies into
         repository when done, install sentiment dependencies onto venv
         for global tracking, perhaps add sentiment analysis on jupyter
         notebook with shared dependencies
 
-    4.  update all information to indicate procedures and articles
+    5.  update all information to indicate procedures and articles
         involved, so users can find relevant information
 
-    5.  include overview section in ./src to summarize all sentiment and
+    6.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
 
-    6.  possibily improve some variable naming conventions such as
+    7.  possibily improve some variable naming conventions such as
         direct, and also use os.path.join for directory concatenation
 
-    7.  push final paper and bibtex when all is done, add global
+    8.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding

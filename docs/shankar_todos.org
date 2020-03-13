@@ -4,6 +4,7 @@
 
 **** Documentation/Visualization
 ***** TODO add section for final evaluation on UNSC corpus, with new pre_processing script in older section
+***** TODO add retokenization and sense-making pipeline for UNSC predictions
 ***** TODO fill up pydocstrings in appropriate style for all functions
 ***** TODO squeeze in sentiment methodologies into repository when done, install sentiment dependencies onto venv for global tracking, perhaps add sentiment analysis on jupyter notebook with shared dependencies
 ***** update all information to indicate procedures and articles involved, so users can find relevant information

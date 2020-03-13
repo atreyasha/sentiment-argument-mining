@@ -33,21 +33,7 @@ def basic_text_cleaning(flat_text):
     return flat_text
 
 def project_to_ids(Tokenizer,data,max_seq_length=512):
-    """
-    Function to map data to indices in the albert vocabulary, as well as
-    adding special bert tokens such as [CLS] and [SEP]
-
-    Args:
-        Tokenizer (bert.tokenization.albert_tokenization.FullTokenizer):
-        tokenizer class for bert tokenizer
-        data (list): input data containing albert tokens
-        max_seq_length (int): maximum sequence length to be used in training
-
-    Returns:
-        (np.ndarray): input albert IDs
-        (np.ndarray): input mask indicating which token is relevant to outcome,
-        this includes all corpus tokens and excludes all bert special tokens
-    """
+    input_tokens = []
     input_ids = []
     input_mask = []
     print("projecting text to indices")
@@ -63,10 +49,11 @@ def project_to_ids(Tokenizer,data,max_seq_length=512):
         input_ids_sub.extend(["<pad>"]*(max_seq_length-len(input_ids_sub)))
         input_mask_sub.extend([0]*(max_seq_length-len(input_mask_sub)))
         assert (len(input_ids_sub) == len(input_mask_sub) == max_seq_length)
+        input_tokens.append(input_ids_sub.copy())
         input_ids_sub = Tokenizer.convert_tokens_to_ids(input_ids_sub)
         input_ids.append(input_ids_sub)
         input_mask.append(input_mask_sub)
-    return np.array(input_ids), np.array(input_mask)
+    return np.array(input_tokens), np.array(input_ids), np.array(input_mask)
 
 def corpus2tokenids_UNSC(max_seq_length=512,
                     directory="./data/UNSC/eval/"):
@@ -106,15 +93,15 @@ def corpus2tokenids_UNSC(max_seq_length=512,
             to_remove.append(i)
     collection = [sent_set for i,sent_set in enumerate(collection)
                   if i not in to_remove]
-    # split data into train and test sets
-    eval_X, eval_mask = project_to_ids(Tokenizer,collection,
-                              max_seq_length)
-    rel_ids = {"speech_ids":[ids[sub[0]] for sub in collection]}
-    with open(directory+"speech_ids_"+str(max_seq_length)+".json","w") as f:
-        json.dump(rel_ids,f)
+    eval_tokens, eval_X, eval_mask = project_to_ids(Tokenizer,collection,
+                                                    max_seq_length)
+    speech_ids = {"speech_ids":[ids[sub[0]] for sub in collection]}
+    np.save(directory+"eval_tokens_"+str(max_seq_length)+".npy",eval_tokens)
     np.save(directory+"eval_X_"+str(max_seq_length)+".npy",eval_X)
     np.save(directory+"eval_mask_"+str(max_seq_length)+".npy",eval_mask)
-    return eval_X, eval_mask, rel_ids
+    with open(directory+"speech_ids_"+str(max_seq_length)+".json","w") as f:
+        json.dump(speech_ids,f)
+    return eval_X, eval_mask, speech_ids
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
