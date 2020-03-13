@@ -2,24 +2,45 @@
 # -*- coding: utf-8 -*-
 
 import os
-import csv
-import json
 import argparse
 import numpy as np
-import tensorflow as tf
 from glob import glob
-from collections import Counter
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, CSVLogger
 from tensorflow.keras.models import load_model
 from pre_process_UNSC import *
+from utils.arg_metav_formatter import *
 from utils.model_utils import *
 
-def load_model(direct):
+def read_or_create_data(max_seq_length=512,
+                        directory="./data/UNSC/eval/"):
+    check = glob(directory+"*"+str(max_seq_length)+"*")
+    if len(check) < 3:
+        eval_X,_,_ = corpus2tokenids_UNSC(max_seq_length=max_seq_length)
+    else:
+        eval_X = np.load(directory+"eval_X_"+str(max_seq_length)+".npy")
+    return eval_X
+
+def load_saved_model(model_path):
     l_bert, model_ckpt = fetch_bert_layer()
-    model_path = glob(os.path.join(direct,"*h5"))[0]
     model = load_model(model_path,
                        custom_objects={"BertModelLayer":l_bert,
                                        "argument_candidate_acc":class_acc(3)})
-    y_pred = model.predict(test_X)
+    return model
+
+def eval_model_UNSC(direct_model,max_seq_length=512,
+                    direct_save="./data/UNSC/eval/"):
+    eval_X = read_or_create_data(max_seq_length)
+    model = load_saved_model(direct_model)
+    y_pred = model.predict(eval_X)
     y_pred = np.argmax(y_pred,axis=-1)
-    out_dict = report(test_Y,y_pred)
+    np.save(direct_save+"eval_Yhat_"+str(max_seq_length)+".npy",y_pred)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
+    parser.add_argument("--max-seq-length", type=int, default=512,
+                        help="maximum sequence length of tokenized id's")
+    required = parser.add_argument_group("required name arguments")
+    required.add_argument("--model-dir", required=True, type=str,
+                          help="path to model *h5 file")
+    args = parser.parse_args()
+    eval_model_UNSC(direct_model=args.model_dir,
+                    max_seq_length=args.max_seq_length)

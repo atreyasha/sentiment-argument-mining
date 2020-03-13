@@ -22,7 +22,10 @@ Developments
     5.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
 
-    6.  push final paper and bibtex when all is done, add global
+    6.  possibily improve some variable naming conventions such as
+        direct, and also use os.path.join for directory concatenation
+
+    7.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding

@@ -45,7 +45,7 @@ def read_or_create_data(max_seq_length,
     check = glob(directory+"*"+str(max_seq_length)+"*")
     if len(check) < 4:
         (train_X, train_Y, test_X,
-         test_Y, label_map) = corpus2tokenids(max_seq_length=max_seq_length)
+         test_Y, label_map) = corpus2tokenids_US(max_seq_length=max_seq_length)
     else:
         train_X = np.load(directory+"train_X_"+str(max_seq_length)+".npy")
         train_Y = np.load(directory+"train_Y_"+str(max_seq_length)+".npy")

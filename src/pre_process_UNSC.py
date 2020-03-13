@@ -49,26 +49,26 @@ def project_to_ids(Tokenizer,data,max_seq_length=512):
         this includes all corpus tokens and excludes all bert special tokens
     """
     input_ids = []
-    output_mask = []
+    input_mask = []
     print("projecting text to indices")
     for instance_set in tqdm(data):
         input_ids_sub = ["[CLS]"]
-        output_mask_sub = [0]
+        input_mask_sub = [0]
         for i in range(len(instance_set[1])):
             input_ids_sub.extend(instance_set[1][i])
-            output_mask_sub.extend([1]*len(instance_set[1][i]))
+            input_mask_sub.extend([1]*len(instance_set[1][i]))
             input_ids_sub.extend(["[SEP]"])
-            output_mask_sub.extend([0])
-        assert (len(input_ids_sub) == len(output_mask_sub))
+            input_mask_sub.extend([0])
+        assert (len(input_ids_sub) == len(input_mask_sub))
         input_ids_sub.extend(["<pad>"]*(max_seq_length-len(input_ids_sub)))
-        output_mask_sub.extend([0]*(max_seq_length-len(output_mask_sub)))
-        assert (len(input_ids_sub) == len(output_mask_sub) == max_seq_length)
+        input_mask_sub.extend([0]*(max_seq_length-len(input_mask_sub)))
+        assert (len(input_ids_sub) == len(input_mask_sub) == max_seq_length)
         input_ids_sub = Tokenizer.convert_tokens_to_ids(input_ids_sub)
         input_ids.append(input_ids_sub)
-        output_mask.append(output_mask_sub)
-    return np.array(input_ids), np.array(output_mask)
+        input_mask.append(input_mask_sub)
+    return np.array(input_ids), np.array(input_mask)
 
-def corpus2tokenids(max_seq_length=512,
+def corpus2tokenids_UNSC(max_seq_length=512,
                     directory="./data/UNSC/eval/"):
     print("Loading UNSC data from RData format")
     ids, flat_text = load_UNSC()
@@ -107,14 +107,18 @@ def corpus2tokenids(max_seq_length=512,
     collection = [sent_set for i,sent_set in enumerate(collection)
                   if i not in to_remove]
     # split data into train and test sets
-    input_ids, input_mask = project_to_ids(Tokenizer,collection,
+    eval_X, eval_mask = project_to_ids(Tokenizer,collection,
                               max_seq_length)
-    np.save(directory+"input_X_"+str(max_seq_length)+".npy",input_ids)
-    np.save(directory+"input_mask_"+str(max_seq_length)+".npy",input_mask)
+    rel_ids = {"speech_ids":[ids[sub[0]] for sub in collection]}
+    with open(directory+"speech_ids_"+str(max_seq_length)+".json","w") as f:
+        json.dump(rel_ids,f)
+    np.save(directory+"eval_X_"+str(max_seq_length)+".npy",eval_X)
+    np.save(directory+"eval_mask_"+str(max_seq_length)+".npy",eval_mask)
+    return eval_X, eval_mask, rel_ids
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
     parser.add_argument("--max-seq-length", type=int, default=512,
                         help="maximum sequence length of tokenized id's")
     args = parser.parse_args()
-    corpus2tokenids(max_seq_length=args.max_seq_length)
+    corpus2tokenids_UNSC(max_seq_length=args.max_seq_length)

@@ -386,8 +386,8 @@ def summary_info(collection,indices,
         writer.writerow(["debate","N","C","P"])
         writer.writerows(new_collection)
 
-def corpus2tokenids(max_seq_length=512,
-                    directory="./data/USElectionDebates/training/"):
+def corpus2tokenids_US(max_seq_length=512,
+                       directory="./data/USElectionDebates/training/"):
     """
     Aggregate function to produce bert-operational training data from
     US-Election-Debate corpus
@@ -476,4 +476,4 @@ if __name__ == "__main__":
                         help="maximum sequence length of tokenized id's")
     args = parser.parse_args()
     corpus2char()
-    corpus2tokenids(max_seq_length=args.max_seq_length)
+    corpus2tokenids_US(max_seq_length=args.max_seq_length)
