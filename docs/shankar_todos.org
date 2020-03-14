@@ -11,7 +11,7 @@
 ***** include overview section in ./src to summarize all sentiment and argumentation techniques
 ***** possibily improve some variable naming conventions such as direct, and also use os.path.join for directory concatenation
 ***** push final paper and bibtex when all is done, add global references to results from paper
-      
+ 
 **** Sequence encoding
 ***** simple (task 1) -> 1: claim, 2: premise, 3: non-argument
 ***** tree (task 2) -> adjacency matrix connecting to various heads which could be claims or connecting premise

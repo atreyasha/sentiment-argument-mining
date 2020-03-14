@@ -53,10 +53,10 @@ def project_to_ids(Tokenizer,data,max_seq_length=512):
         input_ids_sub = Tokenizer.convert_tokens_to_ids(input_ids_sub)
         input_ids.append(input_ids_sub)
         input_mask.append(input_mask_sub)
-    return np.array(input_tokens), np.array(input_ids), np.array(input_mask)
+    return input_tokens, np.array(input_ids), np.array(input_mask)
 
 def corpus2tokenids_UNSC(max_seq_length=512,
-                    directory="./data/UNSC/eval/"):
+                         directory="./data/UNSC/pred/"):
     print("Loading UNSC data from RData format")
     ids, flat_text = load_UNSC()
     print("Performing basic cleaning of data")
@@ -93,15 +93,17 @@ def corpus2tokenids_UNSC(max_seq_length=512,
             to_remove.append(i)
     collection = [sent_set for i,sent_set in enumerate(collection)
                   if i not in to_remove]
-    eval_tokens, eval_X, eval_mask = project_to_ids(Tokenizer,collection,
+    pred_tokens, pred_X, pred_mask = project_to_ids(Tokenizer,collection,
                                                     max_seq_length)
-    speech_ids = {"speech_ids":[ids[sub[0]] for sub in collection]}
-    np.save(directory+"eval_tokens_"+str(max_seq_length)+".npy",eval_tokens)
-    np.save(directory+"eval_X_"+str(max_seq_length)+".npy",eval_X)
-    np.save(directory+"eval_mask_"+str(max_seq_length)+".npy",eval_mask)
-    with open(directory+"speech_ids_"+str(max_seq_length)+".json","w") as f:
-        json.dump(speech_ids,f)
-    return eval_X, eval_mask, speech_ids
+    ids_tokens = [ids[sub[0]] for sub in collection]
+    pred_tokens = {ids_tokens[i]:[token.decode("utf-8") if type(token) is bytes
+                    else token for token in sent_set]
+                   for i, sent_set in enumerate(pred_tokens)}
+    np.save(directory+"pred_X_"+str(max_seq_length)+".npy",pred_X)
+    np.save(directory+"pred_mask_"+str(max_seq_length)+".npy",pred_mask)
+    with open(directory+"pred_tokens_"+str(max_seq_length)+".json","w") as f:
+        json.dump(pred_tokens,f)
+    return pred_tokens, pred_X, pred_mask
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)

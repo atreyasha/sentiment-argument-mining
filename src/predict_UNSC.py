@@ -12,17 +12,17 @@ from utils.arg_metav_formatter import *
 from utils.model_utils import *
 
 def read_or_create_data_UNSC(max_seq_length=512,
-                             directory="./data/UNSC/eval/"):
+                             directory="./data/UNSC/pred/"):
     check = glob(directory+"*"+str(max_seq_length)+"*")
     if len(check) < 3:
-        (eval_X, eval_mask,
-         rel_ids)= corpus2tokenids_UNSC(max_seq_length=max_seq_length)
+        (pred_tokens, pred_X,
+         pred_mask)= corpus2tokenids_UNSC(max_seq_length=max_seq_length)
     else:
-        eval_X = np.load(directory+"eval_X_"+str(max_seq_length)+".npy")
-        eval_mask = np.load(directory+"eval_mask_"+str(max_seq_length)+".npy")
-        with open(directory+"speech_ids_"+str(max_seq_length)+".json","r") as f:
-            speech_ids = json.load(f)
-    return eval_X, eval_mask, speech_ids
+        with open(directory+"pred_tokens_"+str(max_seq_length)+".json","r") as f:
+            pred_tokens = json.load(f)
+        pred_X = np.load(directory+"pred_X_"+str(max_seq_length)+".npy")
+        pred_mask = np.load(directory+"pred_mask_"+str(max_seq_length)+".npy")
+    return pred_tokens, pred_X, pred_mask
 
 def load_saved_model(model_path):
     l_bert, model_ckpt = fetch_bert_layer()
@@ -31,21 +31,21 @@ def load_saved_model(model_path):
                                        "argument_candidate_acc":class_acc(3)})
     return model
 
-def eval_model_UNSC(direct_model,max_seq_length=512,
-                    direct_save="./data/UNSC/eval/"):
-    eval_X,_,_ = read_or_create_data_UNSC(max_seq_length)
+def pred_model_UNSC(direct_model,max_seq_length=512,
+                    direct_save="./data/UNSC/pred/"):
+    _,pred_X,_,_ = read_or_create_data_UNSC(max_seq_length)
     model = load_saved_model(direct_model)
-    y_pred = model.predict(eval_X,batch_size=128)
+    y_pred = model.predict(pred_X,batch_size=128)
     y_pred = np.argmax(y_pred,axis=-1)
-    np.save(direct_save+"eval_Yhat_"+str(max_seq_length)+".npy",y_pred)
+    np.save(direct_save+"pred_Yhat_"+str(max_seq_length)+".npy",y_pred)
     return y_pred
 
 def retokenize_UNSC(y_pred,max_seq_length=512):
-    _, eval_mask, speech_ids = read_or_create_data_UNSC(max_seq_length)
+    (pred_tokens,_,pred_mask,
+    speech_ids) = read_or_create_data_UNSC(max_seq_length)
     # TODO remove all special tokens, keep only important tokens
     # TODO modify command-line interface to allow for processing and retokenizing
     # project thoes back to actual tokens along with corresponding labels
-    # Tokenizer.convert_ids_to_tokens([list])
     # write to json, perhaps make some automatic pipeline to choose best cases
     pass
 
@@ -57,10 +57,10 @@ if __name__ == "__main__":
     required.add_argument("--model-dir", required=True, type=str,
                           help="path to model *h5 file")
     args = parser.parse_args()
-    if os.path.isfile("./data/UNSC/eval/eval_Yhat_"+
+    if os.path.isfile("./data/UNSC/pred/pred_Yhat_"+
                       str(args.max_seq_length)+".npy"):
-        y_pred = np.load("./data/UNSC/eval/eval_Yhat_"+
+        y_pred = np.load("./data/UNSC/pred/pred_Yhat_"+
                       str(args.max_seq_length)+".npy")
     else:
-        y_pred = eval_model_UNSC(direct_model=args.model_dir,
+        y_pred = pred_model_UNSC(direct_model=args.model_dir,
                                  max_seq_length=args.max_seq_length)
