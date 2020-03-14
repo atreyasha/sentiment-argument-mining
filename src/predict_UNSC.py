@@ -40,9 +40,8 @@ def pred_model_UNSC(direct_model,max_seq_length=512,
     np.save(direct_save+"pred_Yhat_"+str(max_seq_length)+".npy",y_pred)
     return y_pred
 
-def retokenize_UNSC(y_pred,max_seq_length=512):
-    (pred_tokens,_,pred_mask,
-    speech_ids) = read_or_create_data_UNSC(max_seq_length)
+def simplify_results(y_pred,max_seq_length=512):
+    pred_tokens,_,pred_mask = read_or_create_data_UNSC(max_seq_length)
     # TODO remove all special tokens, keep only important tokens
     # TODO modify command-line interface to allow for processing and retokenizing
     # project thoes back to actual tokens along with corresponding labels
