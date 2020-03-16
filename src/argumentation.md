@@ -14,7 +14,7 @@ This readme will summarize our code and results in conducting argumentation mini
 
 ### 1. Preprocessing
 
-**i.** For the training of the argumentation classifier model (which uses [ALBERT](https://github.com/google-research/ALBERT) for the encoder segment), we must perform significant preprocessing on the US Election Debate [corpus](https://github.com/ElecDeb60To16/Dataset), which was the topic of [Haddadan et al. 2019](https://www.aclweb.org/anthology/P19-1463/). This includes character span conversion to token tags, `ALBERT` tokenization, addition of special `ALBERT` tokens and corpus pruning. For this, we have created the script `pre_process_USElectionDebates.py` with dedicated functions.
+**i.** For the training of the argumentation classifier model (which uses [ALBERT](https://github.com/google-research/ALBERT) for the encoder segment), we must perform significant preprocessing on the US Election Debate [corpus](https://github.com/ElecDeb60To16/Dataset), which was detailed in [Haddadan et al. 2019](https://www.aclweb.org/anthology/P19-1463/). This includes character span conversion to token tags, `ALBERT` tokenization, addition of special `ALBERT` tokens and corpus pruning. For this, we have created the script `pre_process_USElectionDebates.py` with dedicated functions.
 
 ```
 $ python3 pre_process_USElectionDebates.py --help
