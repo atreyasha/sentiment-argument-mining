@@ -6,7 +6,7 @@ Developments
 1.  Documentation/Visualization
 
     1.  **TODO** complete corpus and prediction visualization
-        script
+        scripts
 
     2.  **TODO** complete all readme updates
 

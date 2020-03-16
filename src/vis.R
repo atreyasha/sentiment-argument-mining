@@ -8,7 +8,78 @@ library(tikzDevice)
 library(reshape2)
 library(optparse)
 
-plot_token_dist <- function(){
+plot_token_dist_UNSC <- function(){
+  # read data to dataframe
+  stats <- read.csv("./data/UNSC/pred/stats_tokens.csv",
+                    stringsAsFactors=FALSE)
+  # bin token counts to get new aggregate by length
+  stats$bin <- cut(stats$len,seq(0,max(stats$len)+100,100),dig.lab=5)
+  names(stats)[3] <- "bin"
+  agg <- aggregate(stats$len,by=list(stats$bin),FUN=sum)
+  names(agg) <- c("bin","len")
+  # fill in remaining factor levels where no data is present
+  agg$len <- as.numeric(agg$len)
+  agg$type = "Unfiltered"
+  # create file
+  tikz("token_dist_UNSC_length.tex", width=20, height=12, standAlone = TRUE)
+  # make ggplot object
+  g <- ggplot(agg,aes(x=bin,y=len,fill=type)) +
+    geom_bar(stat="identity", color = "black", fill = "red", alpha = 0.7, size = 0.5)+
+    xlab("\nBinned Utterance Length [Tokens]") +
+    ylab("Token Count\n") +
+    theme_bw() +
+    theme(text = element_text(size=25, family="CM Roman"),
+          axis.text.x = element_text(angle = 90, hjust = 1, size = 18),
+          legend.text = element_text(size=25),
+          legend.title = element_text(size=25,face = "bold"),
+          legend.key = element_rect(colour = "lightgray", fill = "white"),
+          plot.title = element_text(hjust=0.5)) +
+    ggtitle("Token Count Distribution by Utterance Length")
+  # process
+  print(g)
+  dev.off()
+  texi2pdf("token_dist_UNSC_length.tex",clean=TRUE)
+  file.remove("token_dist_UNSC_length.tex")
+  file.rename("token_dist_UNSC_length.pdf","./img/token_dist_UNSC_length.pdf")
+  # aggregate with filtered counts
+  stats$type <- "Unfiltered"
+  to_add <- stats
+  to_add[which(to_add[,2] > 512),2] = 0
+  to_add$type <- "Filtered_512"
+  stats <- rbind(stats,to_add)
+  agg <- aggregate(stats$len,by=list(stats$bin,stats$type),FUN=sum)
+  names(agg)[1] <- "bin"
+  names(agg)[2] <- "type"
+  names(agg)[3] <- "len"
+  agg[,2] <- factor(agg[,2],levels=c("Unfiltered","Filtered_512"))
+  levels(agg$type) <- c("Full corpus","Pruned corpus [Sequence Length $\\leq$ 512]")
+  agg$len <- as.numeric(agg$len)
+  # create file
+  tikz("token_dist_UNSC_length_combined.tex", width=22, height=12, standAlone = TRUE)
+  # make ggplot object
+  g <- ggplot(agg,aes(x=bin,y=len, fill = type)) +
+    geom_bar(stat="identity", color="black", size = 0.5)+
+    xlab("\nBinned Utterance Length [Tokens]")+
+    ylab("Token Count\n") +
+    theme_bw() +
+    theme(text = element_text(size=25),
+          axis.text.x = element_text(angle = 90, hjust = 1),
+          legend.text = element_text(size=25),
+          legend.title = element_text(size=25,face = "bold"),
+          legend.key = element_rect(colour = "lightgray", fill = "white"),
+          plot.title = element_text(hjust=0.5),
+          legend.position = "none") +
+    ## ggtitle("Token Type Distribution by Utterance Length") +
+    facet_wrap(~type,nrow=2)
+  # process
+  print(g)
+  dev.off()
+  texi2pdf("token_dist_UNSC_length_combined.tex",clean=TRUE)
+  file.remove("token_dist_UNSC_length_combined.tex")
+  file.rename("token_dist_UNSC_length_combined.pdf","./img/token_dist_UNSC_length_combined.pdf")
+}
+
+plot_token_dist_US <- function(){
   # read data to dataframe
   stats <- read.csv("./data/USElectionDebates/corpus/stats_tokens.csv",
                     stringsAsFactors=FALSE)
@@ -22,7 +93,7 @@ plot_token_dist <- function(){
   names(agg)[c(2,3,4)] <- c("None","Claim","Premise")
   agg <- melt(agg,id.vars ="Year")
   # create file
-  tikz("token_dist_year.tex", width=11, height=12, standAlone = TRUE)
+  tikz("token_dist_US_year.tex", width=11, height=12, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(agg,aes(x=factor(Year),y=value,fill=variable)) +
     geom_bar(stat="identity", color="black", size = 0.5)+
@@ -39,9 +110,9 @@ plot_token_dist <- function(){
   # process
   print(g)
   dev.off()
-  texi2pdf("token_dist_year.tex",clean=TRUE)
-  file.remove("token_dist_year.tex")
-  file.rename("token_dist_year.pdf","./img/token_dist_year.pdf")
+  texi2pdf("token_dist_US_year.tex",clean=TRUE)
+  file.remove("token_dist_US_year.tex")
+  file.rename("token_dist_US_year.pdf","./img/token_dist_US_year.pdf")
   # bin token counts to get new aggregate by length
   stats$total <- rowSums(stats[,c(2:4)])
   stats$bin <- cut(stats$total,seq(0,max(stats$total)+100,100),dig.lab=5)
@@ -55,7 +126,7 @@ plot_token_dist <- function(){
   agg <- melt(agg,id.vars ="bin")
   agg$value <- as.numeric(agg$value)
   # create file
-  tikz("token_dist_length.tex", width=13, height=12, standAlone = TRUE)
+  tikz("token_dist_US_length.tex", width=13, height=12, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color="black", size = 0.5)+
@@ -73,9 +144,9 @@ plot_token_dist <- function(){
   # process
   print(g)
   dev.off()
-  texi2pdf("token_dist_length.tex",clean=TRUE)
-  file.remove("token_dist_length.tex")
-  file.rename("token_dist_length.pdf","./img/token_dist_length.pdf")
+  texi2pdf("token_dist_US_length.tex",clean=TRUE)
+  file.remove("token_dist_US_length.tex")
+  file.rename("token_dist_US_length.pdf","./img/token_dist_US_length.pdf")
   # aggregate with filtered counts
   stats$type <- "Unfiltered"
   to_add <- stats
@@ -103,7 +174,7 @@ plot_token_dist <- function(){
                         "Pruned corpus [Sequence Length $\\leq$ 128]")
   agg$value <- as.numeric(agg$value)
   # create file
-  tikz("token_dist_length_combined.tex", width=24, height=12, standAlone = TRUE)
+  tikz("token_dist_US_length_combined.tex", width=24, height=12, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color="black", size = 0.5)+
@@ -121,9 +192,9 @@ plot_token_dist <- function(){
   # process
   print(g)
   dev.off()
-  texi2pdf("token_dist_length_combined.tex",clean=TRUE)
-  file.remove("token_dist_length_combined.tex")
-  file.rename("token_dist_length_combined.pdf","./img/token_dist_length_combined.pdf")
+  texi2pdf("token_dist_US_length_combined.tex",clean=TRUE)
+  file.remove("token_dist_US_length_combined.tex")
+  file.rename("token_dist_US_length_combined.pdf","./img/token_dist_US_length_combined.pdf")
 }
 
 plot_model_evolution <- function(directory){
@@ -188,10 +259,46 @@ plot_model_evolution <- function(directory){
   file.rename("model_training_evolution.pdf","./img/model_training_evolution.pdf")
 }
 
+plot_token_dist_pred_UNSC <- function(path){
+  # read data to dataframe
+  stats <- read.csv(path,
+                    stringsAsFactors=FALSE)
+  stats$total <- rowSums(stats[,c(2:4)])
+  stats$bin <- cut(stats$total,seq(0,max(stats$total)+100,100),dig.lab=5)
+  agg <- aggregate(stats[c("N","C","P")],by=list(stats$bin),FUN=sum)
+  names(agg)[1] <- "bin"
+  names(agg)[c(2,3,4)] <- c("None","Claim","Premise")
+  agg <- melt(agg)
+  # create file
+  tikz("token_dist_pred_UNSC_length.tex", width=15, height=12, standAlone = TRUE)
+  # make ggplot object
+  g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
+    geom_bar(stat="identity", color="black", size = 0.5)+
+    xlab("\nBinned Utterance Length [Tokens]") +
+    ylab("Token Count\n") +
+    theme_bw() +
+    theme(text = element_text(size=25, family="CM Roman"),
+          axis.text.x = element_text(angle = 90, hjust = 1),
+          legend.text = element_text(size=25),
+          legend.title = element_text(size=25,face = "bold"),
+          legend.key = element_rect(colour = "lightgray", fill = "white"),
+          plot.title = element_text(hjust=0.5)) +
+    ggtitle("Token Type Distribution by Utterance Length") +
+    scale_fill_npg(name="Token\nType",alpha=0.8)
+  # process
+  print(g)
+  dev.off()
+  texi2pdf("token_dist_pred_UNSC_length.tex",clean=TRUE)
+  file.remove("token_dist_pred_UNSC_length.tex")
+  file.rename("token_dist_pred_UNSC_length.pdf","./img/token_dist_pred_UNSC_length.pdf")
+}
+
 # parse command-line arguments
 parser <- OptionParser()
 parser <- add_option(parser, c("-m", "--model-dir"),
                      default=NULL, help="Plot model evolution for specified model directory")
+parser <- add_option(parser, c("-p", "--predictions"),
+                     default=NULL, help="Plot prediction token distribution for given csv file")
 args <- parse_args(parser)
 # manage arguments and overall workflow
 if(!is.null(args$m)){
@@ -199,9 +306,18 @@ if(!is.null(args$m)){
      print("Producing model plot")
      plot_model_evolution(args$m)
   }
+} else if(!is.null(args$p)){
+  if(file.exists(args$p)){
+    print("Producing token distribution plots for UNSC predictions")
+    plot_token_dist_pred_UNSC(args$p)
+  }
 } else {
   if(file.exists("./data/USElectionDebates/corpus/stats_tokens.csv")){
-    print("Producing token distribution plots")
-    plot_token_dist()
+    print("Producing token distribution plots for US Election Debates")
+    plot_token_dist_US()
+  }
+  if(file.exists("./data/UNSC/pred/stats_tokens.csv")){
+    print("Producing token distribution plots for UNSC")
+    plot_token_dist_UNSC()
   }
 }
