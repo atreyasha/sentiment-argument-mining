@@ -170,7 +170,7 @@ optional arguments:
                         already produced binary (default: False)
 
 required name arguments:
-  --model-dir str       path to model *h5 file (default: None
+  --model-dir str       path to model *h5 file (default: None)
 ```
 
 This script will load the best saved model and will predict the argumentation candidates on the preprocessed `UNSC` corpus. Next, it will save various files to the `./data` folder, which can be used for analysis and visualization of results.
