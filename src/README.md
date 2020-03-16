@@ -37,7 +37,7 @@ If you already had `git-lfs` installed before cloning the repository, the best m
 
 If you installed `git-lfs` after cloning this repository, execute `git lfs pull` in order to recover the large model data, as per suggestions [here](https://github.com/git-lfs/git-lfs/issues/325).
 
-### 2. Repository initialization
+### 2. Repository Initialization
 
 In order to initialize this repository, simply run `init.sh` as shown below:
 
@@ -51,8 +51,8 @@ $ ./init.sh
 
 ### 3. Argumentation Mining
 
-For further details on argumentation mining, check out our dedicated readme [here](./docs/argumentation.md)
+For further details on argumentation mining, check out our dedicated readme [here](./docs/argumentation.md).
 
 ### 4. Sentiment Analysis
 
-For further details on argumentation mining, check out our dedicated notebook.
+For further details on argumentation mining, check out our dedicated Jupyter notebook [here](./docs/sentiment.ipynb).
