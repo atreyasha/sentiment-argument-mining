@@ -31,7 +31,7 @@ $ pip install -r requirements.txt
 
 **Note:** R-scripts were tested with R version `3.6.*`.
 
-**iii.** If you want to use or reference the best model in this repository (which is stored in a `git-lfs` entry), you would need to install `git-lfs` for your system.
+**iii.** If you want to use or reference the best argumentation classification model in this repository (which is stored in a `git-lfs` entry), you would need to install `git-lfs` for your system.
 
 If you already had `git-lfs` installed before cloning the repository, the best model data would be downloaded alongside the clone.
 
