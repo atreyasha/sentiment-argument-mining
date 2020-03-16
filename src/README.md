@@ -51,8 +51,8 @@ $ ./init.sh
 
 ### 3. Argumentation Mining
 
-For further details on argumentation mining, check out our dedicated readme [here](./docs/argumentation.md).
+For further details on argumentation mining, check out our dedicated readme [here](./argumentation.md).
 
 ### 4. Sentiment Analysis
 
-For further details on sentiment analysis, check out our dedicated Jupyter notebook [here](./docs/sentiment.ipynb).
+For further details on sentiment analysis, check out our dedicated Jupyter notebook [here](./sentiment.ipynb).
