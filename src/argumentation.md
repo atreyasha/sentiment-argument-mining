@@ -153,7 +153,7 @@ Options:
 		Plot prediction token distribution for given csv file
 ```
 
-**i.** In order to construct plots of the US Election Debate corpus, the UNSC corpus and respective token frequencies, simply execute as follows:
+**i.** In order to construct plots of the US Election Debate and UNSC corpora with respective token frequencies, simply execute as follows:
 
 ```shell
 $ Rscript vis.R
