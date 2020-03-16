@@ -55,4 +55,4 @@ For further details on argumentation mining, check out our dedicated readme [her
 
 ### 4. Sentiment Analysis
 
-For further details on argumentation mining, check out our dedicated Jupyter notebook [here](./docs/sentiment.ipynb).
+For further details on sentiment analysis, check out our dedicated Jupyter notebook [here](./docs/sentiment.ipynb).
