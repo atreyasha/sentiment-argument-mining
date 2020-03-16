@@ -7,6 +7,7 @@ import argparse
 import numpy as np
 from tqdm import tqdm
 from glob import glob
+from collections  import Counter
 from tensorflow.keras.models import load_model
 from train_USElectionDebates import read_or_create_data_US
 from pre_process_UNSC import *
@@ -74,9 +75,9 @@ def pred_model_UNSC(direct_model,max_seq_length=512,
         y_pred (np.ndarray): model predictions on UNSC corpus
     """
     if not force_pred and os.path.isfile("./data/UNSC/pred/pred_Yhat_"+
-                      str(args.max_seq_length)+".npy"):
+                      str(max_seq_length)+".npy"):
         y_pred = np.load("./data/UNSC/pred/pred_Yhat_"+
-                      str(args.max_seq_length)+".npy")
+                      str(max_seq_length)+".npy")
     else:
         _,pred_X,_ = read_or_create_data_UNSC(max_seq_length)
         model = load_saved_model(direct_model)
@@ -84,6 +85,44 @@ def pred_model_UNSC(direct_model,max_seq_length=512,
         y_pred = np.argmax(y_pred,axis=-1)
         np.save(direct_save+"pred_Yhat_"+str(max_seq_length)+".npy",y_pred)
     return y_pred
+
+def summary_info_UNSC_pred(collection,max_seq_length=512,
+                           directory="./data/UNSC/pred/"):
+    """
+    Function to write summary statistics on token types to file
+
+    Args:
+        collection (list): data containing token and types
+        max_seq_length (int): maximum sequence length to be used in training
+        directory (str): directory to output files
+    """
+    new_collection = []
+    # get respective token counts
+    for i,el in enumerate(list(collection.keys())):
+        new_collection.append([el])
+        tmp = []
+        for sub_el in collection[el]:
+            tmp.append(sub_el[1])
+        local_dict = dict(Counter(tmp))
+        try:
+            N = local_dict["N"]
+        except KeyError:
+            N = 0
+        try:
+            C = local_dict["C"]
+        except KeyError:
+            C = 0
+        try:
+            P = local_dict["P"]
+        except KeyError:
+            P = 0
+        new_collection[i].extend([N,C,P])
+    # write to csv file
+    with open(directory+"pred_tokens_stats_"+
+              str(max_seq_length)+".csv","w") as f:
+        writer = csv.writer(f)
+        writer.writerow(["speech","N","C","P"])
+        writer.writerows(new_collection)
 
 def simplify_results(y_pred,max_seq_length=512,
                      directory="./data/UNSC/pred/"):
@@ -110,6 +149,8 @@ def simplify_results(y_pred,max_seq_length=512,
          for j,binary in enumerate(pred_mask[i].tolist()) if binary == 1]
     with open(directory+"pred_clean_"+str(max_seq_length)+".json","w") as f:
         json.dump(clean_results,f)
+    # execute pipeline to get summary info
+    summary_info_UNSC_pred(clean_results)
     return clean_results
 
 if __name__ == "__main__":

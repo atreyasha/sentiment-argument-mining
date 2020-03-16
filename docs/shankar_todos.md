@@ -5,10 +5,10 @@ Developments
 
 1.  Documentation/Visualization
 
-    1.  **TODO** complete corpus visualization script
+    1.  **TODO** complete corpus and prediction visualization
+        script
 
-    2.  **TODO** fill up pydocstrings in appropriate style
-        for all functions along with readmes
+    2.  **TODO** complete all readme updates
 
     3.  **TODO** squeeze in sentiment methodologies into
         repository when done, install sentiment dependencies onto venv
