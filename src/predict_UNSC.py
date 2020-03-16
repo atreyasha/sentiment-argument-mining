@@ -15,6 +15,21 @@ from utils.model_utils import *
 
 def read_or_create_data_UNSC(max_seq_length=512,
                              directory="./data/UNSC/pred/"):
+    """
+    Function to either read or create UNSC corpus data
+
+    Args:
+        max_seq_length (int): maximum sequence length to be used in training
+        directory (str): directory to find files
+
+    Returns:
+        pred_tokens (dict): mapping between unique UNSC speech IDs and
+        tokenized input
+        pred_X (np.ndarray): input albert token IDs
+        pred_mask (np.ndarray): input mask indicating which token is relevant
+        to outcome, this includes all corpus tokens and excludes
+        all bert special tokens
+    """
     check = glob(directory+"*"+str(max_seq_length)+"*")
     if len(check) < 3:
         (pred_tokens, pred_X,
@@ -27,6 +42,15 @@ def read_or_create_data_UNSC(max_seq_length=512,
     return pred_tokens, pred_X, pred_mask
 
 def load_saved_model(model_path):
+    """
+    Function to load a saved keras model
+
+    Args:
+        model_path (str): path to *h5 keras model
+
+    Returns:
+        model (tensorflow.python.keras.engine.training.Model): saved keras model
+    """
     l_bert, model_ckpt = fetch_bert_layer()
     model = load_model(model_path,
                        custom_objects={"BertModelLayer":l_bert,
@@ -36,6 +60,19 @@ def load_saved_model(model_path):
 def pred_model_UNSC(direct_model,max_seq_length=512,
                     direct_save="./data/UNSC/pred/",
                     force_pred=False):
+    """
+    Predict given saved model on UNSC corpus
+
+    Args:
+        direct_model (str): path to *h5 keras model
+        max_seq_length (int): maximum sequence length to be used in training
+        direct_save (str): directory where to save predictions
+        force_pred (bool): whether to forcefully predict when an cached
+        prediction already exists
+
+    Returns:
+        y_pred (np.ndarray): model predictions on UNSC corpus
+    """
     if not force_pred and os.path.isfile("./data/UNSC/pred/pred_Yhat_"+
                       str(args.max_seq_length)+".npy"):
         y_pred = np.load("./data/UNSC/pred/pred_Yhat_"+
@@ -50,6 +87,18 @@ def pred_model_UNSC(direct_model,max_seq_length=512,
 
 def simplify_results(y_pred,max_seq_length=512,
                      directory="./data/UNSC/pred/"):
+    """
+    Simplify model predictions on UNSC corpus to human readable format
+
+    Args:
+        y_pred (np.ndarray): model predictions on UNSC corpus
+        max_seq_length (int): maximum sequence length to be used in training
+        directory (str): directory where to save results
+
+    Returns:
+        clean_results (dict): simplified dictionary mapping from speech ID's
+        to saved model predictions
+    """
     pred_tokens,_,pred_mask = read_or_create_data_UNSC(max_seq_length)
     _,_,_,_,label_map = read_or_create_data_US(max_seq_length)
     label_map_inverse = {item[1]:item[0] for item in label_map.items()}
