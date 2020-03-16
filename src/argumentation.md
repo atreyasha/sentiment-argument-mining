@@ -135,7 +135,7 @@ This script will load the best saved model and will predict the argumentation ca
 
 ### 4. Visualization
 
-In order to visualize the US Election Debate corpus and model results, we created functions in the `vis.R` script. The corresponding visualizations will be converted to `tikz` code in a latex environment and will then be saved in `./img` as `pdf` files.
+In order to visualize the US Election Debate and UNSC corpora, as well as model results; we created functions in the `vis.R` script. The corresponding visualizations will be converted to `tikz` code in a latex environment and will then be saved in `./img` as `pdf` files.
 
 ```
 $ Rscript vis.R --help
