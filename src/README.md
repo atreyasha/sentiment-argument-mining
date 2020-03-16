@@ -4,8 +4,8 @@ This readme will summarize our code and results in conducting sentiment analysis
 
 1. [Dependencies](#1-Dependencies)
 2. [Repository Initialization](#2-Repository-Initialization)
-3. [Argumentation Mining](#3-Argumentation-Mining)
-4. [Sentiment Analysis](#4-Sentiment-Analysis)
+3. [Sentiment Analysis](#3-Sentiment-Analysis)
+4. [Argumentation Mining](#4-Argumentation-Mining)
 
 ### 1. Dependencies
 
@@ -49,10 +49,10 @@ $ ./init.sh
 
 **ii.** Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
 
-### 3. Argumentation Mining
-
-For further details on argumentation mining, check out our dedicated readme [here](./argumentation.md).
-
-### 4. Sentiment Analysis
+### 3. Sentiment Analysis
 
 For further details on sentiment analysis, check out our dedicated Jupyter notebook [here](./sentiment.ipynb).
+
+### 4. Argumentation Mining
+
+For further details on argumentation mining, check out our dedicated readme [here](./argumentation.md).
