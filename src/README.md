@@ -9,8 +9,8 @@ This readme will summarize our code and results in conducting sentiment analysis
 3. [Preprocessing](#3-Preprocessing)
 4. [Training and Evaluation](#4-Training-and-Evaluation)
 5. [Prediction on UNSC](#5-Prediction-on-UNSC)
-6. [Visualization](#5-Visualization)
-7. [Acknowledgments](#6-Acknowledgments)
+6. [Visualization](#6-Visualization)
+7. [Acknowledgments](#7-Acknowledgments)
 
 ### 1. Dependencies
 
