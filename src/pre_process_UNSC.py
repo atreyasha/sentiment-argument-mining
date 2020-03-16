@@ -3,6 +3,7 @@
 
 import os
 import re
+import csv
 import json
 import bert
 import nltk
@@ -33,11 +34,10 @@ def basic_text_cleaning(flat_text):
         flat_text[i] = re.sub(r"\([^)]*\)","",flat_text[i])
     return flat_text
 
-def project_to_ids(Tokenizer,data,max_seq_length=512):
+def project_to_ids_UNSC(Tokenizer,data,max_seq_length=512):
     input_tokens = []
     input_ids = []
     input_mask = []
-    print("projecting text to indices")
     for instance_set in tqdm(data):
         input_ids_sub = ["[CLS]"]
         input_mask_sub = [0]
@@ -56,6 +56,17 @@ def project_to_ids(Tokenizer,data,max_seq_length=512):
         input_mask.append(input_mask_sub)
     return input_tokens, np.array(input_ids), np.array(input_mask)
 
+def summary_info_UNSC(collection,ids,
+                      directory="./data/UNSC/pred/"):
+    # get respective token counts
+    lens = [len(nltk.tokenize.word_tokenize(el)) for el in tqdm(collection)]
+    # write to csv file
+    with open(directory+"stats_tokens.csv","w") as f:
+        writer = csv.writer(f)
+        writer.writerow(["id","len"])
+        writer.writerows(list(zip(ids,lens)))
+    return lens
+
 def corpus2tokenids_UNSC(max_seq_length=512,
                          directory="./data/UNSC/pred/"):
     print("Loading UNSC data from RData format")
@@ -66,13 +77,17 @@ def corpus2tokenids_UNSC(max_seq_length=512,
         nltk.tokenize.sent_tokenize("testing. testing")
     except LookupError:
         nltk.download('punkt')
+    # get summary information on corpus
+    print("Computing corpus summary statistics")
+    lens = summary_info_UNSC(flat_text,ids)
     # intialize variables
     collection = []
     Tokenizer = initialize_bert_tokenizer()
     preprocess = bert.albert_tokenization.preprocess_text
     # enter main tokenization loop
+    print("Tokenizing corpus")
     for i in tqdm(range(len(flat_text))):
-        if len(nltk.tokenize.word_tokenize(flat_text[i])) > max_seq_length:
+        if lens[i] > max_seq_length:
             continue
         else:
             tmp_1 = []
@@ -87,6 +102,7 @@ def corpus2tokenids_UNSC(max_seq_length=512,
             collection.append([i,tmp_1])
     # check data length and remove long sentences
     to_remove = []
+    print("Removing corpus elements which are too long")
     for i,sent_set in enumerate(collection):
         token_count = sum([1 for sent in sent_set[1] for token in sent])
         length = token_count+len(sent_set[1])+1
@@ -94,7 +110,8 @@ def corpus2tokenids_UNSC(max_seq_length=512,
             to_remove.append(i)
     collection = [sent_set for i,sent_set in enumerate(collection)
                   if i not in to_remove]
-    pred_tokens, pred_X, pred_mask = project_to_ids(Tokenizer,collection,
+    print("Projecting text to indices")
+    pred_tokens, pred_X, pred_mask = project_to_ids_UNSC(Tokenizer,collection,
                                                     max_seq_length)
     ids_tokens = [ids[sub[0]] for sub in collection]
     pred_tokens = {ids_tokens[i]:[token.decode("utf-8") if type(token) is bytes
