@@ -107,7 +107,7 @@ $ python3 train_USElectionDebates.py --model-type Stacked_LSTM --batch-size 50
 An example of executing a grid-search model training is shown below:
 
 ```shell
-$ python3 train_USElectionDebatespy --grid-search --batch-size 30
+$ python3 train_USElectionDebates.py --grid-search --batch-size 30
 ```
 
 **iii.** This workflow was tested on a single NVIDIA GeForce GTX 1080 Ti GPU with 12 GB RAM. Due to limited-memory issues, we had to use a low default batch-size of `10`. Our best model weights and evaluation metrics can be found in `./model_logs/2020_03_06_16_19_03_MSL512_grid_train`. Our best model with the `TD_Dense` decoder achieved a `69%` Macro-F\_1 score on the test dataset.
