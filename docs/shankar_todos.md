@@ -5,18 +5,26 @@ Developments
 
 1.  Documentation/Visualization
 
-    1.  **TODO** add section for final evaluation on UNSC
-        corpus, with new pre~processing~ script in older section
+    1.  **TODO** complete corpus and prediction visualization
+        scripts
 
-    2.  **TODO** fill up pydocstrings in appropriate style
-        for all functions
+    2.  **TODO** complete all readme updates
 
-    3.  update all information to indicate procedures and articles
+    3.  **TODO** squeeze in sentiment methodologies into
+        repository when done, install sentiment dependencies onto venv
+        for global tracking, perhaps add sentiment analysis on jupyter
+        notebook with shared dependencies
+
+    4.  update all information to indicate procedures and articles
         involved, so users can find relevant information
 
-    4.  make final pull request when all is complete
+    5.  include overview section in ./src to summarize all sentiment and
+        argumentation techniques
 
-    5.  push final paper and bibtex when all is done, add global
+    6.  possibily improve some variable naming conventions such as
+        direct, and also use os.path.join for directory concatenation
+
+    7.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding

@@ -37,12 +37,12 @@ def read_us_election_corpus():
     # read raw text into pythonic list
     raw = []
     ann = []
-    print("reading raw corpus files")
+    print("Reading raw corpus files")
     for File in tqdm(files_raw):
         with codecs.open(File,"r",encoding="utf-8") as f:
             raw.append(f.read())
     # read annotations and append to merged list
-    print("reading corpus annotations")
+    print("Reading corpus annotations")
     for i,File in tqdm(enumerate(files_ann),total=len(files_ann)):
         with codecs.open(File,"r",encoding="utf-8") as f:
             ann_data = f.readlines()
@@ -73,7 +73,7 @@ def char_tag(corpus,spaces=False):
     # create empty list
     tagged = []
     # tag basic cases
-    print("tagging void argument cases")
+    print("Tagging void argument cases")
     for i,raw in enumerate(tqdm(corpus[0])):
         char_raw = list(raw)
         for j,char in enumerate(char_raw):
@@ -87,7 +87,7 @@ def char_tag(corpus,spaces=False):
                     char_raw[j] = "N"
         tagged.append(char_raw)
     # tag claims and premises
-    print("tagging claims and premises")
+    print("Tagging claims and premises")
     for i in tqdm(range(len(tagged))):
         for annotation in corpus[1]:
             if annotation[0] == i:
@@ -109,7 +109,7 @@ def char_tag(corpus,spaces=False):
                                 elif ann_type == "Premise":
                                     tagged[i][j] = "P"
     # join and return final tag
-    print("returning final object")
+    print("Returning final object")
     return ["".join(char for char in segment) for segment in tqdm(tagged)]
 
 def flatten(char_sequences,indices=False):
@@ -300,7 +300,7 @@ def initialize_bert_tokenizer():
                                                        spm_model_file=spm)
     return Tokenizer
 
-def project_to_ids(Tokenizer,train_data,label_id_map,max_seq_length=512):
+def project_to_ids_US(Tokenizer,train_data,label_id_map,max_seq_length=512):
     """
     Function to map data to indices in the albert vocabulary, as well as
     adding special bert tokens such as [CLS] and [SEP]
@@ -321,7 +321,6 @@ def project_to_ids(Tokenizer,train_data,label_id_map,max_seq_length=512):
     input_ids = []
     label_ids = []
     output_mask = []
-    print("projecting text to indices")
     for instance_set in tqdm(train_data):
         input_ids_sub = ["[CLS]"]
         label_ids_sub = ["[CLS]"]
@@ -348,8 +347,8 @@ def project_to_ids(Tokenizer,train_data,label_id_map,max_seq_length=512):
         output_mask.append(output_mask_sub)
     return np.array(input_ids), np.array(label_ids), np.array(output_mask)
 
-def summary_info(collection,indices,
-                 directory="./data/USElectionDebates/corpus/"):
+def summary_info_US(collection,indices,
+                    directory="./data/USElectionDebates/corpus/"):
     """
     Function to write summary statistics on token types to file
 
@@ -386,8 +385,8 @@ def summary_info(collection,indices,
         writer.writerow(["debate","N","C","P"])
         writer.writerows(new_collection)
 
-def corpus2tokenids(max_seq_length=512,
-                    directory="./data/USElectionDebates/training/"):
+def corpus2tokenids_US(max_seq_length=512,
+                       directory="./data/USElectionDebates/training/"):
     """
     Aggregate function to produce bert-operational training data from
     US-Election-Debate corpus
@@ -410,6 +409,7 @@ def corpus2tokenids(max_seq_length=512,
     flat_ann = flatten(tagged)
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=True)
+    print("Domain debiasing by removing special tokens")
     # remove initial capitalized NER reference, might assist with debiasing
     for i, text in enumerate(flat_text):
         span = re.search("^[A-Z]*\\:\\s",text)
@@ -422,7 +422,7 @@ def corpus2tokenids(max_seq_length=512,
                 flat_ann[i] = flat_ann[i][span[1]:]
                 assert len(flat_text[i]) == len(flat_ann[i])
     collection = []
-    print("splitting and tokenizing sentences")
+    print("Splitting and tokenizing sentences")
     Tokenizer = initialize_bert_tokenizer()
     # ensure nltk sentence tokenizer is present
     try:
@@ -441,7 +441,8 @@ def corpus2tokenids(max_seq_length=512,
             flat_ann[i] = flat_ann[i][span[1]:]
         collection.append(tokenize(sub_text,sub_ann,Tokenizer))
     # print out summary info for later visualization
-    summary_info(collection,indices)
+    print("Printing out summary statistics for corpus")
+    summary_info_US(collection,indices)
     # check data length and remove long sentences
     to_remove = []
     for i,sent_set in enumerate(collection):
@@ -457,9 +458,10 @@ def corpus2tokenids(max_seq_length=512,
                                    random_state=42)
     train = post_process(train)
     test = post_process(test)
-    train_X, train_Y, _ = project_to_ids(Tokenizer,train,label_map,
+    print("Projecting text to indices")
+    train_X, train_Y, _ = project_to_ids_US(Tokenizer,train,label_map,
                                          max_seq_length)
-    test_X, test_Y, _ = project_to_ids(Tokenizer,test,label_map,
+    test_X, test_Y, _ = project_to_ids_US(Tokenizer,test,label_map,
                                        max_seq_length)
     np.save(directory+"train_X_"+str(max_seq_length)+".npy",train_X)
     np.save(directory+"train_Y_"+str(max_seq_length)+".npy",train_Y)
@@ -476,4 +478,4 @@ if __name__ == "__main__":
                         help="maximum sequence length of tokenized id's")
     args = parser.parse_args()
     corpus2char()
-    corpus2tokenids(max_seq_length=args.max_seq_length)
+    corpus2tokenids_US(max_seq_length=args.max_seq_length)

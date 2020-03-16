@@ -25,8 +25,8 @@ def getCurrentTime():
     """
     return datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 
-def read_or_create_data(max_seq_length,
-                        directory="./data/USElectionDebates/training/"):
+def read_or_create_data_US(max_seq_length,
+                           directory="./data/USElectionDebates/training/"):
     """
     Function either loads cached training data or re-executes
     pre-processing pipeline to generate training data
@@ -45,7 +45,7 @@ def read_or_create_data(max_seq_length,
     check = glob(directory+"*"+str(max_seq_length)+"*")
     if len(check) < 4:
         (train_X, train_Y, test_X,
-         test_Y, label_map) = corpus2tokenids(max_seq_length=max_seq_length)
+         test_Y, label_map) = corpus2tokenids_US(max_seq_length=max_seq_length)
     else:
         train_X = np.load(directory+"train_X_"+str(max_seq_length)+".npy")
         train_Y = np.load(directory+"train_Y_"+str(max_seq_length)+".npy")
@@ -94,7 +94,7 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
     """
     # read in data
     (train_X, train_Y,
-     test_X, test_Y, label_map) = read_or_create_data(max_seq_length)
+     test_X, test_Y, label_map) = read_or_create_data_US(max_seq_length)
     num_labels = len(label_map.keys())
     # clear keras session
     tf.keras.backend.clear_session()
@@ -186,7 +186,7 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
     """
     # read in data
     (train_X, train_Y,
-     test_X, test_Y, label_map) = read_or_create_data(max_seq_length)
+     test_X, test_Y, label_map) = read_or_create_data_US(max_seq_length)
     num_labels = len(label_map.keys())
     # create log directory and log file
     log_dir = ("./model_logs/"+getCurrentTime()+"_MSL"+str(max_seq_length)
