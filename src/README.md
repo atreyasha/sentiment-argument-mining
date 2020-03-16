@@ -55,7 +55,7 @@ $ ./init.sh
 
 ### 3. Preprocessing
 
-For the training of the argumentation classifier model (which uses [ALBERT](https://github.com/google-research/ALBERT) for the encoder segment), we must perform significant pre-processing on the US Election Debate corpus. This includes character span conversion to token tags, `ALBERT` tokenization, addition of special `ALBERT` tokens and corpus pruning. For this, we have created the script `pre_process_USElectionDebates.py` with dedicated functions.
+**i.** For the training of the argumentation classifier model (which uses [ALBERT](https://github.com/google-research/ALBERT) for the encoder segment), we must perform significant pre-processing on the US Election Debate corpus. This includes character span conversion to token tags, `ALBERT` tokenization, addition of special `ALBERT` tokens and corpus pruning. For this, we have created the script `pre_process_USElectionDebates.py` with dedicated functions.
 
 ```
 $ python3 pre_process_USElectionDebates.py --help
@@ -74,6 +74,26 @@ $ python3 pre_process_USElectionDebates.py
 ```
 
 This process will produce respective `json`, `csv` and `npy` files in the `./data` directory; all of which will be later utilized in training and evaluation.
+
+**ii.** A similar type of pre-processing must be conducted on the UNSC corpus, such that we can apply the aforementioned trained classifier on it. This is done through the script `pre_process_UNSC.py`.
+
+```
+$ python3 pre_process_UNSC.py --help
+
+usage: pre_process_UNSC.py [-h] [--max-seq-length int]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --max-seq-length int  maximum sequence length of tokenized id's (default: 512)
+```
+
+In order to conduct pre-processing of the UNSC corpus, simply execute the following:
+
+```shell
+$ python3 pre_process_UNSC.py
+```
+
+This process will produce respective `json`, `csv` and `npy` files in the `./data` directory; all of which will be later utilized in prediction.
 
 ### 4. Training and Evaluation
 
