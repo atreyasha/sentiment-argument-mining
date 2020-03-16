@@ -41,7 +41,7 @@ def pred_model_UNSC(direct_model,max_seq_length=512,
         y_pred = np.load("./data/UNSC/pred/pred_Yhat_"+
                       str(args.max_seq_length)+".npy")
     else:
-        _,pred_X,_,_ = read_or_create_data_UNSC(max_seq_length)
+        _,pred_X,_ = read_or_create_data_UNSC(max_seq_length)
         model = load_saved_model(direct_model)
         y_pred = model.predict(pred_X,batch_size=128)
         y_pred = np.argmax(y_pred,axis=-1)
