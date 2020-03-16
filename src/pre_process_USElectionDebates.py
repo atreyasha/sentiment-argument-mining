@@ -329,9 +329,9 @@ def project_to_ids_US(Tokenizer,train_data,label_id_map,max_seq_length=512):
             input_ids_sub.extend(instance_set[1][i])
             label_ids_sub.extend(instance_set[2][i])
             output_mask_sub.extend([1]*len(instance_set[1][i]))
-            input_ids_sub.extend(["[SEP]"])
-            label_ids_sub.extend(["[SEP]"])
-            output_mask_sub.extend([0])
+        output_mask_sub.extend([0])
+        input_ids_sub.extend(["[SEP]"])
+        label_ids_sub.extend(["[SEP]"])
         assert (len(input_ids_sub) == len(label_ids_sub)
                 == len(output_mask_sub))
         input_ids_sub.extend(["<pad>"]*(max_seq_length-len(input_ids_sub)))
@@ -447,7 +447,7 @@ def corpus2tokenids_US(max_seq_length=512,
     to_remove = []
     for i,sent_set in enumerate(collection):
         token_count = sum([1 for sent in sent_set for token in sent])
-        length = token_count+len(sent_set)+1
+        length = token_count+2
         if length > max_seq_length:
             to_remove.append(i)
     collection = [sent_set for i,sent_set in enumerate(collection)
