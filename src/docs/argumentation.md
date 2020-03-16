@@ -2,7 +2,7 @@
 
 ### Train on US Election Debates, Predict on UNSC
 
-This readme will summarize our code and results in conducting argumentation mining on the UNSC corpus.
+This readme will summarize our code and results in conducting argumentation mining on the US Election Debate and UNSC corpora.
 
 ### Table of Contents
 
