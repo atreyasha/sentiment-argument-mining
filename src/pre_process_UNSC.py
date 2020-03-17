@@ -77,8 +77,8 @@ def project_to_ids_UNSC(Tokenizer,data,max_seq_length=512):
         for i in range(len(instance_set[1])):
             input_ids_sub.extend(instance_set[1][i])
             input_mask_sub.extend([1]*len(instance_set[1][i]))
-            input_ids_sub.extend(["[SEP]"])
-            input_mask_sub.extend([0])
+        input_ids_sub.extend(["[SEP]"])
+        input_mask_sub.extend([0])
         assert (len(input_ids_sub) == len(input_mask_sub))
         input_ids_sub.extend(["<pad>"]*(max_seq_length-len(input_ids_sub)))
         input_mask_sub.extend([0]*(max_seq_length-len(input_mask_sub)))
@@ -162,7 +162,7 @@ def corpus2tokenids_UNSC(max_seq_length=512,
     print("Removing corpus elements which are too long")
     for i,sent_set in enumerate(collection):
         token_count = sum([1 for sent in sent_set[1] for token in sent])
-        length = token_count+len(sent_set[1])+1
+        length = token_count+2
         if length > max_seq_length:
             to_remove.append(i)
     collection = [sent_set for i,sent_set in enumerate(collection)
