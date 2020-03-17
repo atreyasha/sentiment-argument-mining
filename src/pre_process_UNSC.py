@@ -162,7 +162,7 @@ def corpus2tokenids_UNSC(max_seq_length=512,
     print("Removing corpus elements which are too long")
     for i,sent_set in enumerate(collection):
         token_count = sum([1 for sent in sent_set[1] for token in sent])
-        length = token_count+len(sent_set[1])+1
+        length = token_count+2
         if length > max_seq_length:
             to_remove.append(i)
     collection = [sent_set for i,sent_set in enumerate(collection)
