@@ -148,7 +148,7 @@ def simplify_results(y_pred,max_seq_length=512,
                                         label_map_inverse[y_pred[i,j]])
          for j,binary in enumerate(pred_mask[i].tolist()) if binary == 1]
     with open(directory+"pred_clean_"+str(max_seq_length)+".json","w") as f:
-        json.dump(clean_results,f)
+        json.dump(clean_results,f,ensure_ascii=False)
     # execute pipeline to get summary info
     summary_info_UNSC_pred(clean_results)
     return clean_results
