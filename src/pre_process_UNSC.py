@@ -177,7 +177,7 @@ def corpus2tokenids_UNSC(max_seq_length=512,
     np.save(directory+"pred_X_"+str(max_seq_length)+".npy",pred_X)
     np.save(directory+"pred_mask_"+str(max_seq_length)+".npy",pred_mask)
     with open(directory+"pred_tokens_"+str(max_seq_length)+".json","w") as f:
-        json.dump(pred_tokens,f)
+        json.dump(pred_tokens,f,ensure_ascii=False)
     return pred_tokens, pred_X, pred_mask
 
 if __name__ == "__main__":

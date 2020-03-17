@@ -5,26 +5,25 @@ Developments
 
 1.  Documentation/Visualization
 
-    1.  **TODO** complete corpus and prediction visualization
-        scripts
+    1.  **TODO** push new best model log directory with saved
+        model, new model evolution results and new prediction token
+        distribution
 
-    2.  **TODO** complete all readme updates
-
-    3.  **TODO** squeeze in sentiment methodologies into
+    2.  **TODO** squeeze in sentiment methodologies into
         repository when done, install sentiment dependencies onto venv
         for global tracking, perhaps add sentiment analysis on jupyter
         notebook with shared dependencies
 
-    4.  update all information to indicate procedures and articles
+    3.  update all information to indicate procedures and articles
         involved, so users can find relevant information
 
-    5.  include overview section in ./src to summarize all sentiment and
+    4.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
 
-    6.  possibily improve some variable naming conventions such as
+    5.  possibily improve some variable naming conventions such as
         direct, and also use os.path.join for directory concatenation
 
-    7.  push final paper and bibtex when all is done, add global
+    6.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding

@@ -3,8 +3,7 @@
 *** Argumentation workflow
 
 **** Documentation/Visualization
-***** TODO complete corpus and prediction visualization scripts
-***** TODO complete all readme updates
+***** TODO push new best model log directory with saved model, new model evolution results and new prediction token distribution
 ***** TODO squeeze in sentiment methodologies into repository when done, install sentiment dependencies onto venv for global tracking, perhaps add sentiment analysis on jupyter notebook with shared dependencies
 ***** update all information to indicate procedures and articles involved, so users can find relevant information
 ***** include overview section in ./src to summarize all sentiment and argumentation techniques
