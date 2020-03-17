@@ -215,6 +215,7 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
         tf.keras.backend.clear_session()
         # define grid variables
         globals().update(config)
+        assert model_type in ["TD_Dense","1D_CNN","Stacked_LSTM"]
         max_learn_rate = learn_rate_combinations[0]
         end_learn_rate = learn_rate_combinations[1]
         # prepare model compilation
@@ -317,6 +318,7 @@ if __name__ == "__main__":
                       help="path to json file for hyperparameter ranges")
     args = parser.parse_args()
     if not args.grid_search:
+        assert args.model_type in ["TD_Dense","1D_CNN","Stacked_LSTM"]
         single_train(args.max_seq_length,args.max_epochs,
                      args.batch_size,args.warmup_epochs,
                      args.max_learn_rate,args.end_learn_rate,
