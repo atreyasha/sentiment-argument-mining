@@ -7,21 +7,22 @@ certifi==2019.11.28
 chardet==3.0.4
 erlastic==2.0.0
 gast==0.2.2
-google-auth==1.11.2
+google-auth==1.11.3
 google-auth-oauthlib==0.4.1
-google-pasta==0.1.8
+google-pasta==0.2.0
 grpcio==1.27.2
 h5py==2.10.0
 idna==2.9
 joblib==0.14.1
 keras-applications==1.0.8
 keras-preprocessing==1.1.0
+logging==0.4.9.6
 markdown==3.2.1
 nltk==3.4.5
-numpy==1.18.1
+numpy==1.18.2
 oauthlib==3.1.0
 opt-einsum==3.2.0
-pandas==1.0.1
+pandas==1.0.2
 params-flow==0.7.4
 protobuf==3.11.3
 py-params==0.8.3
@@ -45,4 +46,4 @@ tqdm==4.43.0
 urllib3==1.25.8
 werkzeug==1.0.0
 wheel==0.34.2; python_version >= "3"
-wrapt==1.12.0
+wrapt==1.12.1

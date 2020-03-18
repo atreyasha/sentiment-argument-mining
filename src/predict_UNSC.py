@@ -4,6 +4,9 @@
 import os
 import json
 import argparse
+import logging
+import logging.config
+logging.config.fileConfig('./utils/logging.conf')
 import numpy as np
 from tqdm import tqdm
 from glob import glob
@@ -160,13 +163,19 @@ if __name__ == "__main__":
     parser.add_argument("--force-pred", action="store_true", default=False,
                         help="option to force redoing prediction despite"+
                         " presence of already produced binary")
+    parser.add_argument("--verbosity", type=int, default=1,
+                        help="0 for no text, 1 for verbose text")
     required = parser.add_argument_group("required name arguments")
     required.add_argument("--model-dir", required=True, type=str,
                           help="path to model *h5 file")
     args = parser.parse_args()
-    print("Loading model predictions, might take some time...")
+    if args.verbosity == 1:
+        logger = logging.getLogger('base')
+    else:
+        logger = logging.getLogger('root')
+    logger.info("Loading model predictions, might take some time...")
     y_pred = pred_model_UNSC(direct_model = args.model_dir,
                              max_seq_length = args.max_seq_length,
                              force_pred = args.force_pred)
-    print("Simplifying model predictions for human readability")
+    logger.info("Simplifying model predictions for human readability")
     clean_results = simplify_results(y_pred,args.max_seq_length)

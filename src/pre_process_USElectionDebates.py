@@ -9,6 +9,9 @@ import json
 import nltk
 import codecs
 import argparse
+import logging
+import logging.config
+logging.config.fileConfig('./utils/logging.conf')
 import numpy as np
 from glob import glob
 from tqdm import tqdm
@@ -37,12 +40,12 @@ def read_us_election_corpus():
     # read raw text into pythonic list
     raw = []
     ann = []
-    print("Reading raw corpus files")
+    logger.info("Reading raw corpus files")
     for File in tqdm(files_raw):
         with codecs.open(File,"r",encoding="utf-8") as f:
             raw.append(f.read())
     # read annotations and append to merged list
-    print("Reading corpus annotations")
+    logger.info("Reading corpus annotations")
     for i,File in tqdm(enumerate(files_ann),total=len(files_ann)):
         with codecs.open(File,"r",encoding="utf-8") as f:
             ann_data = f.readlines()
@@ -73,7 +76,7 @@ def char_tag(corpus,spaces=False):
     # create empty list
     tagged = []
     # tag basic cases
-    print("Tagging void argument cases")
+    logger.info("Tagging void argument cases")
     for i,raw in enumerate(tqdm(corpus[0])):
         char_raw = list(raw)
         for j,char in enumerate(char_raw):
@@ -87,7 +90,7 @@ def char_tag(corpus,spaces=False):
                     char_raw[j] = "N"
         tagged.append(char_raw)
     # tag claims and premises
-    print("Tagging claims and premises")
+    logger.info("Tagging claims and premises")
     for i in tqdm(range(len(tagged))):
         for annotation in corpus[1]:
             if annotation[0] == i:
@@ -109,7 +112,7 @@ def char_tag(corpus,spaces=False):
                                 elif ann_type == "Premise":
                                     tagged[i][j] = "P"
     # join and return final tag
-    print("Returning final object")
+    logger.info("Returning final object")
     return ["".join(char for char in segment) for segment in tqdm(tagged)]
 
 def flatten(char_sequences,indices=False):
@@ -409,7 +412,7 @@ def corpus2tokenids_US(max_seq_length=512,
     flat_ann = flatten(tagged)
     assert len(flat_text) == len(flat_ann)
     flat_text,flat_ann = correct_periods(flat_text,flat_ann,spaces=True)
-    print("Domain debiasing by removing special tokens")
+    logger.info("Domain debiasing by removing special tokens")
     # remove initial capitalized NER reference, might assist with debiasing
     for i, text in enumerate(flat_text):
         span = re.search("^[A-Z]*\\:\\s",text)
@@ -422,7 +425,7 @@ def corpus2tokenids_US(max_seq_length=512,
                 flat_ann[i] = flat_ann[i][span[1]:]
                 assert len(flat_text[i]) == len(flat_ann[i])
     collection = []
-    print("Splitting and tokenizing sentences")
+    logger.info("Splitting and tokenizing sentences")
     Tokenizer = initialize_bert_tokenizer()
     # ensure nltk sentence tokenizer is present
     try:
@@ -441,7 +444,7 @@ def corpus2tokenids_US(max_seq_length=512,
             flat_ann[i] = flat_ann[i][span[1]:]
         collection.append(tokenize(sub_text,sub_ann,Tokenizer))
     # print out summary info for later visualization
-    print("Printing out summary statistics for corpus")
+    logger.info("Printing out summary statistics for corpus")
     summary_info_US(collection,indices)
     # check data length and remove long sentences
     to_remove = []
@@ -458,10 +461,10 @@ def corpus2tokenids_US(max_seq_length=512,
                                    random_state=42)
     train = post_process(train)
     test = post_process(test)
-    print("Projecting train text to indices")
+    logger.info("Projecting train text to indices")
     train_X, train_Y, _ = project_to_ids_US(Tokenizer,train,label_map,
                                          max_seq_length)
-    print("Projecting test text to indices")
+    logger.info("Projecting test text to indices")
     test_X, test_Y, _ = project_to_ids_US(Tokenizer,test,label_map,
                                        max_seq_length)
     np.save(directory+"train_X_"+str(max_seq_length)+".npy",train_X)
@@ -477,6 +480,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
     parser.add_argument("--max-seq-length", type=int, default=512,
                         help="maximum sequence length of tokenized id's")
+    parser.add_argument("--verbosity", type=int, default=1,
+                        help="0 for no text, 1 for verbose text")
     args = parser.parse_args()
+    if args.verbosity == 1:
+        logger = logging.getLogger('base')
+    else:
+        logger = logging.getLogger('root')
     corpus2char()
     corpus2tokenids_US(max_seq_length=args.max_seq_length)

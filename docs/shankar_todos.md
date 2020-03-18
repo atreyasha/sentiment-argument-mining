@@ -5,27 +5,25 @@ Developments
 
 1.  Documentation/Visualization
 
-    1.  **TODO** push new best model log directory with saved
+    1.  **TODO** possibily improve some variable naming
+        conventions such as direct, and also use os.path.join for
+        directory concatenation
+
+    2.  **TODO** push new best model log directory with saved
         model, new model evolution results and new prediction token
         distribution
 
-    2.  **TODO** squeeze in sentiment methodologies into
+    3.  **TODO** squeeze in sentiment methodologies into
         repository when done, install sentiment dependencies onto venv
         for global tracking, perhaps add sentiment analysis on jupyter
         notebook with shared dependencies
 
-    3.  include overview section in ./src to summarize all sentiment and
+    4.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
 
-    4.  possibily improve some variable naming conventions such as
-        direct, and also use os.path.join for directory concatenation
+    5.  add test scripts to ensure constant sanity checks
 
-    5.  improve usage of logger for messages and other debugging related
-        concerns
-
-    6.  add test scripts to ensure constant sanity checks
-
-    7.  push final paper and bibtex when all is done, add global
+    6.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding

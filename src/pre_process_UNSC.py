@@ -9,6 +9,9 @@ import bert
 import nltk
 import pyreadr
 import argparse
+import logging
+import logging.config
+logging.config.fileConfig('./utils/logging.conf')
 import numpy as np
 from glob import glob
 from tqdm import tqdm
@@ -126,23 +129,23 @@ def corpus2tokenids_UNSC(max_seq_length=512,
         to outcome, this includes all corpus tokens and excludes
         all bert special tokens
     """
-    print("Loading UNSC data from RData format")
+    logger.info("Loading UNSC data from RData format")
     ids, flat_text = load_UNSC()
-    print("Performing basic cleaning of data")
+    logger.info("Performing basic cleaning of data")
     flat_text = basic_text_cleaning(flat_text)
     try:
         nltk.tokenize.sent_tokenize("testing. testing")
     except LookupError:
         nltk.download('punkt')
     # get summary information on corpus
-    print("Computing corpus summary statistics")
+    logger.info("Computing corpus summary statistics")
     lens = summary_info_UNSC(flat_text,ids)
     # intialize variables
     collection = []
     Tokenizer = initialize_bert_tokenizer()
     preprocess = bert.albert_tokenization.preprocess_text
     # enter main tokenization loop
-    print("Tokenizing corpus")
+    logger.info("Tokenizing corpus")
     for i in tqdm(range(len(flat_text))):
         if lens[i] > max_seq_length:
             continue
@@ -159,7 +162,7 @@ def corpus2tokenids_UNSC(max_seq_length=512,
             collection.append([i,tmp_1])
     # check data length and remove long sentences
     to_remove = []
-    print("Removing corpus elements which are too long")
+    logger.info("Removing corpus elements which are too long")
     for i,sent_set in enumerate(collection):
         token_count = sum([1 for sent in sent_set[1] for token in sent])
         length = token_count+2
@@ -167,7 +170,7 @@ def corpus2tokenids_UNSC(max_seq_length=512,
             to_remove.append(i)
     collection = [sent_set for i,sent_set in enumerate(collection)
                   if i not in to_remove]
-    print("Projecting text to indices")
+    logger.info("Projecting text to indices")
     pred_tokens, pred_X, pred_mask = project_to_ids_UNSC(Tokenizer,collection,
                                                     max_seq_length)
     ids_tokens = [ids[sub[0]] for sub in collection]
@@ -184,5 +187,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=arg_metav_formatter)
     parser.add_argument("--max-seq-length", type=int, default=512,
                         help="maximum sequence length of tokenized id's")
+    parser.add_argument("--verbosity", type=int, default=1,
+                        help="0 for no text, 1 for verbose text")
     args = parser.parse_args()
+    if args.verbosity == 1:
+        logger = logging.getLogger('base')
+    else:
+        logger = logging.getLogger('root')
     corpus2tokenids_UNSC(max_seq_length=args.max_seq_length)

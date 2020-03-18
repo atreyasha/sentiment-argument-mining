@@ -20,10 +20,12 @@ This readme will summarize our code and results in conducting argumentation mini
 $ python3 pre_process_USElectionDebates.py --help
 
 usage: pre_process_USElectionDebates.py [-h] [--max-seq-length int]
+                                        [--verbosity int]
 
 optional arguments:
   -h, --help            show this help message and exit
   --max-seq-length int  maximum sequence length of tokenized id's (default: 512)
+  --verbosity int       0 for no text, 1 for verbose text (default: 1)
 ```
 
 In our training process, we assume the maximum possible sequence length of `512` tokens for the `ALBERT` encoder model. In order to conduct preprocessing, simply execute the following:
@@ -39,11 +41,12 @@ This process will produce respective `json`, `csv` and `npy` files in the `./dat
 ```
 $ python3 pre_process_UNSC.py --help
 
-usage: pre_process_UNSC.py [-h] [--max-seq-length int]
+usage: pre_process_UNSC.py [-h] [--max-seq-length int] [--verbosity int]
 
 optional arguments:
   -h, --help            show this help message and exit
   --max-seq-length int  maximum sequence length of tokenized id's (default: 512)
+  --verbosity int       0 for no text, 1 for verbose text (default: 1)
 ```
 
 In order to conduct preprocessing of the UNSC corpus, simply execute the following:
@@ -121,13 +124,15 @@ After training, we can utilize our best model to predict argumentation candidate
 ```
 $ python3 predict_UNSC.py --help
 
-usage: predict_UNSC.py [-h] [--max-seq-length int] [--force-pred] --model-dir str
+usage: predict_UNSC.py [-h] [--max-seq-length int] [--force-pred] [--verbosity int]
+                       --model-dir str
 
 optional arguments:
   -h, --help            show this help message and exit
   --max-seq-length int  maximum sequence length of tokenized id's (default: 512)
   --force-pred          option to force redoing prediction despite presence of
                         already produced binary (default: False)
+  --verbosity int       0 for no text, 1 for verbose text (default: 1)
 
 required name arguments:
   --model-dir str       path to model *h5 file (default: None)
