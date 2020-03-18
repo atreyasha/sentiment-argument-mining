@@ -72,8 +72,8 @@ def mean_labels(input_dict):
 
 def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
                  warmup_epoch_count=10,max_learn_rate=1e-5,
-                 end_learn_rate=1e-7,model_type="TD_Dense",
-                 label_threshold_less=3):
+                 end_learn_rate=1e-7,patience=5,
+                 model_type="TD_Dense",label_threshold_less=3):
     """
     Function to conduct single model training on the pre-processed
     US Election Debate corpus
@@ -87,6 +87,8 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
         of warmup epochs)
         end_learn_rate (float): minimum learning rate (achieved at end of
         maximum training epochs)
+        patience (int): number of grace-period epochs where validation metric
+        is allowed to worsen from the worst recorded value
         model_type (str): type of model decoder to use, see
         './utils/model_utils.py'
         label_threshold_less (int): all label IDs strictly less than this number
@@ -128,7 +130,7 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
                         callbacks=[LRScheduler,
                         EarlyStopping(monitor="val_loss",
                                       mode="min",
-                                      patience=5,
+                                      patience=patience,
                                       restore_best_weights
                                       =True),
                         ModelCheckpoint(monitor="val_loss",
@@ -170,7 +172,7 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
                          "test_f1_C":str(test_out_dict["4"]["f1-score"]),
                          "test_f1_P":str(test_out_dict["5"]["f1-score"])})
 
-def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
+def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,patience=5,
                json_path="./utils/grid.json",label_threshold_less=3):
     """
     Function to conduct grid-search on model training on the pre-processed
@@ -180,6 +182,8 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
         max_seq_length (int): maximum sequence length for training data
         max_epochs (int): maximum training epochs
         batch_size (int): batch-size for stochastic gradient descent
+        patience (int): number of grace-period epochs where validation metric
+        is allowed to worsen from the worst recorded value
         json_path (str): path to json file indicating hyperparameter ranges
         label_threshold_less (int): all label IDs strictly less than this number
         will be ignored in class accuracy calculations
@@ -234,7 +238,7 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,
                             callbacks=[LRScheduler,
                                        EarlyStopping(monitor="val_loss",
                                                      mode="min",
-                                                     patience=5,
+                                                     patience=patience,
                                                      restore_best_weights
                                                      =True),
                                        ModelCheckpoint(monitor="val_loss",
@@ -303,6 +307,9 @@ if __name__ == "__main__":
                         help="maximum number of training epochs")
     parser.add_argument("--batch-size", type=int, default=10,
                         help="batch-size for training procedure")
+    parser.add_argument("--patience", type=int, default=5,
+                        help="grace-period epochs where validation metric "+
+                        "is allowed to worsen before stopping training")
     single = parser.add_argument_group("arguments specific to single training")
     single.add_argument("--warmup-epochs", type=int, default=20,
                         help="warmup or increasing learning rate epochs")
@@ -322,7 +329,7 @@ if __name__ == "__main__":
         single_train(args.max_seq_length,args.max_epochs,
                      args.batch_size,args.warmup_epochs,
                      args.max_learn_rate,args.end_learn_rate,
-                     args.model_type)
+                     args.patience,args.model_type)
     else:
         grid_train(args.max_seq_length,args.max_epochs,
-                   args.batch_size,args.json)
+                   args.batch_size,args.patience,args.json)

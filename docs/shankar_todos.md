@@ -14,16 +14,13 @@ Developments
         for global tracking, perhaps add sentiment analysis on jupyter
         notebook with shared dependencies
 
-    3.  update all information to indicate procedures and articles
-        involved, so users can find relevant information
-
-    4.  include overview section in ./src to summarize all sentiment and
+    3.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
 
-    5.  possibily improve some variable naming conventions such as
+    4.  possibily improve some variable naming conventions such as
         direct, and also use os.path.join for directory concatenation
 
-    6.  push final paper and bibtex when all is done, add global
+    5.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding

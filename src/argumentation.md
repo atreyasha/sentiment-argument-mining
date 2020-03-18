@@ -63,9 +63,9 @@ $ python3 train_USElectionDebates.py --help
 
 usage: train_USElectionDebates.py [-h] [--max-seq-length int] [--grid-search]
                                   [--max-epochs int] [--batch-size int]
-                                  [--warmup-epochs int] [--max-learn-rate float]
-                                  [--end-learn-rate float] [--model-type str]
-                                  [--json str]
+                                  [--patience int] [--warmup-epochs int]
+                                  [--max-learn-rate float] [--end-learn-rate float]
+                                  [--model-type str] [--json str]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -74,6 +74,8 @@ optional arguments:
                         training session will commence (default: False)
   --max-epochs int      maximum number of training epochs (default: 100)
   --batch-size int      batch-size for training procedure (default: 10)
+  --patience int        grace-period epochs where validation metric is allowed to
+                        worsen before stopping training (default: 5)
 
 arguments specific to single training:
   --warmup-epochs int   warmup or increasing learning rate epochs (default: 20)
