@@ -74,7 +74,7 @@ optional arguments:
                         training session will commence (default: False)
   --max-epochs int      maximum number of training epochs (default: 100)
   --batch-size int      batch-size for training procedure (default: 10)
-  --patience int        grace-period epochs where validation metric is allowed to
+  --patience int        number of epochs where validation metric is allowed to
                         worsen before stopping training (default: 5)
 
 arguments specific to single training:
