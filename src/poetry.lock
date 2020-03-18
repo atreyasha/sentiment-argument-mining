@@ -194,14 +194,6 @@ tests = ["pandas", "pillow", "tensorflow (1.7)", "keras", "pytest", "pytest-xdis
 
 [[package]]
 category = "main"
-description = "A logging module for Python"
-name = "logging"
-optional = false
-python-versions = "*"
-version = "0.4.9.6"
-
-[[package]]
-category = "main"
 description = "Python implementation of Markdown."
 name = "markdown"
 optional = false
@@ -581,7 +573,7 @@ python-versions = "*"
 version = "1.12.1"
 
 [metadata]
-content-hash = "dc51b22423193a9ba381e8157cfebe976edb059ac54a06801079cfa96a2f3ba6"
+content-hash = "65acdefef7e707fcaf38fa5097b0a4bb6f273c06fe3e2a4fb504bed49cbf6845"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -720,9 +712,6 @@ keras-applications = [
 keras-preprocessing = [
     {file = "Keras_Preprocessing-1.1.0-py2.py3-none-any.whl", hash = "sha256:44aee5f2c4d80c3b29f208359fcb336df80f293a0bb6b1c738da43ca206656fb"},
     {file = "Keras_Preprocessing-1.1.0.tar.gz", hash = "sha256:5a8debe01d840de93d49e05ccf1c9b81ae30e210d34dacbcc47aeb3049b528e5"},
-]
-logging = [
-    {file = "logging-0.4.9.6.tar.gz", hash = "sha256:26f6b50773f085042d301085bd1bf5d9f3735704db9f37c1ce6d8b85c38f2417"},
 ]
 markdown = [
     {file = "Markdown-3.2.1-py2.py3-none-any.whl", hash = "sha256:e4795399163109457d4c5af2183fbe6b60326c17cfdf25ce6e7474c6624f725d"},
