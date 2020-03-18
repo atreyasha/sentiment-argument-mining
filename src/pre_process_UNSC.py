@@ -105,7 +105,7 @@ def summary_info_UNSC(collection,ids,
     # get respective token counts
     lens = [len(nltk.tokenize.word_tokenize(el)) for el in tqdm(collection)]
     # write to csv file
-    with open(directory+"stats_tokens.csv","w") as f:
+    with open(os.path.join(directory,"stats_tokens.csv"),"w") as f:
         writer = csv.writer(f)
         writer.writerow(["id","len"])
         writer.writerows(list(zip(ids,lens)))
@@ -177,9 +177,12 @@ def corpus2tokenids_UNSC(max_seq_length=512,
     pred_tokens = {ids_tokens[i]:[token.decode("utf-8") if type(token) is bytes
                     else token for token in sent_set]
                    for i, sent_set in enumerate(pred_tokens)}
-    np.save(directory+"pred_X_"+str(max_seq_length)+".npy",pred_X)
-    np.save(directory+"pred_mask_"+str(max_seq_length)+".npy",pred_mask)
-    with open(directory+"pred_tokens_"+str(max_seq_length)+".json","w") as f:
+    np.save(os.path.join(directory,"pred_X_"+str(max_seq_length)+".npy"),
+            pred_X)
+    np.save(os.path.join(directory,"pred_mask_"+str(max_seq_length)+".npy"),
+            pred_mask)
+    with open(os.path.join(directory,"pred_tokens_"+str(max_seq_length)+".json"),
+              "w") as f:
         json.dump(pred_tokens,f,ensure_ascii=False)
     return pred_tokens, pred_X, pred_mask
 

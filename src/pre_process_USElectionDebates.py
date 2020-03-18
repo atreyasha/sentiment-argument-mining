@@ -263,7 +263,7 @@ def write_to_json(data,directory,name):
             char_dict[i] = {}
         char_dict[i][j] = {"text":text,
                         "ann":ann}
-    with open(directory+name,"w") as f:
+    with open(os.path.join(directory,name),"w") as f:
         json.dump(char_dict,f)
 
 def corpus2char(directory="./data/USElectionDebates/corpus/",
@@ -276,8 +276,6 @@ def corpus2char(directory="./data/USElectionDebates/corpus/",
         directory (str): base file directory on which to store output
         spaces (bool): True to tag spaces as separate character
     """
-    if not directory.endswith("/"):
-        directory += "/"
     corpus = read_us_election_corpus()
     tagged = char_tag(corpus,spaces=spaces)
     indices,flat_text = flatten(corpus[0],indices=True)
@@ -383,7 +381,7 @@ def summary_info_US(collection,indices,
             P = 0
         new_collection[i].extend([N,C,P])
     # write to csv file
-    with open(directory+"stats_tokens.csv","w") as f:
+    with open(os.path.join(directory,"stats_tokens.csv"),"w") as f:
         writer = csv.writer(f)
         writer.writerow(["debate","N","C","P"])
         writer.writerows(new_collection)
@@ -467,12 +465,16 @@ def corpus2tokenids_US(max_seq_length=512,
     logger.info("Projecting test text to indices")
     test_X, test_Y, _ = project_to_ids_US(Tokenizer,test,label_map,
                                        max_seq_length)
-    np.save(directory+"train_X_"+str(max_seq_length)+".npy",train_X)
-    np.save(directory+"train_Y_"+str(max_seq_length)+".npy",train_Y)
-    np.save(directory+"test_X_"+str(max_seq_length)+".npy",test_X)
-    np.save(directory+"test_Y_"+str(max_seq_length)+".npy",test_Y)
+    np.save(os.path.join(directory,"train_X_"+str(max_seq_length)+".npy"),
+            train_X)
+    np.save(os.path.join(directory,"train_Y_"+str(max_seq_length)+".npy"),
+            train_Y)
+    np.save(os.path.join(directory,"test_X_"+str(max_seq_length)+".npy"),
+            test_X)
+    np.save(os.path.join(directory,"test_Y_"+str(max_seq_length)+".npy"),
+            test_Y)
     # write json label map
-    with open(directory+"label_map.json","w") as f:
+    with open(os.path.join(directory,"label_map.json"),"w") as f:
         json.dump(label_map,f)
     return train_X, train_Y, test_X, test_Y, label_map
 

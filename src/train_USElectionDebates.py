@@ -42,16 +42,20 @@ def read_or_create_data_US(max_seq_length,
         test_Y (np.ndarray): testing data labels
         label_map (dict): mapping from label to integer ID for labels
     """
-    check = glob(directory+"*"+str(max_seq_length)+"*")
+    check = glob(os.path.join(directory,"*"+str(max_seq_length)+"*"))
     if len(check) < 4:
         (train_X, train_Y, test_X,
          test_Y, label_map) = corpus2tokenids_US(max_seq_length=max_seq_length)
     else:
-        train_X = np.load(directory+"train_X_"+str(max_seq_length)+".npy")
-        train_Y = np.load(directory+"train_Y_"+str(max_seq_length)+".npy")
-        test_X = np.load(directory+"test_X_"+str(max_seq_length)+".npy")
-        test_Y = np.load(directory+"test_Y_"+str(max_seq_length)+".npy")
-        with open(directory+"label_map.json","r") as f:
+        train_X = np.load(os.path.join(directory,"train_X_"
+                                       +str(max_seq_length)+".npy"))
+        train_Y = np.load(os.path.join(directory,"train_Y_"
+                                       +str(max_seq_length)+".npy"))
+        test_X = np.load(os.path.join(directory,"test_X_"
+                                      +str(max_seq_length)+".npy"))
+        test_Y = np.load(os.path.join(directory,"test_Y_"
+                                      +str(max_seq_length)+".npy"))
+        with open(os.path.join(directory,"label_map.json"),"r") as f:
             label_map = json.load(f)
     return train_X, train_Y, test_X, test_Y, label_map
 

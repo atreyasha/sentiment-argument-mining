@@ -34,15 +34,18 @@ def read_or_create_data_UNSC(max_seq_length=512,
         to outcome, this includes all corpus tokens and excludes
         all bert special tokens
     """
-    check = glob(directory+"*"+str(max_seq_length)+"*")
+    check = glob(os.path.join(directory,"*"+str(max_seq_length)+"*"))
     if len(check) < 3:
         (pred_tokens, pred_X,
          pred_mask)= corpus2tokenids_UNSC(max_seq_length=max_seq_length)
     else:
-        with open(directory+"pred_tokens_"+str(max_seq_length)+".json","r") as f:
+        with open(os.path.join(directory,"pred_tokens_"
+                               +str(max_seq_length)+".json"),"r") as f:
             pred_tokens = json.load(f)
-        pred_X = np.load(directory+"pred_X_"+str(max_seq_length)+".npy")
-        pred_mask = np.load(directory+"pred_mask_"+str(max_seq_length)+".npy")
+        pred_X = np.load(os.path.join(directory,"pred_X_"
+                                      +str(max_seq_length)+".npy"))
+        pred_mask = np.load(os.path.join(directory,"pred_mask_"
+                                         +str(max_seq_length)+".npy"))
     return pred_tokens, pred_X, pred_mask
 
 def load_saved_model(model_path):
@@ -86,7 +89,8 @@ def pred_model_UNSC(direct_model,max_seq_length=512,
         model = load_saved_model(direct_model)
         y_pred = model.predict(pred_X,batch_size=128)
         y_pred = np.argmax(y_pred,axis=-1)
-        np.save(direct_save+"pred_Yhat_"+str(max_seq_length)+".npy",y_pred)
+        np.save(os.path.join(direct_save,"pred_Yhat_"
+                             +str(max_seq_length)+".npy"),y_pred)
     return y_pred
 
 def summary_info_UNSC_pred(collection,max_seq_length=512,
@@ -121,8 +125,8 @@ def summary_info_UNSC_pred(collection,max_seq_length=512,
             P = 0
         new_collection[i].extend([N,C,P])
     # write to csv file
-    with open(directory+"pred_tokens_stats_"+
-              str(max_seq_length)+".csv","w") as f:
+    with open(os.path.join(directory,"pred_tokens_stats_"+
+              str(max_seq_length)+".csv"),"w") as f:
         writer = csv.writer(f)
         writer.writerow(["speech","N","C","P"])
         writer.writerows(new_collection)
@@ -150,7 +154,8 @@ def simplify_results(y_pred,max_seq_length=512,
         clean_results[keys[i]]=[(pred_tokens[keys[i]][j],
                                         label_map_inverse[y_pred[i,j]])
          for j,binary in enumerate(pred_mask[i].tolist()) if binary == 1]
-    with open(directory+"pred_clean_"+str(max_seq_length)+".json","w") as f:
+    with open(os.path.join(directory,"pred_clean_"
+                           +str(max_seq_length)+".json"),"w") as f:
         json.dump(clean_results,f,ensure_ascii=False)
     # execute pipeline to get summary info
     summary_info_UNSC_pred(clean_results)
