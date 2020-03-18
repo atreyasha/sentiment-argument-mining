@@ -164,7 +164,7 @@ if __name__ == "__main__":
     required.add_argument("--model-dir", required=True, type=str,
                           help="path to model *h5 file")
     args = parser.parse_args()
-    print("Loading model predictions")
+    print("Loading model predictions, might take some time...")
     y_pred = pred_model_UNSC(direct_model = args.model_dir,
                              max_seq_length = args.max_seq_length,
                              force_pred = args.force_pred)

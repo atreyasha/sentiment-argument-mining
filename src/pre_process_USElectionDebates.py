@@ -458,9 +458,10 @@ def corpus2tokenids_US(max_seq_length=512,
                                    random_state=42)
     train = post_process(train)
     test = post_process(test)
-    print("Projecting text to indices")
+    print("Projecting train text to indices")
     train_X, train_Y, _ = project_to_ids_US(Tokenizer,train,label_map,
                                          max_seq_length)
+    print("Projecting test text to indices")
     test_X, test_Y, _ = project_to_ids_US(Tokenizer,test,label_map,
                                        max_seq_length)
     np.save(directory+"train_X_"+str(max_seq_length)+".npy",train_X)
