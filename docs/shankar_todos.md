@@ -5,22 +5,18 @@ Developments
 
 1.  Documentation/Visualization
 
-    1.  **TODO** push new best model log directory with saved
-        model, new model evolution results and new prediction token
-        distribution
-
-    2.  **TODO** squeeze in sentiment methodologies into
+    1.  **TODO** squeeze in sentiment methodologies into
         repository when done, install sentiment dependencies onto venv
         for global tracking, perhaps add sentiment analysis on jupyter
         notebook with shared dependencies
 
-    3.  include overview section in ./src to summarize all sentiment and
+    2.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
 
-    4.  add test scripts to ensure constant sanity checks, or test
+    3.  add test scripts to ensure constant sanity checks, or test
         manually on jarvis
 
-    5.  push final paper and bibtex when all is done, add global
+    4.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding
