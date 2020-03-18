@@ -95,7 +95,7 @@ arguments specific to grid-search training:
                         ./utils/grid.json)
 ```
 
-In our training regime, we assume a warmup-cooldown learning rate profile which entails a linear learning rate increase from `end-learn-rate` to `max-learn-rate` within the first `warmup-epochs`. Then, the learning rate exponentially decays over the remaining epochs until `max-epochs` towards `end-learn-rate`.
+In our training regime, we assume a warmup-cooldown learning rate profile which entails a linear learning rate increase from `max-learn-rate/warmup-epochs` to `max-learn-rate` within the first `warmup-epochs`. Then, the learning rate exponentially decays over the remaining epochs until `max-epochs` from `max-learn-rate` to `end-learn-rate`.
 
 Furthermore, we provide 3 pre-defined simple decoder models named as `TD_Dense`, `1D_CNN` and `Stacked_LSTM`. More details on these can be seen in [model_utils.py](./utils/model_utils.py).
 
