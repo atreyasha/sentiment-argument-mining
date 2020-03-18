@@ -140,6 +140,12 @@ required name arguments:
 
 This script will load the best saved model and will predict the argumentation candidates on the preprocessed `UNSC` corpus. Next, it will save various files to the `./data` folder, which can be used for analysis and visualization of results.
 
+To run this script on our best model, simply execute:
+
+```shell
+$ python3 predict_UNSC --model-dir ./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_1.h5
+```
+
 ### 4. Visualization
 
 In order to visualize the US Election Debate and UNSC corpora, as well as model results; we created functions in the `vis.R` script. The corresponding visualizations will be converted to `tikz` code in a latex environment and will then be saved in `./img` as `pdf` files.
