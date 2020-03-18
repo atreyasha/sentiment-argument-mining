@@ -88,7 +88,7 @@ def single_train(max_seq_length=512,max_epochs=100,batch_size=10,
         end_learn_rate (float): minimum learning rate (achieved at end of
         maximum training epochs)
         patience (int): number of grace-period epochs where validation metric
-        is allowed to worsen from the worst recorded value
+        is allowed to worsen from the best recorded value
         model_type (str): type of model decoder to use, see
         './utils/model_utils.py'
         label_threshold_less (int): all label IDs strictly less than this number
@@ -183,7 +183,7 @@ def grid_train(max_seq_length=512,max_epochs=100,batch_size=10,patience=5,
         max_epochs (int): maximum training epochs
         batch_size (int): batch-size for stochastic gradient descent
         patience (int): number of grace-period epochs where validation metric
-        is allowed to worsen from the worst recorded value
+        is allowed to worsen from the best recorded value
         json_path (str): path to json file indicating hyperparameter ranges
         label_threshold_less (int): all label IDs strictly less than this number
         will be ignored in class accuracy calculations

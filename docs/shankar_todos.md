@@ -20,7 +20,12 @@ Developments
     4.  possibily improve some variable naming conventions such as
         direct, and also use os.path.join for directory concatenation
 
-    5.  push final paper and bibtex when all is done, add global
+    5.  improve usage of logger for messages and other debugging related
+        concerns
+
+    6.  add test scripts to ensure constant sanity checks
+
+    7.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding
