@@ -17,7 +17,8 @@ Developments
     3.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
 
-    4.  add test scripts to ensure constant sanity checks
+    4.  add test scripts to ensure constant sanity checks, or test
+        manually on jarvis
 
     5.  push final paper and bibtex when all is done, add global
         references to results from paper

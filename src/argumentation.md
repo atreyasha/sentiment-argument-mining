@@ -99,7 +99,7 @@ In our training regime, we assume a warmup-cooldown learning rate profile which 
 
 Furthermore, we provide 3 pre-defined simple decoder models named as `TD_Dense`, `1D_CNN` and `Stacked_LSTM`. More details on these can be seen in [model_utils.py](./utils/model_utils.py).
 
-**i.** Under the single model training scheme, the model will be trained given a supplied set of parameters. Relevant performance histories and evaluation metrics will be stored in `./model_logs`.
+**i.** Under the single model training scheme, the model will be trained given a supplied set of parameters. The model, its performance history and evaluation metrics will be stored in `./model_logs`.
 
 An example of executing a single model training is shown below:
 
@@ -107,7 +107,7 @@ An example of executing a single model training is shown below:
 $ python3 train_USElectionDebates.py --model-type Stacked_LSTM --batch-size 50
 ```
 
-**ii.** Under the grid-search model training scheme, models will be trained with various hyperparameters, which are defined in `./utils/grid.json`. Relevant evaluation metrics of all models and the performance history of the best model will be stored in `./model_logs`.
+**ii.** Under the grid-search model training scheme, models will be trained with various hyperparameters, which are defined in `./utils/grid.json`. Relevant evaluation metrics of all models, as well as the the best model and its performance history will be stored in `./model_logs`.
 
 An example of executing a grid-search model training is shown below:
 

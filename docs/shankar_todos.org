@@ -6,7 +6,7 @@
 ***** TODO push new best model log directory with saved model, new model evolution results and new prediction token distribution
 ***** TODO squeeze in sentiment methodologies into repository when done, install sentiment dependencies onto venv for global tracking, perhaps add sentiment analysis on jupyter notebook with shared dependencies
 ***** include overview section in ./src to summarize all sentiment and argumentation techniques
-***** add test scripts to ensure constant sanity checks
+***** add test scripts to ensure constant sanity checks, or test manually on jarvis
 ***** push final paper and bibtex when all is done, add global references to results from paper
  
 **** Sequence encoding
