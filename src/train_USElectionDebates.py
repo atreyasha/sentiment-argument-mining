@@ -308,7 +308,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch-size", type=int, default=10,
                         help="batch-size for training procedure")
     parser.add_argument("--patience", type=int, default=5,
-                        help="grace-period epochs where validation metric "+
+                        help="number of epochs where validation metric "+
                         "is allowed to worsen before stopping training")
     single = parser.add_argument_group("arguments specific to single training")
     single.add_argument("--warmup-epochs", type=int, default=20,
