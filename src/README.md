@@ -21,7 +21,7 @@ Alternatively, you can install dependencies with `pip`:
 $ pip install -r requirements.txt
 ```
 
-**Note**: Your python version must be `3.7.*` in order to install certain dependencies in this repository. 
+**Note**: The dependencies were tested with python versions `3.6.*` and `3.7.*`, but should work with newer versions. 
 
 **ii.** In this repository, we use `R` and `ggplot` for visualization. Execute the following within your R console to get the dependencies:
 
