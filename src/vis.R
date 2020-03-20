@@ -25,7 +25,7 @@ plot_token_dist_UNSC <- function(){
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=len,fill=type)) +
     geom_bar(stat="identity", color = "black", fill = "red", alpha = 0.7, size = 0.5)+
-    xlab("\nBinned Utterance Length [Tokens]") +
+    xlab("\nBinned Speech Length [Tokens]") +
     ylab("Token Count\n") +
     theme_bw() +
     theme(text = element_text(size=25, family="CM Roman"),
@@ -34,7 +34,7 @@ plot_token_dist_UNSC <- function(){
           legend.title = element_text(size=25,face = "bold"),
           legend.key = element_rect(colour = "lightgray", fill = "white"),
           plot.title = element_text(hjust=0.5)) +
-    ggtitle("Token Count Distribution by Utterance Length")
+    ggtitle("Token Count Distribution by Speech Length")
   # process
   print(g)
   dev.off()
@@ -59,7 +59,7 @@ plot_token_dist_UNSC <- function(){
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=len, fill = type)) +
     geom_bar(stat="identity", color="black", size = 0.5)+
-    xlab("\nBinned Utterance Length [Tokens]")+
+    xlab("\nBinned Speech Length [Tokens]")+
     ylab("Token Count\n") +
     theme_bw() +
     theme(text = element_text(size=25),
