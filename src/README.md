@@ -1,4 +1,4 @@
-## Sentiment and Argumentation Mining (UN Security Council Speeches)
+## Sentiment Analysis and Argumentation Mining (UN Security Council Speeches)
 
 This readme will summarize our code and results in conducting sentiment analysis and argumentation mining on the UNSC corpus.
 
@@ -21,7 +21,7 @@ Alternatively, you can install dependencies with `pip`:
 $ pip install -r requirements.txt
 ```
 
-**Note**: The dependencies were tested with python versions `3.6.*` and `3.7.*`, but should work with newer versions. 
+**Note**: These dependencies were tested with python versions `3.6.*` and `3.7.*`, but should work with newer versions. 
 
 **ii.** In this repository, we use `R` and `ggplot` for visualization. Execute the following within your R console to get the dependencies:
 

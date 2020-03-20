@@ -16,7 +16,10 @@ Developments
     3.  add test scripts to ensure constant sanity checks, or test
         manually on jarvis
 
-    4.  push final paper and bibtex when all is done, add global
+    4.  add script to compute classification report of best model at the
+        end of training
+
+    5.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding

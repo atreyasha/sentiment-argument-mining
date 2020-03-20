@@ -1,12 +1,12 @@
-## Sentiment and Argumentation Mining (UN Security Council Speeches)
+## Sentiment Analysis and Argumentation Mining (UN Security Council Speeches)
 
 ### Overview
 
-This project entails sentiment and argumentation mining into the recently published UN security council speeches (detailed in [Schönfeld et al. 2019](https://arxiv.org/abs/1906.10969)), which is publicly accessible [here](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KGVSYH).
+This project entails sentiment analysis and argumentation mining into the recently published UN security council speeches (detailed in [Schönfeld et al. 2019](https://arxiv.org/abs/1906.10969)), which is publicly accessible [here](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KGVSYH).
 
 This dataset contains ~65,000 UN security council speeches from ~5,000 security council meetings from years 1995-2017. Each meeting is split up into the various speeches given by member countries. Furthermore, speeches are annotated with dates, topics and overall meeting outcomes.
 
-It could be very interesting to conduct sentiment and argumentation analysis on this dataset, as it is generally uncommon to find textual corpora for political text and debates.
+It could be very interesting to conduct sentiment analysis and argumentation mining on this dataset, as it is generally uncommon to find textual corpora for political text and debates.
 
 ### Methodologies
 
