@@ -13,16 +13,19 @@ Developments
     2.  **TODO** possibly improve final output and format to
         all claims and premises extracted from speeches
 
-    3.  include overview section in ./src to summarize all sentiment and
+    3.  **TODO** add plots with length of bins included and
+        not only token counts
+
+    4.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
 
-    4.  add test scripts to ensure constant sanity checks, or test
+    5.  add test scripts to ensure constant sanity checks, or test
         manually on jarvis
 
-    5.  add script to compute classification report of best model at the
+    6.  add script to compute classification report of best model at the
         end of training
 
-    6.  push final paper and bibtex when all is done, add global
+    7.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding

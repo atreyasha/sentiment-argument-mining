@@ -18,7 +18,7 @@ plot_token_dist_UNSC <- function(){
   agg <- aggregate(stats$len,by=list(stats$bin),FUN=sum)
   names(agg) <- c("bin","len")
   # fill in remaining factor levels where no data is present
-  agg$len <- as.numeric(agg$len)
+  agg[,2] <- as.numeric(agg[,2])
   agg$type = "Unfiltered"
   # create file
   tikz("token_dist_UNSC_length.tex", width=20, height=12, standAlone = TRUE)
@@ -41,6 +41,35 @@ plot_token_dist_UNSC <- function(){
   texi2pdf("token_dist_UNSC_length.tex",clean=TRUE)
   file.remove("token_dist_UNSC_length.tex")
   file.rename("token_dist_UNSC_length.pdf","./img/token_dist_UNSC_length.pdf")
+  # make new combined plot with bin lengths
+  count <- aggregate(stats$len,by=list(stats$bin),FUN=length)
+  count <- as.numeric(count[,2])
+  agg <- cbind(agg,count)
+  names(agg)[4] <- "Number of Speeches"
+  names(agg)[2] <- "Token Count"
+  agg <- melt(agg,measure.vars = c(2,4))
+  tikz("token_dist_UNSC_length_binned_plus.tex", width=20, height=15, standAlone = TRUE)
+  # make ggplot object
+  g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
+    geom_bar(stat="identity", color = "black", size = 0.5)+
+    ylab("")+
+    xlab("\nBinned Speech Length [Tokens]") +
+    theme_bw() +
+    theme(text = element_text(size=30, family="CM Roman"),
+          axis.text.x = element_text(angle = 90, hjust = 1, size = 18),
+          legend.text = element_text(size=25),
+          legend.title = element_text(size=25,face = "bold"),
+          legend.key = element_rect(colour = "lightgray", fill = "white"),
+          legend.position = "none",
+          plot.title = element_text(hjust=0.5)) +
+    facet_wrap(variable~.,nrow=2,scales="free_y")
+  # process
+  print(g)
+  dev.off()
+  texi2pdf("token_dist_UNSC_length_binned_plus.tex",clean=TRUE)
+  file.remove("token_dist_UNSC_length_binned_plus.tex")
+  file.rename("token_dist_UNSC_length_binned_plus.pdf",
+              "./img/token_dist_UNSC_length_binned_plus.pdf")
   # aggregate with filtered counts
   stats$type <- "Unfiltered"
   to_add <- stats

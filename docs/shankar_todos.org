@@ -5,6 +5,7 @@
 **** Documentation/Visualization
 ***** TODO squeeze in sentiment methodologies into repository when done, install sentiment dependencies onto venv for global tracking, perhaps add sentiment analysis on jupyter notebook with shared dependencies
 ***** TODO possibly improve final output and format to all claims and premises extracted from speeches
+***** TODO add plots with length of bins included and not only token counts
 ***** include overview section in ./src to summarize all sentiment and argumentation techniques
 ***** add test scripts to ensure constant sanity checks, or test manually on jarvis
 ***** add script to compute classification report of best model at the end of training
