@@ -10,16 +10,19 @@ Developments
         for global tracking, perhaps add sentiment analysis on jupyter
         notebook with shared dependencies
 
-    2.  include overview section in ./src to summarize all sentiment and
+    2.  **TODO** possibly improve final output and format to
+        all claims and premises extracted from speeches
+
+    3.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
 
-    3.  add test scripts to ensure constant sanity checks, or test
+    4.  add test scripts to ensure constant sanity checks, or test
         manually on jarvis
 
-    4.  add script to compute classification report of best model at the
+    5.  add script to compute classification report of best model at the
         end of training
 
-    5.  push final paper and bibtex when all is done, add global
+    6.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding
