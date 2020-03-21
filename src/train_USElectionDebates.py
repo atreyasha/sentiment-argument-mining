@@ -9,7 +9,6 @@ import datetime
 import numpy as np
 import tensorflow as tf
 from glob import glob
-from collections import Counter
 from sklearn.model_selection import ParameterGrid
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, CSVLogger
 from utils.model_utils import *

@@ -13,7 +13,6 @@ import logging
 import logging.config
 logging.config.fileConfig('./utils/logging.conf')
 import numpy as np
-from glob import glob
 from tqdm import tqdm
 from pre_process_USElectionDebates import initialize_bert_tokenizer
 from utils.arg_metav_formatter import *
