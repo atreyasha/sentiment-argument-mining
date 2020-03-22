@@ -51,8 +51,12 @@ $ ./init.sh
 
 ### 3. Sentiment Analysis
 
+Under sentiment analysis, we tested two successful sentiment-analysis tools, specifically [VADER](https://github.com/cjhutto/vaderSentiment) and [TextBlob](https://github.com/sloria/TextBlob), on the UNSC corpus. Next, we evaluated the predicted results to check their quality.
+
 For further details on sentiment analysis, check out our dedicated Jupyter notebook [here](./sentiment.ipynb).
 
 ### 4. Argumentation Mining
+
+Under argumentation mining, we fine-tuned the [ALBERT](https://github.com/google-research/ALBERT) language encoder (with custom decoders) on a small annotated political argumentation corpus known as the US Election Debate Corpus, detailed in [Haddadan et al. 2019](https://www.aclweb.org/anthology/P19-1463/). Next, we applied the fine-tuned argumentation classifier on the UNSC corpus to predict and extract argumentation candidates. 
 
 For further details on argumentation mining, check out our dedicated readme [here](./argumentation.md).

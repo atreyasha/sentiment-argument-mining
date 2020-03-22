@@ -14,7 +14,8 @@ Developments
         all claims and premises extracted from speeches
 
     3.  **TODO** add plots with length of bins included and
-        not only token counts
+        not only token counts, also for US Election Debates to give
+        another perspective on the data
 
     4.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
