@@ -2,6 +2,8 @@
 
 This readme will summarize our code and results in conducting sentiment analysis and argumentation mining on the UNSC corpus.
 
+### Table of Contents
+
 1. [Dependencies](#1-Dependencies)
 2. [Repository Initialization](#2-Repository-Initialization)
 3. [Sentiment Analysis](#3-Sentiment-Analysis)
