@@ -179,7 +179,7 @@ $ Rscript vis.R --model-history \
 ./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_history_1.csv
 ```
 
-**iii.** In order to construct a plot of the model's prediction on the UNSC corpus, simply execute the following with the path to the prediction `csv` file, which should have been automatically generated in the previous step.
+**iii.** In order to construct a plot of the model's prediction on the UNSC corpus, simply execute the following with the path to the prediction `csv` file, which should have been automatically generated in the prediction step.
 
 ```shell
 $ Rscript vis.R --predictions ./data/UNSC/pred/pred_tokens_stats_512.csv
