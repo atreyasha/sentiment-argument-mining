@@ -226,8 +226,7 @@ plot_token_dist_US <- function(){
   file.rename("token_dist_US_length_combined.pdf","./img/token_dist_US_length_combined.pdf")
 }
 
-plot_model_evolution <- function(directory){
-  file <- list.files(directory,pattern="^model\\_history",full.names = TRUE)
+plot_model_evolution <- function(file){
   stats <- read.csv(file,stringsAsFactors=FALSE)
   stats <- melt(stats,id.vars="epoch")
   stats$type <- stats$variable
@@ -324,8 +323,8 @@ plot_token_dist_pred_UNSC <- function(path){
 
 # parse command-line arguments
 parser <- OptionParser()
-parser <- add_option(parser, c("-m", "--model-dir"),
-                     default=NULL, help="Plot model evolution for specified model directory")
+parser <- add_option(parser, c("-m", "--model-history"),
+                     default=NULL, help="Plot model evolution for specified model history csv file")
 parser <- add_option(parser, c("-p", "--predictions"),
                      default=NULL, help="Plot prediction token distribution for given csv file")
 args <- parse_args(parser)
