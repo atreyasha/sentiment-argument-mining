@@ -19,7 +19,7 @@ A list of documents detailing our methodologies can be found below:
 * [Preliminary presentation](/docs/prelim_presentation/main.pdf)
 * [Progress-update presentation](/docs/progress_presentation/main.pdf)
 
-A formal description of our code and results can be found in the [src](/src) directory.
+A formal description of our code and results can be found in the [readme](/src/README.md) in the `./src` directory.
 
 ### Citations
 

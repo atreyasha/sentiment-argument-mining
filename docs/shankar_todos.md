@@ -5,17 +5,17 @@ Developments
 
 1.  Documentation/Visualization
 
-    1.  **TODO** squeeze in sentiment methodologies into
+    1.  **TODO** possibly improve final output and format to
+        all claims and premises extracted from speeches
+
+    2.  **TODO** add plots with length of bins included and
+        not only token counts, also for US Election Debates to give
+        another perspective on the data
+
+    3.  **TODO** squeeze in sentiment methodologies into
         repository when done, install sentiment dependencies onto venv
         for global tracking, perhaps add sentiment analysis on jupyter
         notebook with shared dependencies
-
-    2.  **TODO** possibly improve final output and format to
-        all claims and premises extracted from speeches
-
-    3.  **TODO** add plots with length of bins included and
-        not only token counts, also for US Election Debates to give
-        another perspective on the data
 
     4.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
