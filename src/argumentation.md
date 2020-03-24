@@ -172,7 +172,7 @@ Options:
 $ Rscript vis.R
 ```
 
-**ii.** In order to construct a plot of a model's performance history, simply append the path of the model log file as shown below:
+**ii.** In order to construct a plot of a model's performance history, simply append the path of the model history `csv` file as shown below:
 
 ```shell
 $ Rscript vis.R --model-history \
