@@ -226,8 +226,8 @@ plot_token_dist_US <- function(){
   file.rename("token_dist_US_length_combined.pdf","./img/token_dist_US_length_combined.pdf")
 }
 
-plot_model_evolution <- function(file){
-  stats <- read.csv(file,stringsAsFactors=FALSE)
+plot_model_evolution <- function(path){
+  stats <- read.csv(path,stringsAsFactors=FALSE)
   stats <- melt(stats,id.vars="epoch")
   stats$type <- stats$variable
   # reorder dataframe
