@@ -20,27 +20,6 @@ plot_token_dist_UNSC <- function(){
   # fill in remaining factor levels where no data is present
   agg[,2] <- as.numeric(agg[,2])
   agg$type = "Unfiltered"
-  # create file
-  tikz("token_dist_UNSC_length.tex", width=20, height=12, standAlone = TRUE)
-  # make ggplot object
-  g <- ggplot(agg,aes(x=bin,y=len,fill=type)) +
-    geom_bar(stat="identity", color = "black", fill = "red", alpha = 0.7, size = 0.5)+
-    xlab("\nBinned Speech Length [Tokens]") +
-    ylab("Token Count\n") +
-    theme_bw() +
-    theme(text = element_text(size=25, family="CM Roman"),
-          axis.text.x = element_text(angle = 90, hjust = 1, size = 18),
-          legend.text = element_text(size=25),
-          legend.title = element_text(size=25,face = "bold"),
-          legend.key = element_rect(colour = "lightgray", fill = "white"),
-          plot.title = element_text(hjust=0.5)) +
-    ggtitle("Token Count Distribution by Speech Length")
-  # process
-  print(g)
-  dev.off()
-  texi2pdf("token_dist_UNSC_length.tex",clean=TRUE)
-  file.remove("token_dist_UNSC_length.tex")
-  file.rename("token_dist_UNSC_length.pdf","./img/token_dist_UNSC_length.pdf")
   # make new combined plot with bin lengths
   count <- aggregate(stats$len,by=list(stats$bin),FUN=length)
   count <- as.numeric(count[,2])
@@ -48,10 +27,15 @@ plot_token_dist_UNSC <- function(){
   names(agg)[4] <- "Number of Speeches"
   names(agg)[2] <- "Token Count"
   agg <- melt(agg,measure.vars = c(2,4))
+  sums <- aggregate(agg[,4],by=list(agg$variable),FUN=sum)
   tikz("token_dist_UNSC_length_binned_plus.tex", width=20, height=15, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color = "black", size = 0.5)+
+    geom_text(aes(x, y, label=lab),
+              data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ = ",formatC(sums[1,2], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[2,2],big.mark=","))),
+                              variable=unique(agg[,c("variable")])),
+              hjust=1.1,vjust=1.5,size=10) +
     ylab("")+
     xlab("\nBinned Speech Length [Tokens]") +
     theme_bw() +
@@ -62,6 +46,7 @@ plot_token_dist_UNSC <- function(){
           legend.key = element_rect(colour = "lightgray", fill = "white"),
           legend.position = "none",
           plot.title = element_text(hjust=0.5)) +
+    scale_fill_npg() +
     facet_wrap(variable~.,nrow=2,scales="free_y")
   # process
   print(g)
@@ -72,34 +57,55 @@ plot_token_dist_UNSC <- function(){
               "./img/token_dist_UNSC_length_binned_plus.pdf")
   # aggregate with filtered counts
   stats$type <- "Unfiltered"
-  to_add <- stats
-  to_add[which(to_add[,2] > 512),2] = 0
-  to_add$type <- "Filtered_512"
+  if(file.exists("./data/UNSC/pred/pred_tokens_stats_512.csv")){
+    path <- "./data/UNSC/pred/pred_tokens_stats_512.csv"
+    to_add <- read.csv(path,stringsAsFactors=FALSE)
+    to_add$len <- rowSums(to_add[,c(2:4)])
+    to_add$bin <- cut(to_add$len,seq(0,max(to_add$len)+100,100),dig.lab=5)
+    to_add <- to_add[,c("speech","len","bin")]
+    names(to_add)[1] <- "id"
+    to_add$type <- "Filtered_512"
+  } else{
+    to_add <- stats
+    to_add[which(to_add[,2] > 512),2] = 0
+    to_add$type <- "Filtered_512"
+  }
   stats <- rbind(stats,to_add)
   agg <- aggregate(stats$len,by=list(stats$bin,stats$type),FUN=sum)
+  agg_add <- aggregate(stats$len,by=list(stats$bin,stats$type),FUN=function(x) length(which(x!=0)))
   names(agg)[1] <- "bin"
   names(agg)[2] <- "type"
-  names(agg)[3] <- "len"
+  names(agg)[3] <- "Token Count"
+  agg <- cbind(agg,agg_add[,3])
+  names(agg)[4] <- "Number of Speeches"
   agg[,2] <- factor(agg[,2],levels=c("Unfiltered","Filtered_512"))
   levels(agg$type) <- c("Full corpus","Pruned corpus [Sequence Length $\\leq$ 512]")
-  agg$len <- as.numeric(agg$len)
+  agg[,3] <- as.numeric(agg[,3])
+  agg[,4] <- as.numeric(agg[,4])
+  agg <- melt(agg)
+  sums <- aggregate(agg[,4],by=list(agg$variable,agg$type),FUN=sum)
   # create file
-  tikz("token_dist_UNSC_length_combined.tex", width=22, height=12, standAlone = TRUE)
+  tikz("token_dist_UNSC_length_combined.tex", width=20, height=15, standAlone = TRUE)
   # make ggplot object
-  g <- ggplot(agg,aes(x=bin,y=len, fill = type)) +
+  g <- ggplot(agg,aes(x=bin,y=value,fill=type)) +
     geom_bar(stat="identity", color="black", size = 0.5)+
+    geom_text(aes(x, y, label=lab),
+              data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ = ",formatC(sums[1,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[2,3],big.mark=",")),paste0("$\\Sigma$ = ",formatC(sums[3,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[4,3],big.mark=","))),
+                              type=sums[,2],variable=sums[,1]),
+              hjust=1.1,vjust=1.5,size=10) +
     xlab("\nBinned Speech Length [Tokens]")+
-    ylab("Token Count\n") +
+    ylab("") +
     theme_bw() +
     theme(text = element_text(size=25),
-          axis.text.x = element_text(angle = 90, hjust = 1),
+          axis.text.x = element_text(angle = 90, hjust = 1, size = 10),
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
           legend.key = element_rect(colour = "lightgray", fill = "white"),
           plot.title = element_text(hjust=0.5),
           legend.position = "none") +
+    scale_fill_npg() +
     ## ggtitle("Token Type Distribution by Utterance Length") +
-    facet_wrap(~type,nrow=2)
+    facet_grid(variable~type,scales="free_y")
   # process
   print(g)
   dev.off()
@@ -133,8 +139,9 @@ plot_token_dist_US <- function(){
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
           legend.key = element_rect(colour = "lightgray", fill = "white"),
-          plot.title = element_text(hjust=0.5)) +
-    ggtitle("Token Type Distribution by Year") +
+          plot.title = element_text(hjust=0.5),
+          legend.key.size = unit(0.8, "cm")) +
+  ggtitle("Token Type Distribution by Year") +
     scale_fill_npg(name="Token\nType",alpha=0.8)
   # process
   print(g)
@@ -146,30 +153,41 @@ plot_token_dist_US <- function(){
   stats$total <- rowSums(stats[,c(2:4)])
   stats$bin <- cut(stats$total,seq(0,max(stats$total)+100,100),dig.lab=5)
   agg <- aggregate(stats[c("N","C","P")],by=list(stats$bin),FUN=sum)
-  names(agg)[1] <- "bin"
-  names(agg)[c(2,3,4)] <- c("None","Claim","Premise")
+  bin <- aggregate(stats[c("bin")],by=list(stats$bin),FUN=length)
+  agg <- cbind(agg,bin[,2])
+  names(agg) <- c("bin","None","Claim","Premise","count")
   # fill in remaining factor levels where no data is present
   for(level in levels(agg$bin)[-which(levels(agg$bin) %in% agg$bin)]){
-    agg <- rbind(agg,c(level,0,0,0))
+    agg <- rbind(agg,c(level,0,0,0,0))
   }
   agg <- melt(agg,id.vars ="bin")
   agg$value <- as.numeric(agg$value)
+  agg$type <- "Token Count"
+  agg[which(agg[,c("variable")] == "count"),c("type")] <- "Number of Speeches"
+  agg[,c("type")] <- factor(agg[,c("type")],levels=c("Token Count","Number of Speeches"))
+  sums <- aggregate(agg[,3],by=list(agg$type),FUN=sum)
   # create file
-  tikz("token_dist_US_length.tex", width=13, height=12, standAlone = TRUE)
+  tikz("token_dist_US_length.tex", width=20, height=15, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color="black", size = 0.5)+
+    geom_text(aes(x, y, label=lab),
+              data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ = ",formatC(sums[1,2], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[2,2],big.mark=","))),
+                              type=sums[,1],variable=c("None","Claim")),
+              hjust=1.1,vjust=1.5,size=10) +
     xlab("\nBinned Utterance Length [Tokens]") +
-    ylab("Token Count\n") +
+    ylab("") +
     theme_bw() +
     theme(text = element_text(size=25, family="CM Roman"),
           axis.text.x = element_text(angle = 90, hjust = 1),
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
           legend.key = element_rect(colour = "lightgray", fill = "white"),
-          plot.title = element_text(hjust=0.5)) +
-    ggtitle("Token Type Distribution by Utterance Length") +
-    scale_fill_npg(name="Token\nType",alpha=0.8)
+          plot.title = element_text(hjust=0.5),
+          legend.key.size = unit(0.8, "cm")) +
+    ## ggtitle("Token Type Distribution by Utterance Length") +
+    scale_fill_npg(name="Token\nType",alpha=0.8,breaks=c("None","Claim","Premise")) +
+    facet_wrap(type~.,nrow=2,scales="free_y")
   # process
   print(g)
   dev.off()
@@ -179,45 +197,53 @@ plot_token_dist_US <- function(){
   # aggregate with filtered counts
   stats$type <- "Unfiltered"
   to_add <- stats
-  to_add[which(to_add[,5] > 512),c(2,3,4)] = 0
+  to_add[which(to_add[,5] > 510),c(2,3,4,5)] = 0
   to_add$type <- "Filtered_512"
   stats <- rbind(stats,to_add)
-  to_add <- stats[which(stats[,ncol(stats)] == "Unfiltered"),]
-  to_add[which(to_add[,5] > 128),c(2,3,4)] = 0
-  to_add$type <- "Filtered_128"
-  stats <- rbind(stats,to_add)
   agg <- aggregate(stats[c("N","C","P")],by=list(stats$bin,stats$type),FUN=sum)
+  agg_add <- aggregate(stats$total,by=list(stats$bin,stats$type),FUN=function(x) length(which(x!=0)))
   names(agg)[1] <- "bin"
   names(agg)[2] <- "type"
   names(agg)[c(3,4,5)] <- c("None","Claim","Premise")
+  agg <- cbind(agg,agg_add[,3])
+  names(agg)[6] <- "count"
   # fill in remaining factor levels where no data is present
   for(type in unique(agg$type)){
     for(level in levels(agg$bin)[-which(levels(agg$bin) %in%
                                         agg[which(agg$type == type),"bin"])]){
-      agg <- rbind(agg,c(level,type,0,0,0))
+      agg <- rbind(agg,c(level,type,0,0,0,0))
     }
   }
   agg <- melt(agg,id.vars =c("bin","type"))
-  agg[,2] <- factor(agg[,2],levels=c("Unfiltered","Filtered_512","Filtered_128"))
-  levels(agg$type) <- c("Full corpus","Pruned corpus [Sequence Length $\\leq$ 512]",
-                        "Pruned corpus [Sequence Length $\\leq$ 128]")
   agg$value <- as.numeric(agg$value)
+  agg$type_2 <- "Token Count"
+  agg[which(agg[,c("variable")] == "count"),c("type_2")] <- "Number of Speeches"
+  agg[,c("type_2")] <- factor(agg[,c("type_2")],levels=c("Token Count","Number of Speeches"))
+  agg[,c("type")] <- factor(agg[,c("type")],levels=c("Unfiltered","Filtered_512"))
+  levels(agg$type) <- c("Full corpus","Pruned corpus [Sequence Length $\\leq$ 512]")
+  sums <- aggregate(agg$value,by=list(agg$type_2,agg$type),FUN=sum)
   # create file
-  tikz("token_dist_US_length_combined.tex", width=24, height=12, standAlone = TRUE)
+  tikz("token_dist_US_length_combined.tex", width=20, height=15, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color="black", size = 0.5)+
-    xlab("\nBinned Utterance Length [Tokens]")+ylab("Token Count\n") +
+    geom_text(aes(x, y, label=lab),
+              data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ = ",formatC(sums[1,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[2,3],big.mark=",")),paste0("$\\Sigma$ = ",formatC(sums[3,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[4,3],big.mark=","))),
+                              type=sums[,2],type_2=sums[,1],variable=unique(agg$variable)),
+              hjust=1.1,vjust=1.5,size=10) +
+    xlab("\nBinned Utterance Length [Tokens]")+
+    ylab("") +
     theme_bw() +
     theme(text = element_text(size=25),
           axis.text.x = element_text(angle = 90, hjust = 1),
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
           legend.key = element_rect(colour = "lightgray", fill = "white"),
-          plot.title = element_text(hjust=0.5)) +
+          plot.title = element_text(hjust=0.5),
+          legend.key.size = unit(0.8, "cm")) +
     ## ggtitle("Token Type Distribution by Utterance Length") +
-    scale_fill_npg(name="Token\nType",alpha=0.8) +
-    facet_wrap(~type,ncol=3)
+    scale_fill_npg(name="Token\nType",alpha=0.8,breaks=c("None","Claim","Premise")) +
+    facet_grid(type_2~type,scales="free_y")
   # process
   print(g)
   dev.off()
@@ -301,7 +327,7 @@ plot_token_dist_pred_UNSC <- function(path){
   tikz("token_dist_pred_UNSC_length.tex", width=15, height=12, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
-    geom_bar(stat="identity", color="black", size = 0.5)+
+    geom_bar(stat="identity", color="black", size = 0.5, width = 0.7)+
     xlab("\nBinned Utterance Length [Tokens]") +
     ylab("Token Count\n") +
     theme_bw() +
@@ -310,7 +336,8 @@ plot_token_dist_pred_UNSC <- function(path){
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
           legend.key = element_rect(colour = "lightgray", fill = "white"),
-          plot.title = element_text(hjust=0.5)) +
+          plot.title = element_text(hjust=0.5),
+          legend.key.size = unit(0.8, "cm")) +
     ggtitle("Token Type Distribution by Utterance Length") +
     scale_fill_npg(name="Token\nType",alpha=0.8)
   # process

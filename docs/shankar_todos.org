@@ -1,7 +1,7 @@
 ** Developments
  
 *** Argumentation workflow
-
+    
 **** Documentation/Visualization
 ***** TODO possibly improve final output and format to all claims and premises extracted from speeches
 ***** TODO add plots with length of bins included and not only token counts, also for US Election Debates to give another perspective on the data
