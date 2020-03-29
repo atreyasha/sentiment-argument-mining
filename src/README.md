@@ -49,7 +49,9 @@ $ ./init.sh
 
 **i.** Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
 
-**ii.** Secondly, you will be prompted to download and deploy the UNSC and US election debate corpus. This will download and unzip the corresponding files.
+**ii.** Secondly, you will be prompted to download and deploy the UNSC corpus files. This will download and unzip the corresponding files, but can take quite some time due to large file sizes.
+
+**iii.** Thirdly, you will be prompted to download and deploy the US election debate corpus. This will download and unzip the corresponding files, and should be fairly quick.
 
 ### 3. Sentiment Analysis
 

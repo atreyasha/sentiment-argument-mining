@@ -146,6 +146,8 @@ To run this script on our best model, simply execute:
 $ python3 predict_UNSC --model-dir ./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_1.h5
 ```
 
+Under the default maximum sequence length of `512` tokens, this process will produce a clean human-readable `json` file, specifically `./data/UNSC/pred/pred_clean_512.json`, where each key maps to a speech id and the value of the key represents the tokenized version of the speech along with token-based argumentation classifications. This can be used for further semantic analysis on how the classifier performed on the UNSC corpus.
+
 ### 4. Visualization
 
 In order to visualize the US Election Debate and UNSC corpora, as well as model results; we created functions in the `vis.R` script. The corresponding visualizations will be converted to `tikz` code in a latex environment and will then be saved in `./img` as `pdf` files.
