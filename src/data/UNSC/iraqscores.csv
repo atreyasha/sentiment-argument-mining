@@ -1,0 +1,41 @@
+Year,Country,Positive_Sentences,Negative_Sentences,Subjectivity
+1999,France,63,13,0.5043955376
+1999,Russian Federation,67,32,0.43505585133333335
+1999,China,56,26,0.4870871625
+1999,United Kingdom Of Great Britain And Northern Ireland,93,7,0.5977922136666667
+1999,United States Of America,105,16,0.43259102
+2000,France,53,24,0.39437251475
+2000,Russian Federation,84,31,0.39220979000000006
+2000,China,66,28,0.37766648825
+2000,United Kingdom Of Great Britain And Northern Ireland,81,29,0.51071662275
+2000,United States Of America,16,7,0.36292106350000003
+2001,France,29,11,0.43481685
+2001,Russian Federation,22,11,0.430573814
+2001,China,49,9,0.3293686763333334
+2001,United Kingdom Of Great Britain And Northern Ireland,64,20,0.459348408
+2001,United States Of America,47,16,0.44121325899999997
+2002,France,51,7,0.38829624999999995
+2002,Russian Federation,68,17,0.48449046833333337
+2002,China,72,4,0.33905368683333337
+2002,United Kingdom Of Great Britain And Northern Ireland,42,25,0.5002107155
+2002,United States Of America,56,33,0.4333972765
+2003,France,357,134,0.3954311673529412
+2003,Russian Federation,283,86,0.409151413875
+2003,China,193,36,0.44203132750000007
+2003,United Kingdom Of Great Britain And Northern Ireland,368,121,0.4503764163076923
+2003,United States Of America,557,288,0.4077971574444444
+2004,France,77,11,0.42686008925
+2004,Russian Federation,82,12,0.33264171600000003
+2004,China,59,2,0.23484547525
+2004,United Kingdom Of Great Britain And Northern Ireland,146,13,0.42865130299999993
+2004,United States Of America,242,70,0.45421867299999996
+2005,France,42,3,0.24066862916666668
+2005,Russian Federation,40,3,0.3453232604
+2005,China,13,0,0.20359523800000004
+2005,United Kingdom Of Great Britain And Northern Ireland,27,5,0.3145489874
+2005,United States Of America,148,54,0.45899252516666667
+2006,France,45,12,0.3213240286666667
+2006,Russian Federation,30,14,0.41831735
+2006,China,46,6,0.39680174549999997
+2006,United Kingdom Of Great Britain And Northern Ireland,51,1,0.40408042099999997
+2006,United States Of America,160,82,0.38345130883333334
