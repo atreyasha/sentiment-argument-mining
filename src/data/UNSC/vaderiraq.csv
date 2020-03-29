@@ -1,0 +1,116 @@
+year,country,vader
+1995,France,0.9952
+1996,France,0.9587
+1997,France,0.992175
+1998,France,0.98385
+1999,France,0.76912
+2000,France,0.89115
+2001,France,0.9989
+2002,France,0.9720333333333334
+2003,France,0.9470764705882353
+2004,France,0.9964000000000001
+2005,France,0.8146833333333333
+2006,France,0.9907666666666667
+2007,France,0.99778
+2008,France,0.99695
+2009,France,0.99945
+2010,France,0.7136799999999999
+2011,France,
+2012,France,
+2013,France,
+2014,France,0.8329
+2015,France,
+2016,France,
+2017,France,
+1995,Russian Federation,0.9974
+1996,Russian Federation,0.9967999999999999
+1997,Russian Federation,0.7371444444444444
+1998,Russian Federation,0.99472
+1999,Russian Federation,0.93325
+2000,Russian Federation,0.8624222222222222
+2001,Russian Federation,0.9896
+2002,Russian Federation,0.9942333333333334
+2003,Russian Federation,0.81255
+2004,Russian Federation,0.9952749999999999
+2005,Russian Federation,0.86066
+2006,Russian Federation,0.3618333333333333
+2007,Russian Federation,0.9794833333333334
+2008,Russian Federation,0.9962200000000001
+2009,Russian Federation,0.99565
+2010,Russian Federation,0.7154
+2011,Russian Federation,0.4984
+2012,Russian Federation,
+2013,Russian Federation,0.47000000000000003
+2014,Russian Federation,-0.9878
+2015,Russian Federation,
+2016,Russian Federation,
+2017,Russian Federation,
+1995,China,0.9806
+1996,China,0.9969
+1997,China,0.9017333333333334
+1998,China,0.9862
+1999,China,0.9831750000000001
+2000,China,0.79295
+2001,China,0.7843333333333334
+2002,China,0.88625
+2003,China,0.994425
+2004,China,0.7932375
+2005,China,0.49798
+2006,China,0.99895
+2007,China,0.9976600000000001
+2008,China,0.999
+2009,China,0.99935
+2010,China,0.9984
+2011,China,
+2012,China,
+2013,China,0.47000000000000003
+2014,China,0.9978
+2015,China,0.5017666666666667
+2016,China,
+2017,China,
+1995,United Kingdom Of Great Britain And Northern Ireland,0.9945
+1996,United Kingdom Of Great Britain And Northern Ireland,0.99365
+1997,United Kingdom Of Great Britain And Northern Ireland,0.9879200000000001
+1998,United Kingdom Of Great Britain And Northern Ireland,0.5900199999999999
+1999,United Kingdom Of Great Britain And Northern Ireland,0.8306333333333333
+2000,United Kingdom Of Great Britain And Northern Ireland,0.9759249999999999
+2001,United Kingdom Of Great Britain And Northern Ireland,0.9977500000000001
+2002,United Kingdom Of Great Britain And Northern Ireland,0.98575
+2003,United Kingdom Of Great Britain And Northern Ireland,0.8452153846153847
+2004,United Kingdom Of Great Britain And Northern Ireland,0.9974833333333334
+2005,United Kingdom Of Great Britain And Northern Ireland,0.75738
+2006,United Kingdom Of Great Britain And Northern Ireland,0.9895333333333333
+2007,United Kingdom Of Great Britain And Northern Ireland,0.9979833333333333
+2008,United Kingdom Of Great Britain And Northern Ireland,0.9990166666666668
+2009,United Kingdom Of Great Britain And Northern Ireland,0.7025666666666667
+2010,United Kingdom Of Great Britain And Northern Ireland,0.7727999999999999
+2011,United Kingdom Of Great Britain And Northern Ireland,
+2012,United Kingdom Of Great Britain And Northern Ireland,
+2013,United Kingdom Of Great Britain And Northern Ireland,
+2014,United Kingdom Of Great Britain And Northern Ireland,-0.20950000000000002
+2015,United Kingdom Of Great Britain And Northern Ireland,
+2016,United Kingdom Of Great Britain And Northern Ireland,
+2017,United Kingdom Of Great Britain And Northern Ireland,
+1995,United States Of America,0.9951
+1996,United States Of America,0.99045
+1997,United States Of America,0.7673000000000001
+1998,United States Of America,0.957388888888889
+1999,United States Of America,0.9838250000000001
+2000,United States Of America,0.6108
+2001,United States Of America,0.99715
+2002,United States Of America,0.9918
+2003,United States Of America,0.6738277777777778
+2004,United States Of America,0.9983222222222222
+2005,United States Of America,0.9972333333333334
+2006,United States Of America,0.9969666666666667
+2007,United States Of America,0.9922571428571428
+2008,United States Of America,0.74613
+2009,United States Of America,0.99975
+2010,United States Of America,0.6908411764705884
+2011,United States Of America,
+2012,United States Of America,0.47000000000000003
+2013,United States Of America,0.5974
+2014,United States Of America,0.5803243243243245
+2015,United States Of America,
+2016,United States Of America,
+2017,United States Of America,
