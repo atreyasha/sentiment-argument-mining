@@ -55,7 +55,7 @@ $ ./init.sh
 
 ### 3. Sentiment Analysis
 
-Under sentiment analysis, we tested two successful sentiment-analysis tools, specifically [VADER](https://github.com/cjhutto/vaderSentiment) and [TextBlob](https://github.com/sloria/TextBlob), on the UNSC corpus. Next, we evaluated the predicted results to check their quality.
+Under sentiment analysis, we tested two successful sentiment-analysis tools, specifically [VADER](https://github.com/cjhutto/vaderSentiment) and [AFINN](https://github.com/fnielsen/afinn), on the UNSC corpus. For subjectivity analysis, we used [TextBlob](https://github.com/sloria/TextBlob), a text processing framework for Python. Next, we evaluated the predicted results to check their quality.
 
 For further details on sentiment analysis, check out our dedicated Jupyter notebook [here](./sentiment.ipynb).
 

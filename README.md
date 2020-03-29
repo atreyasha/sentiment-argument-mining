@@ -11,6 +11,7 @@ It could be very interesting to conduct sentiment analysis and argumentation min
 ### Methodologies
 
 For sentiment analysis, we compare the performance of various successful textual sentiment classifiers on the UNSC corpus.
+The tools used for sentiment analysis are [VADER](https://github.com/cjhutto/vaderSentiment) and [AFINN](https://github.com/fnielsen/afinn), a lexicon that contains more than 3,300 words with a polarity score associated with each word. For subjectivity analysis, we used [TextBlob](https://github.com/sloria/TextBlob), a text processing framework for Python. 
 
 For argumentation mining, we train an argument candidate classifier (based on the [ALBERT](https://github.com/google-research/ALBERT) language encoder) on the US Election Debate corpus from [Haddadan et al. 2019](https://www.aclweb.org/anthology/P19-1463/), which is available to the public [here](https://github.com/ElecDeb60To16/Dataset). Next, we apply this classifier on the UNSC corpus to check if we can extract meaningful argumentation candidates.
 
