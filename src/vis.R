@@ -104,7 +104,7 @@ plot_token_dist_UNSC <- function(){
           plot.title = element_text(hjust=0.5),
           legend.position = "none") +
     scale_fill_npg() +
-    ## ggtitle("Token Type Distribution by Utterance Length") +
+    ## ggtitle("Token Type Distribution by Speech Length") +
     facet_grid(variable~type,scales="free_y")
   # process
   print(g)
@@ -175,7 +175,7 @@ plot_token_dist_US <- function(){
               data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ = ",formatC(sums[1,2], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[2,2],big.mark=","))),
                               type=sums[,1],variable=c("None","Claim")),
               hjust=1.1,vjust=1.5,size=10) +
-    xlab("\nBinned Utterance Length [Tokens]") +
+    xlab("\nBinned Speech Length [Tokens]") +
     ylab("") +
     theme_bw() +
     theme(text = element_text(size=25, family="CM Roman"),
@@ -185,7 +185,7 @@ plot_token_dist_US <- function(){
           legend.key = element_rect(colour = "lightgray", fill = "white"),
           plot.title = element_text(hjust=0.5),
           legend.key.size = unit(0.8, "cm")) +
-    ## ggtitle("Token Type Distribution by Utterance Length") +
+    ## ggtitle("Token Type Distribution by Speech Length") +
     scale_fill_npg(name="Token\nType",alpha=0.8,breaks=c("None","Claim","Premise")) +
     facet_wrap(type~.,nrow=2,scales="free_y")
   # process
@@ -231,7 +231,7 @@ plot_token_dist_US <- function(){
               data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ = ",formatC(sums[1,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[2,3],big.mark=",")),paste0("$\\Sigma$ = ",formatC(sums[3,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[4,3],big.mark=","))),
                               type=sums[,2],type_2=sums[,1],variable=unique(agg$variable)),
               hjust=1.1,vjust=1.5,size=10) +
-    xlab("\nBinned Utterance Length [Tokens]")+
+    xlab("\nBinned Speech Length [Tokens]")+
     ylab("") +
     theme_bw() +
     theme(text = element_text(size=25),
@@ -241,7 +241,7 @@ plot_token_dist_US <- function(){
           legend.key = element_rect(colour = "lightgray", fill = "white"),
           plot.title = element_text(hjust=0.5),
           legend.key.size = unit(0.8, "cm")) +
-    ## ggtitle("Token Type Distribution by Utterance Length") +
+    ## ggtitle("Token Type Distribution by Speech Length") +
     scale_fill_npg(name="Token\nType",alpha=0.8,breaks=c("None","Claim","Premise")) +
     facet_grid(type_2~type,scales="free_y")
   # process
@@ -301,7 +301,7 @@ plot_model_evolution <- function(path){
                                   "Model Checkpoint"="black"),
                        breaks = c("Training","Validation","Learning Rate",
                                   "Model Checkpoint"))+
-    ## ggtitle("Token Type Distribution by Utterance Length") +
+    ## ggtitle("Token Type Distribution by Speech Length") +
     ## scale_fill_npg(name="Token\nType",alpha=0.8) +
     facet_wrap(~type,scales="free_y",nrow=3) +
     scale_y_continuous(expand = expand_scale(mult = c(0.2, 0.22)))
@@ -328,7 +328,7 @@ plot_token_dist_pred_UNSC <- function(path){
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color="black", size = 0.5, width = 0.7)+
-    xlab("\nBinned Utterance Length [Tokens]") +
+    xlab("\nBinned Speech Length [Tokens]") +
     ylab("Token Count\n") +
     theme_bw() +
     theme(text = element_text(size=25, family="CM Roman"),
@@ -338,7 +338,7 @@ plot_token_dist_pred_UNSC <- function(path){
           legend.key = element_rect(colour = "lightgray", fill = "white"),
           plot.title = element_text(hjust=0.5),
           legend.key.size = unit(0.8, "cm")) +
-    ggtitle("Token Type Distribution by Utterance Length") +
+    ggtitle("Token Type Distribution by Speech Length") +
     scale_fill_npg(name="Token\nType",alpha=0.8)
   # process
   print(g)
