@@ -294,7 +294,7 @@ plot_model_evolution <- function(path){
           legend.key = element_rect(colour = "lightgray", fill = "white", size=1.2),
           legend.key.size = unit(0.8,"cm"),
           plot.title = element_text(hjust=0.5)) +
-    scale_x_continuous(breaks = round(seq(min(stats$epoch), max(stats$epoch), by = 5),1)) +
+    scale_x_continuous(breaks = round(seq(min(stats$epoch), max(stats$epoch), by = 1),1)) +
     scale_color_manual(values = c("Training"="#F8766D",
                                   "Validation"="#00BA38",
                                   "Learning Rate"="#619CFF",
