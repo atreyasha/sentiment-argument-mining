@@ -12,7 +12,7 @@ It could be very interesting to conduct sentiment analysis and argumentation min
 
 For sentiment analysis, we compare the performance of various successful textual sentiment classifiers on the UNSC corpus.
 
-For argumentation mining, we train an argument candidate classifier on the US Election Debate corpus from [Haddadan et al. 2019](https://www.aclweb.org/anthology/P19-1463/), which is available to the public [here](https://github.com/ElecDeb60To16/Dataset). Next, we apply this classifier on the UNSC corpus to check if we can extract meaningful argumentation candidates.
+For argumentation mining, we train an argument candidate classifier (based on the [ALBERT](https://github.com/google-research/ALBERT) language encoder) on the US Election Debate corpus from [Haddadan et al. 2019](https://www.aclweb.org/anthology/P19-1463/), which is available to the public [here](https://github.com/ElecDeb60To16/Dataset). Next, we apply this classifier on the UNSC corpus to check if we can extract meaningful argumentation candidates.
 
 A list of documents detailing our methodologies can be found below:
 
