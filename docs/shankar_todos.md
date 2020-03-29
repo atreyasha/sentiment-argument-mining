@@ -17,16 +17,19 @@ Developments
         for global tracking, perhaps add sentiment analysis on jupyter
         notebook with shared dependencies
 
-    4.  include overview section in ./src to summarize all sentiment and
+    4.  **TODO** update information on afinn in readmes and
+        in repository
+
+    5.  include overview section in ./src to summarize all sentiment and
         argumentation techniques
 
-    5.  add test scripts to ensure constant sanity checks, or test
+    6.  add test scripts to ensure constant sanity checks, or test
         manually on jarvis
 
-    6.  add script to compute classification report of best model at the
+    7.  add script to compute classification report of best model at the
         end of training
 
-    7.  push final paper and bibtex when all is done, add global
+    8.  push final paper and bibtex when all is done, add global
         references to results from paper
 
 2.  Sequence encoding
