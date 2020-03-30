@@ -28,7 +28,7 @@ plot_token_dist_UNSC <- function(){
   names(agg)[2] <- "Token Count"
   agg <- melt(agg,measure.vars = c(2,4))
   sums <- aggregate(agg[,4],by=list(agg$variable),FUN=sum)
-  tikz("token_dist_UNSC_length_binned_plus.tex", width=20, height=15, standAlone = TRUE)
+  tikz("token_dist_UNSC_length.tex", width=20, height=15, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color = "black", size = 0.5)+
@@ -51,10 +51,10 @@ plot_token_dist_UNSC <- function(){
   # process
   print(g)
   dev.off()
-  texi2pdf("token_dist_UNSC_length_binned_plus.tex",clean=TRUE)
-  file.remove("token_dist_UNSC_length_binned_plus.tex")
-  file.rename("token_dist_UNSC_length_binned_plus.pdf",
-              "./img/token_dist_UNSC_length_binned_plus.pdf")
+  texi2pdf("token_dist_UNSC_length.tex",clean=TRUE)
+  file.remove("token_dist_UNSC_length.tex")
+  file.rename("token_dist_UNSC_length.pdf",
+              "./img/token_dist_UNSC_length.pdf")
   # aggregate with filtered counts
   stats$type <- "Unfiltered"
   if(file.exists("./data/UNSC/pred/pred_tokens_stats_512.csv")){
