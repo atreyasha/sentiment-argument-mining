@@ -182,9 +182,11 @@ plot_token_dist_US <- function(){
           axis.text.x = element_text(angle = 90, hjust = 1),
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
-          legend.key = element_rect(colour = "lightgray", fill = "white"),
+          legend.key = element_rect(colour = "transparent", fill = "white"),
+          legend.background=element_blank(),
           plot.title = element_text(hjust=0.5),
-          legend.key.size = unit(0.8, "cm")) +
+          legend.key.size = unit(0.8, "cm"),
+          legend.position = c(0.902, 0.84))+
     ## ggtitle("Token Type Distribution by Speech Length") +
     scale_fill_npg(name="Token\nType",alpha=0.8,breaks=c("None","Claim","Premise")) +
     facet_wrap(type~.,nrow=2,scales="free_y")
@@ -240,7 +242,9 @@ plot_token_dist_US <- function(){
           legend.title = element_text(size=25,face = "bold"),
           legend.key = element_rect(colour = "lightgray", fill = "white"),
           plot.title = element_text(hjust=0.5),
-          legend.key.size = unit(0.8, "cm")) +
+          legend.key.size = unit(0.8, "cm"),
+          legend.background=element_blank(),
+          legend.position = c(0.902, 0.84))+
     ## ggtitle("Token Type Distribution by Speech Length") +
     scale_fill_npg(name="Token\nType",alpha=0.8,breaks=c("None","Claim","Premise")) +
     facet_grid(type_2~type,scales="free_y")
