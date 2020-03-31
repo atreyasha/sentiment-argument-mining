@@ -81,7 +81,7 @@ plot_token_dist_UNSC <- function(){
   agg <- cbind(agg,agg_add[,3])
   names(agg)[4] <- "Number of Speeches"
   agg[,2] <- factor(agg[,2],levels=c("Unfiltered","Filtered_512"))
-  levels(agg$type) <- c("Full UNSC corpus","Pruned UNSC corpus [Sequence Length $\\leq$ 512]")
+  levels(agg$type) <- c("Full UNSC Corpus","Pruned UNSC Corpus [Sequence Length $\\leq$ 512]")
   agg[,3] <- as.numeric(agg[,3])
   agg[,4] <- as.numeric(agg[,4])
   agg <- melt(agg)
@@ -227,7 +227,7 @@ plot_token_dist_US <- function(){
   agg[which(agg[,c("variable")] == "count"),c("type_2")] <- "Number of Speeches"
   agg[,c("type_2")] <- factor(agg[,c("type_2")],levels=c("Token Count","Number of Speeches"))
   agg[,c("type")] <- factor(agg[,c("type")],levels=c("Unfiltered","Filtered_512"))
-  levels(agg$type) <- c("Full USED corpus","Pruned USED corpus [Sequence Length $\\leq$ 512]")
+  levels(agg$type) <- c("Full USED Corpus","Pruned USED Corpus [Sequence Length $\\leq$ 512]")
   sums <- aggregate(agg$value,by=list(agg$type_2,agg$type),FUN=sum)
   # create file
   tikz("token_dist_US_length_combined.tex", width=20, height=15, standAlone = TRUE)
