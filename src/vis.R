@@ -45,7 +45,9 @@ plot_token_dist_UNSC <- function(){
           legend.title = element_text(size=25,face = "bold"),
           legend.key = element_rect(colour = "lightgray", fill = "white"),
           legend.position = "none",
-          plot.title = element_text(hjust=0.5)) +
+          plot.title = element_text(hjust=0.5),
+          strip.text.x = element_text(size = 27),
+          strip.text.y = element_text(size = 27)) +
     scale_fill_npg() +
     facet_wrap(variable~.,nrow=2,scales="free_y")
   # process
@@ -79,7 +81,7 @@ plot_token_dist_UNSC <- function(){
   agg <- cbind(agg,agg_add[,3])
   names(agg)[4] <- "Number of Speeches"
   agg[,2] <- factor(agg[,2],levels=c("Unfiltered","Filtered_512"))
-  levels(agg$type) <- c("Full corpus","Pruned corpus [Sequence Length $\\leq$ 512]")
+  levels(agg$type) <- c("Full UNSC corpus","Pruned UNSC corpus [Sequence Length $\\leq$ 512]")
   agg[,3] <- as.numeric(agg[,3])
   agg[,4] <- as.numeric(agg[,4])
   agg <- melt(agg)
@@ -102,7 +104,9 @@ plot_token_dist_UNSC <- function(){
           legend.title = element_text(size=25,face = "bold"),
           legend.key = element_rect(colour = "lightgray", fill = "white"),
           plot.title = element_text(hjust=0.5),
-          legend.position = "none") +
+          legend.position = "none",
+          strip.text.x = element_text(size = 27),
+          strip.text.y = element_text(size = 27)) +
     scale_fill_npg() +
     ## ggtitle("Token Type Distribution by Speech Length") +
     facet_grid(variable~type,scales="free_y")
@@ -186,7 +190,8 @@ plot_token_dist_US <- function(){
           legend.background=element_blank(),
           plot.title = element_text(hjust=0.5),
           legend.key.size = unit(0.8, "cm"),
-          legend.position = c(0.902, 0.84))+
+          legend.position = c(0.902, 0.84),
+          strip.text.x = element_text(size = 27))+
     ## ggtitle("Token Type Distribution by Speech Length") +
     scale_fill_npg(name="Token\nType",alpha=0.8,breaks=c("None","Claim","Premise")) +
     facet_wrap(type~.,nrow=2,scales="free_y")
@@ -222,7 +227,7 @@ plot_token_dist_US <- function(){
   agg[which(agg[,c("variable")] == "count"),c("type_2")] <- "Number of Speeches"
   agg[,c("type_2")] <- factor(agg[,c("type_2")],levels=c("Token Count","Number of Speeches"))
   agg[,c("type")] <- factor(agg[,c("type")],levels=c("Unfiltered","Filtered_512"))
-  levels(agg$type) <- c("Full corpus","Pruned corpus [Sequence Length $\\leq$ 512]")
+  levels(agg$type) <- c("Full USED corpus","Pruned USED corpus [Sequence Length $\\leq$ 512]")
   sums <- aggregate(agg$value,by=list(agg$type_2,agg$type),FUN=sum)
   # create file
   tikz("token_dist_US_length_combined.tex", width=20, height=15, standAlone = TRUE)
@@ -244,7 +249,9 @@ plot_token_dist_US <- function(){
           plot.title = element_text(hjust=0.5),
           legend.key.size = unit(0.8, "cm"),
           legend.background=element_blank(),
-          legend.position = c(0.902, 0.84))+
+          legend.position = c(0.902, 0.84),
+          strip.text.x = element_text(size = 27),
+          strip.text.y = element_text(size = 27))+
     ## ggtitle("Token Type Distribution by Speech Length") +
     scale_fill_npg(name="Token\nType",alpha=0.8,breaks=c("None","Claim","Premise")) +
     facet_grid(type_2~type,scales="free_y")
