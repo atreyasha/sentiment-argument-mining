@@ -3,14 +3,10 @@
 *** Argumentation workflow
     
 **** Documentation/Visualization
+***** TODO push final paper and bibtex when all is done, add global references to results from paper
 ***** TODO possibly improve final output and format to all claims and premises extracted from speeches
-***** TODO add plots with length of bins included and not only token counts, also for US Election Debates to give another perspective on the data
-***** TODO squeeze in sentiment methodologies into repository when done, install sentiment dependencies onto venv for global tracking, perhaps add sentiment analysis on jupyter notebook with shared dependencies
-***** TODO update information on afinn in readmes and in repository
-***** include overview section in ./src to summarize all sentiment and argumentation techniques
-***** add test scripts to ensure constant sanity checks, or test manually on jarvis
 ***** add script to compute classification report of best model at the end of training
-***** push final paper and bibtex when all is done, add global references to results from paper
+***** add test scripts to ensure constant sanity checks, or test manually on jarvis
  
 **** Sequence encoding
 ***** simple (task 1) -> 1: claim, 2: premise, 3: non-argument
@@ -21,11 +17,3 @@
 ***** limited time issue: make homogeneous train/validation/test datasets for appropriate evaluation
 ***** limited time issue: multi-task setting with argumentation tree
 ***** limited time issue: develop gradient accumulator/checkpointer in optimizer to save memory and use most of data available
-
-**** Paper
-***** motivate with all methods tried
-***** mention domain debiasing with removal of references
-***** compare with scores in paper and talk about how paper made much simplifications
-***** think about all other optimizations worth mentioning, talk about problem with size 128 reduction
-***** concede to using low batch size to allow for more data, add comparison with majority class classifier as baseline
-***** mention all limitations and recommendations for things to do; along with using pytorch instead of tensorflow
