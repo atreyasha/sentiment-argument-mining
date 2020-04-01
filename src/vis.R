@@ -304,7 +304,9 @@ plot_model_evolution <- function(path){
           legend.title = element_blank(),
           legend.key = element_rect(colour = "lightgray", fill = "white", size=1.2),
           legend.key.size = unit(0.8,"cm"),
-          plot.title = element_text(hjust=0.5)) +
+          plot.title = element_text(hjust=0.5),
+          legend.position="bottom",
+          strip.text.x = element_text(size=27)) +
     scale_x_continuous(breaks = round(seq(min(stats$epoch), max(stats$epoch), by = 1),1)) +
     scale_color_manual(values = c("Training"="#F8766D",
                                   "Validation"="#00BA38",
@@ -349,7 +351,7 @@ plot_token_dist_pred_UNSC <- function(path){
           legend.key = element_rect(colour = "lightgray", fill = "white"),
           plot.title = element_text(hjust=0.5),
           legend.key.size = unit(0.8, "cm")) +
-    ggtitle("Token Type Distribution by Speech Length") +
+    ggtitle("Token Type Prediction in UNSC Corpus") +
     scale_fill_npg(name="Token\nType",alpha=0.8)
   # process
   print(g)
