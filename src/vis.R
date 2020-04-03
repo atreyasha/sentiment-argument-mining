@@ -219,13 +219,13 @@ plot_token_dist_US <- function(){
   for(type in unique(stats_non_arg$type)){
     for(level in levels(stats_non_arg$bin)[-which(levels(stats_non_arg$bin) %in%
                                                   stats_non_arg[which(stats_non_arg$type == type),"bin"])]){
-      stats_non_arg <- rbind(stats_non_arg,c(level,type,0,"Argumentative"))
+      stats_non_arg <- rbind(stats_non_arg,c(level,type,0,"Non-Argumentative"))
     }
   }
   for(type in unique(stats_arg$type)){
     for(level in levels(stats_arg$bin)[-which(levels(stats_arg$bin) %in%
                                                   stats_arg[which(stats_arg$type == type),"bin"])]){
-      stats_arg <- rbind(stats_arg,c(level,type,0,"Non-Argumentative"))
+      stats_arg <- rbind(stats_arg,c(level,type,0,"Argumentative"))
     }
   }
   stats_combined <- rbind(stats_arg,stats_non_arg)
