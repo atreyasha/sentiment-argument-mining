@@ -24,8 +24,8 @@ plot_token_dist_UNSC <- function(){
   count <- aggregate(stats$len,by=list(stats$bin),FUN=length)
   count <- as.numeric(count[,2])
   agg <- cbind(agg,count)
-  names(agg)[4] <- "Number of Speeches"
-  names(agg)[2] <- "Token Count"
+  names(agg)[4] <- "Number of Speeches [S]"
+  names(agg)[2] <- "Token Count [T]"
   agg <- melt(agg,measure.vars = c(2,4))
   sums <- aggregate(agg[,4],by=list(agg$variable),FUN=sum)
   tikz("token_dist_UNSC_length.tex", width=20, height=15, standAlone = TRUE)
@@ -33,9 +33,9 @@ plot_token_dist_UNSC <- function(){
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color = "black", size = 0.5)+
     geom_text(aes(x, y, label=lab),
-              data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ = ",formatC(sums[1,2], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[2,2],big.mark=","))),
+              data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ [T] = ",formatC(sums[1,2], format = "e", digits = 2)),paste0("$\\Sigma$ [S] = ",prettyNum(sums[2,2],big.mark=","))),
                               variable=unique(agg[,c("variable")])),
-              hjust=1.1,vjust=1.5,size=10) +
+              hjust=1.1,vjust=1.8,size=10) +
     ylab("")+
     xlab("\nBinned Speech Length [Tokens]") +
     theme_bw() +
@@ -77,9 +77,9 @@ plot_token_dist_UNSC <- function(){
   agg_add <- aggregate(stats$len,by=list(stats$bin,stats$type),FUN=function(x) length(which(x!=0)))
   names(agg)[1] <- "bin"
   names(agg)[2] <- "type"
-  names(agg)[3] <- "Token Count"
+  names(agg)[3] <- "Token Count [T]"
   agg <- cbind(agg,agg_add[,3])
-  names(agg)[4] <- "Number of Speeches"
+  names(agg)[4] <- "Number of Speeches [S]"
   agg[,2] <- factor(agg[,2],levels=c("Unfiltered","Filtered_512"))
   levels(agg$type) <- c("Full UNSC Corpus","Pruned UNSC Corpus [Sequence Length $\\leq$ 512]")
   agg[,3] <- as.numeric(agg[,3])
@@ -92,9 +92,9 @@ plot_token_dist_UNSC <- function(){
   g <- ggplot(agg,aes(x=bin,y=value,fill=type)) +
     geom_bar(stat="identity", color="black", size = 0.5)+
     geom_text(aes(x, y, label=lab),
-              data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ = ",formatC(sums[1,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[2,3],big.mark=",")),paste0("$\\Sigma$ = ",formatC(sums[3,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[4,3],big.mark=","))),
+              data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ [T] = ",formatC(sums[1,3], format = "e", digits = 2)),paste0("$\\Sigma$ [S] = ",prettyNum(sums[2,3],big.mark=",")),paste0("$\\Sigma$ [T] = ",formatC(sums[3,3], format = "e", digits = 2)),paste0("$\\Sigma$ [S] = ",prettyNum(sums[4,3],big.mark=","))),
                               type=sums[,2],variable=sums[,1]),
-              hjust=1.1,vjust=1.5,size=10) +
+              hjust=1.1,vjust=1.8,size=10) +
     xlab("\nBinned Speech Length [Tokens]")+
     ylab("") +
     theme_bw() +
@@ -212,28 +212,28 @@ plot_token_dist_US <- function(){
   stats_non_arg <- aggregate(stats_non_arg$total,by=list(stats_non_arg$bin,stats_non_arg$type),FUN=length)
   stats_arg <- stats[which(stats[,c("C")] != 0 | stats[,c("P")] != 0),]
   stats_arg <- aggregate(stats_arg$total,by=list(stats_arg$bin,stats_arg$type),FUN=length)
-  stats_non_arg$variable <- "Non-Argumentative"
-  stats_arg$variable <- "Argumentative"
+  stats_non_arg$variable <- "Non-Argumentative [O]"
+  stats_arg$variable <- "Argumentative [A]"
   names(stats_non_arg) <- c("bin","type","value","variable")
   names(stats_arg) <- c("bin","type","value","variable")
   for(type in unique(stats_non_arg$type)){
     for(level in levels(stats_non_arg$bin)[-which(levels(stats_non_arg$bin) %in%
                                                   stats_non_arg[which(stats_non_arg$type == type),"bin"])]){
-      stats_non_arg <- rbind(stats_non_arg,c(level,type,0,"Non-Argumentative"))
+      stats_non_arg <- rbind(stats_non_arg,c(level,type,0,"Non-Argumentative [O]"))
     }
   }
   for(type in unique(stats_arg$type)){
     for(level in levels(stats_arg$bin)[-which(levels(stats_arg$bin) %in%
                                                   stats_arg[which(stats_arg$type == type),"bin"])]){
-      stats_arg <- rbind(stats_arg,c(level,type,0,"Argumentative"))
+      stats_arg <- rbind(stats_arg,c(level,type,0,"Argumentative [A]"))
     }
   }
   stats_combined <- rbind(stats_arg,stats_non_arg)
-  stats_combined$type_2 <- "Number of Speeches"
+  stats_combined$type_2 <- "Number of Speeches [S]"
   stats_combined <- melt(stats_combined)
   names(agg)[1] <- "bin"
   names(agg)[2] <- "type"
-  names(agg)[c(3,4,5)] <- c("None","Claim","Premise")
+  names(agg)[c(3,4,5)] <- c("None [N]","Claim [C]","Premise [P]")
   # fill in remaining factor levels where no data is present
   for(type in unique(agg$type)){
     for(level in levels(agg$bin)[-which(levels(agg$bin) %in%
@@ -242,22 +242,24 @@ plot_token_dist_US <- function(){
     }
   }
   agg <- melt(agg,id.vars =c("bin","type"))
-  agg$type_2 <- "Token Count"
+  agg$type_2 <- "Token Count [T]"
   agg <- rbind(agg,stats_combined)
   agg$value <- as.numeric(agg$value)
-  agg[,c("type_2")] <- factor(agg[,c("type_2")],levels=c("Token Count","Number of Speeches"))
+  agg[,c("type_2")] <- factor(agg[,c("type_2")],levels=c("Token Count [T]","Number of Speeches [S]"))
   agg[,c("type")] <- factor(agg[,c("type")],levels=c("Unfiltered","Filtered_512"))
   levels(agg$type) <- c("Full USED Corpus","Pruned USED Corpus [Sequence Length $\\leq$ 512]")
   sums <- aggregate(agg$value,by=list(agg$type_2,agg$type),FUN=sum)
+  sums_cat <- aggregate(agg$value,by=list(agg$type_2,agg$type,agg$variable),FUN=sum)
   # create file
   tikz("token_dist_US_length_combined.tex", width=20, height=15, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color="black", size = 0.5)+
     geom_text(aes(x, y, label=lab),
-              data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ = ",formatC(sums[1,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[2,3],big.mark=",")),paste0("$\\Sigma$ = ",formatC(sums[3,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[4,3],big.mark=","))),
+              data=data.frame(x=Inf, y=Inf,
+                              lab=c(paste0("$\\Sigma$ [T] = ",formatC(sums[1,3],format = "e", digits = 2),"\n$\\Sigma$ [N] = ",formatC(sums_cat[1,4],format="e",digits=2), "\n$\\Sigma$ [C] = ",formatC(sums_cat[3,4],format="e",digits=2),"\n$\\Sigma$ [P] = ",formatC(sums_cat[5,4],format="e",digits=2)),paste0("$\\Sigma$ [S] = ",prettyNum(sums[2,3],big.mark=","),"\n$\\Sigma$ [A] = ",prettyNum(sums_cat[7,4],big.mark=","),"\n$\\Sigma$ [O] = ",prettyNum(sums_cat[9,4],big.mark=","),"\n"),paste0("$\\Sigma$ [T] = ",formatC(sums[3,3], format = "e", digits = 2),"\n$\\Sigma$ [N] = ",formatC(sums_cat[2,4],format="e",digits=2), "\n$\\Sigma$ [C] = ",formatC(sums_cat[4,4],format="e",digits=2),"\n$\\Sigma$ [P] = ",formatC(sums_cat[6,4],format="e",digits=2)),paste0("$\\Sigma$ [S] = ",prettyNum(sums[4,3],big.mark=","),"\n$\\Sigma$ [A] = ",prettyNum(sums_cat[8,4],big.mark=","),"\n$\\Sigma$ [O] = ",prettyNum(sums_cat[10,4],big.mark=","),"\n")),
                               type=sums[,2],type_2=sums[,1],variable=unique(agg$variable)[1:4]),
-              hjust=1.1,vjust=1.5,size=10) +
+              hjust=1.15,vjust=1.2,size=10) +
     xlab("\nBinned Speech Length [Tokens]")+
     ylab("") +
     theme_bw() +
@@ -354,27 +356,35 @@ plot_token_dist_pred_UNSC <- function(path){
   stats$bin <- cut(stats$total,seq(0,max(stats$total)+100,100),dig.lab=5)
   agg <- aggregate(stats[c("N","C","P")],by=list(stats$bin),FUN=sum)
   names(agg)[1] <- "bin"
-  names(agg)[c(2,3,4)] <- c("None","Claim","Premise")
+  names(agg)[c(2,3,4)] <- c("None [N]","Claim [C]","Premise [P]")
   agg <- melt(agg)
   stats_non_arg <- stats[which(stats[,c("C")] == 0 & stats[,c("P")] == 0),]
   stats_non_arg <- aggregate(stats_non_arg$total,by=list(stats_non_arg$bin),FUN=length)
   stats_arg <- stats[which(stats[,c("C")] != 0 | stats[,c("P")] != 0),]
   stats_arg <- aggregate(stats_arg$total,by=list(stats_arg$bin),FUN=length)
-  stats_non_arg$variable <- "Non-Argumentative"
-  stats_arg$variable <- "Argumentative"
+  stats_non_arg$variable <- "Non-Argumentative [O]"
+  stats_arg$variable <- "Argumentative [A]"
   stats_combined <- rbind(stats_arg,stats_non_arg)
-  stats_combined$type <- "Number of Speeches"
+  stats_combined$type <- "Number of Speeches [S]"
   names(stats_combined)[c(1,2)] <- c("bin","value")
   stats_combined <- melt(stats_combined)
   stats_combined <- stats_combined[,-4]
-  agg$type <- "Token Count"
+  agg$type <- "Token Count [T]"
   agg <- rbind(agg,stats_combined)
-  agg$type <- factor(agg$type,levels=c("Token Count","Number of Speeches"))
+  agg$type <- factor(agg$type,levels=c("Token Count [T]","Number of Speeches [S]"))
+  sums <- aggregate(agg$value,by=list(agg$type),FUN=sum)
+  sums_cat <- aggregate(agg$value,by=list(agg$type,agg$variable),FUN=sum)
   # create file
-  tikz("token_dist_pred_UNSC_length.tex", width=20, height=15, standAlone = TRUE)
+  current <- getOption("tikzLatexPackages")
+  ## option("tikzLatexPackages") <- paste0(current,"\\usepackage{amsmath}\n")
+  tikz("token_dist_pred_UNSC_length.tex", width=20, height=15, standAlone = TRUE,
+       packages =  paste0(current,"\\usepackage{amsmath}\n"))
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color="black", size = 0.5, width = 0.7)+
+    geom_text(aes(x, y, label=lab),
+              data=data.frame(x=c(0,Inf), y=c(Inf,Inf),
+                              lab=c(paste0("$\\Sigma$ [T] = ",formatC(sums[1,2],format = "e", digits = 2),"\n$\\Sigma$ [N] = ",formatC(sums_cat[1,3],format="e",digits=2), "\n$\\Sigma$ [C] = ",formatC(sums_cat[2,3],format="e",digits=2),"\n$\\Sigma$ [P] = ",formatC(sums_cat[3,3],format="e",digits=2)),paste0("$\\begin{aligned}"," \\Sigma ~[\\text{S}] &= \\text{",prettyNum(sums[2,2],big.mark=","),"} \\\\ \\Sigma ~[\\text{A}] &= \\text{",prettyNum(sums_cat[4,3],big.mark=","),"} \\\\ \\Sigma ~[\\text{O}] &= \\text{",prettyNum(sums_cat[5,3],big.mark=","),"} \\end{aligned}$")),type=sums[,1],variable=unique(agg$variable)[1:2]),hjust=c(-0.2,1.2),vjust=c(1.2,5),size=10) +
     xlab("\nBinned Speech Length [Tokens]") +
     ylab("") +
     theme_bw() +
