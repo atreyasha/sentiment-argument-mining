@@ -39,7 +39,7 @@ plot_token_dist_UNSC <- function(){
     ylab("")+
     xlab("\nBinned Speech Length [Tokens]") +
     theme_bw() +
-    theme(text = element_text(size=30, family="CM Roman"),
+    theme(text = element_text(size=30),
           axis.text.x = element_text(angle = 90, hjust = 1, size = 18),
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
@@ -98,7 +98,7 @@ plot_token_dist_UNSC <- function(){
     xlab("\nBinned Speech Length [Tokens]")+
     ylab("") +
     theme_bw() +
-    theme(text = element_text(size=25),
+    theme(text = element_text(size=30),
           axis.text.x = element_text(angle = 90, hjust = 1, size = 10),
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
@@ -138,7 +138,7 @@ plot_token_dist_US <- function(){
     geom_bar(stat="identity", color="black", size = 0.5)+
     xlab("\nYear")+ylab("Token Count\n") +
     theme_bw() +
-    theme(text = element_text(size=25, family="CM Roman"),
+    theme(text = element_text(size=30),
           axis.text.x = element_text(angle = 90, hjust = 1),
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
@@ -182,7 +182,7 @@ plot_token_dist_US <- function(){
     xlab("\nBinned Speech Length [Tokens]") +
     ylab("") +
     theme_bw() +
-    theme(text = element_text(size=25, family="CM Roman"),
+    theme(text = element_text(size=30),
           axis.text.x = element_text(angle = 90, hjust = 1),
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
@@ -208,12 +208,32 @@ plot_token_dist_US <- function(){
   to_add$type <- "Filtered_512"
   stats <- rbind(stats,to_add)
   agg <- aggregate(stats[c("N","C","P")],by=list(stats$bin,stats$type),FUN=sum)
-  agg_add <- aggregate(stats$total,by=list(stats$bin,stats$type),FUN=function(x) length(which(x!=0)))
+  stats_non_arg <- stats[which(stats[,c("N")] != 0 & stats[,c("C")] == 0 & stats[,c("P")] == 0),]
+  stats_non_arg <- aggregate(stats_non_arg$total,by=list(stats_non_arg$bin,stats_non_arg$type),FUN=length)
+  stats_arg <- stats[which(stats[,c("C")] != 0 | stats[,c("P")] != 0),]
+  stats_arg <- aggregate(stats_arg$total,by=list(stats_arg$bin,stats_arg$type),FUN=length)
+  stats_non_arg$variable <- "Non-Argumentative"
+  stats_arg$variable <- "Argumentative"
+  names(stats_non_arg) <- c("bin","type","value","variable")
+  names(stats_arg) <- c("bin","type","value","variable")
+  for(type in unique(stats_non_arg$type)){
+    for(level in levels(stats_non_arg$bin)[-which(levels(stats_non_arg$bin) %in%
+                                                  stats_non_arg[which(stats_non_arg$type == type),"bin"])]){
+      stats_non_arg <- rbind(stats_non_arg,c(level,type,0,"Argumentative"))
+    }
+  }
+  for(type in unique(stats_arg$type)){
+    for(level in levels(stats_arg$bin)[-which(levels(stats_arg$bin) %in%
+                                                  stats_arg[which(stats_arg$type == type),"bin"])]){
+      stats_arg <- rbind(stats_arg,c(level,type,0,"Non-Argumentative"))
+    }
+  }
+  stats_combined <- rbind(stats_arg,stats_non_arg)
+  stats_combined$type_2 <- "Number of Speeches"
+  stats_combined <- melt(stats_combined)
   names(agg)[1] <- "bin"
   names(agg)[2] <- "type"
   names(agg)[c(3,4,5)] <- c("None","Claim","Premise")
-  agg <- cbind(agg,agg_add[,3])
-  names(agg)[6] <- "count"
   # fill in remaining factor levels where no data is present
   for(type in unique(agg$type)){
     for(level in levels(agg$bin)[-which(levels(agg$bin) %in%
@@ -222,9 +242,9 @@ plot_token_dist_US <- function(){
     }
   }
   agg <- melt(agg,id.vars =c("bin","type"))
-  agg$value <- as.numeric(agg$value)
   agg$type_2 <- "Token Count"
-  agg[which(agg[,c("variable")] == "count"),c("type_2")] <- "Number of Speeches"
+  agg <- rbind(agg,stats_combined)
+  agg$value <- as.numeric(agg$value)
   agg[,c("type_2")] <- factor(agg[,c("type_2")],levels=c("Token Count","Number of Speeches"))
   agg[,c("type")] <- factor(agg[,c("type")],levels=c("Unfiltered","Filtered_512"))
   levels(agg$type) <- c("Full USED Corpus","Pruned USED Corpus [Sequence Length $\\leq$ 512]")
@@ -236,12 +256,12 @@ plot_token_dist_US <- function(){
     geom_bar(stat="identity", color="black", size = 0.5)+
     geom_text(aes(x, y, label=lab),
               data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ = ",formatC(sums[1,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[2,3],big.mark=",")),paste0("$\\Sigma$ = ",formatC(sums[3,3], format = "e", digits = 2)),paste0("$\\Sigma$ = ",prettyNum(sums[4,3],big.mark=","))),
-                              type=sums[,2],type_2=sums[,1],variable=unique(agg$variable)),
+                              type=sums[,2],type_2=sums[,1],variable=unique(agg$variable)[1:4]),
               hjust=1.1,vjust=1.5,size=10) +
     xlab("\nBinned Speech Length [Tokens]")+
     ylab("") +
     theme_bw() +
-    theme(text = element_text(size=25),
+    theme(text = element_text(size=30),
           axis.text.x = element_text(angle = 90, hjust = 1),
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
@@ -249,11 +269,11 @@ plot_token_dist_US <- function(){
           plot.title = element_text(hjust=0.5),
           legend.key.size = unit(0.8, "cm"),
           legend.background=element_blank(),
-          legend.position = c(0.902, 0.84),
+          legend.position = "bottom",
           strip.text.x = element_text(size = 27),
           strip.text.y = element_text(size = 27))+
     ## ggtitle("Token Type Distribution by Speech Length") +
-    scale_fill_npg(name="Token\nType",alpha=0.8,breaks=c("None","Claim","Premise")) +
+    scale_fill_npg(name="",alpha=0.8) +
     facet_grid(type_2~type,scales="free_y")
   # process
   print(g)
@@ -298,7 +318,7 @@ plot_model_evolution <- function(path){
     xlab("\nTraining Epoch")+
     ylab("")+
     theme_bw() +
-    theme(text = element_text(size=25),
+    theme(text = element_text(size=30),
           ## axis.text.x = element_text(angle = 90, hjust = 1),
           legend.text = element_text(size=25),
           legend.title = element_blank(),
@@ -336,23 +356,41 @@ plot_token_dist_pred_UNSC <- function(path){
   names(agg)[1] <- "bin"
   names(agg)[c(2,3,4)] <- c("None","Claim","Premise")
   agg <- melt(agg)
+  stats_non_arg <- stats[which(stats[,c("C")] == 0 & stats[,c("P")] == 0),]
+  stats_non_arg <- aggregate(stats_non_arg$total,by=list(stats_non_arg$bin),FUN=length)
+  stats_arg <- stats[which(stats[,c("C")] != 0 | stats[,c("P")] != 0),]
+  stats_arg <- aggregate(stats_arg$total,by=list(stats_arg$bin),FUN=length)
+  stats_non_arg$variable <- "Non-Argumentative"
+  stats_arg$variable <- "Argumentative"
+  stats_combined <- rbind(stats_arg,stats_non_arg)
+  stats_combined$type <- "Number of Speeches"
+  names(stats_combined)[c(1,2)] <- c("bin","value")
+  stats_combined <- melt(stats_combined)
+  stats_combined <- stats_combined[,-4]
+  agg$type <- "Token Count"
+  agg <- rbind(agg,stats_combined)
+  agg$type <- factor(agg$type,levels=c("Token Count","Number of Speeches"))
   # create file
-  tikz("token_dist_pred_UNSC_length.tex", width=15, height=12, standAlone = TRUE)
+  tikz("token_dist_pred_UNSC_length.tex", width=20, height=15, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color="black", size = 0.5, width = 0.7)+
     xlab("\nBinned Speech Length [Tokens]") +
-    ylab("Token Count\n") +
+    ylab("") +
     theme_bw() +
-    theme(text = element_text(size=25, family="CM Roman"),
+    theme(text = element_text(size=30),
           axis.text.x = element_text(angle = 90, hjust = 1),
           legend.text = element_text(size=25),
           legend.title = element_text(size=25,face = "bold"),
-          legend.key = element_rect(colour = "lightgray", fill = "white"),
+          legend.key = element_rect(colour = "transparent", fill = "white"),
           plot.title = element_text(hjust=0.5),
-          legend.key.size = unit(0.8, "cm")) +
-    ggtitle("Token Type Prediction in UNSC Corpus") +
-    scale_fill_npg(name="Token\nType",alpha=0.8)
+          legend.key.size = unit(0.8, "cm"),
+          legend.position = "bottom",
+          legend.background=element_blank(),
+          strip.text.x = element_text(size = 27))+
+    ## ggtitle("Token Type Prediction in UNSC Corpus") +
+    scale_fill_npg(name="",alpha=0.8) +
+    facet_wrap(type~.,scales="free_y")
   # process
   print(g)
   dev.off()
