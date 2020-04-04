@@ -9,6 +9,7 @@
 5. [Argumentation Mining](#5-Argumentation-Mining)
 6. [Citations](#6-Citations)
 7. [Developments](#7-Developments)
+8. [Authors](#8-Authors)
 
 ### 1. Overview
 
@@ -119,7 +120,7 @@ Haddadan et al. 2019 (paper describing US Election Debate corpus)
 
 A detailed development log can be found [here](/docs/shankar_todos.md).
 
-### Authors
+### 8. Authors
 
 Atreya Shankar, Juliane Hanel
 
