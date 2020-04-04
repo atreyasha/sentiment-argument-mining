@@ -89,7 +89,7 @@ plot_token_dist_UNSC <- function(){
   # create file
   tikz("token_dist_UNSC_length_combined.tex", width=20, height=15, standAlone = TRUE)
   # make ggplot object
-  g <- ggplot(agg,aes(x=bin,y=value,fill=type)) +
+  g <- ggplot(agg,aes(x=bin,y=value,fill=variable)) +
     geom_bar(stat="identity", color="black", size = 0.5)+
     geom_text(aes(x, y, label=lab),
               data=data.frame(x=Inf, y=Inf, lab=c(paste0("$\\Sigma$ [T] = ",formatC(sums[1,3], format = "e", digits = 2)),paste0("$\\Sigma$ [S] = ",prettyNum(sums[2,3],big.mark=",")),paste0("$\\Sigma$ [T] = ",formatC(sums[3,3], format = "e", digits = 2)),paste0("$\\Sigma$ [S] = ",prettyNum(sums[4,3],big.mark=","))),
