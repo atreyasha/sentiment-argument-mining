@@ -1,0 +1,19 @@
+\section{Conclusions}
+\label{conclu}
+
+In this project, we analyzed the UNSC corpus using two different approaches, sentiment analysis and argumentation mining. We aimed to provide automatic annotations for this novel political speech corpus, as it currently lacks hand-written annotations which would greatly facilitate the work of NLP researchers, as well as political scientists. We introduced the reader to the background concepts of our analyses and explained our methodologies. The detailed description of our results and their discussion shows that we succeeded in fulfilling our goals. We pointed to factors future researchers should bare in mind, for example false-positive classification of speeches. Our final results and automatic annotations can be found in our GitHub repository\footnotemark[2].
+
+While we do not provide definite and flawless annotations for the UNSC corpus, we succeeded in providing a well documented starting point for both sentiment and argumentation mining. We believe that the corpus can provide invaluable insights into the work and development of the United Nations Security Council and hope to have facilitated future research on this fascinating topic.
+
+% Conclusions:
+% summarize everything
+% talk about deliverables in conclusions and perhaps elsewhere, how/where they can be accessed with link, github link
+
+\section{Recommendations}
+\label{reco}
+
+ Given the resource and time limitations of our project, we were not able to perform extensive evaluations of our analyses. As this is fundamental for good scientific practice and the interpretation of results, we strongly recommend future researchers to employ an infrastructure for the evaluation of the produced annotations, e.g. by using crowdsourcing platforms. 
+ 
+ As for the sentiment analysis, crowdsourcing manual annotations on word, n-gram or sentence level might also be an option worth considering. A partly annotated corpus would allow for machine learning analyses of the UNSC data and open up new perspectives. Furthermore, we think closer examination of specific subtopics might yield interesting results. Investigation of a subset of the corpus allows for a more fine-grained analysis and shows diverging opinions among countries better than a simple country-level analysis. Developing a strategy for identification and exclusion of non-relevant opening and closing words of speeches is also an open task that should be pursued.
+ 
+ For argumentation mining, we can make multiple recommendations for building upon our methodologies. On a data level, we could improve our training/validation and test data splits to create more homogeneous datasets. We could also attempt tagging tokens using the BIO scheme, as recommended by \citet{eger2017neural}, and check if that improves performance. In regards to fine-tuning, we recommend a transition from \texttt{TensorFlow} to \texttt{PyTorch} API's since there are more diverse collections of NLP-oriented deep-learning libraries which build upon the latter. Given limited hardware such as a single GPU, we would recommend memory-conserving training techniques such as gradient accumulation or checkpointing; which could allow for larger global batch-sizes and therefore less noisy gradients. We could also recommend multi-task training for the USED corpus with the second joint task being argumentation span linking using a graph neural network. In regards to actual application of models, we could recommend a thorough post-processing threshold analysis; such that the classifier could perform better on claim or premise tokens by intentional classification threshold design. Finally, we also propose using different pre-trained language models which could handle multiple sentences better; which include XLNet, RoBERTa or Google's recently released Reformer (or efficient transformer) model.

@@ -1,0 +1,126 @@
+% import packages
+\documentclass[12pt,a4paper]{article}
+%\usepackage{times}
+%\usepackage{wrapfig}
+%\usepackage{latexsym}
+%\usepackage{subcaption}
+%\usepackage{csquotes}
+%\usepackage{placeins}
+%\usepackage{cleveref}
+%\usepackage{setspace}
+%\onehalfspacing
+%\usepackage{array}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{soul}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[titles]{tocloft}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{ragged2e}
+\usepackage[hidelinks]{hyperref}
+\usepackage[font=footnotesize]{caption}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage[round,sort]{natbib}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,decorations.pathreplacing,shapes,calc,fit}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{url}
+\usepackage{array,tabularx}
+\usepackage{calc}
+
+% define global variables
+\newlength{\bibitemsep}\setlength{\bibitemsep}{.2\baselineskip plus .05\baselineskip minus .05\baselineskip}
+\newlength{\bibparskip}\setlength{\bibparskip}{3pt}
+\let\oldthebibliography\thebibliography
+\renewcommand\thebibliography[1]{%
+  \oldthebibliography{#1}%
+  \setlength{\parskip}{\bibitemsep}%
+  \setlength{\itemsep}{\bibparskip}%
+}
+\newlength{\DepthReference}
+\settodepth{\DepthReference}{g}%relative to a depth of a letter.
+\newlength{\HeightReference}
+\settoheight{\HeightReference}{T}
+\newlength{\Width}%
+\newcommand{\MyColorBox}[2][red]%
+{%
+    \settowidth{\Width}{#2}%
+    %\setlength{\fboxsep}{0pt}%
+    \colorbox{#1}%
+    {%      
+        \raisebox{-\DepthReference}%
+        {%
+                \parbox[b][\HeightReference+\DepthReference][c]{\Width}{\centering#2}%
+        }%
+    }%
+}
+\setlength{\fboxsep}{1pt}
+\setlength{\cftbeforesecskip}{1ex}
+\colorlet{LightForestGreen}{ForestGreen!50!}
+\colorlet{LightCyan}{Cyan!30!}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\captionsetup[algorithm]{labelsep=colon}
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+\geometry{top=2.5cm,
+		bottom=2.5cm}
+\graphicspath{{img/}}
+\newcommand\BibTeX{B\textsc{ib}\TeX}
+%\renewcommand{\contentsname}{Table of Contents}
+%\renewcommand{\refname}{Bibliography}
+\newcolumntype{L}[1]{>{\RaggedRight\hspace{0pt}}p{#1}}
+\newcolumntype{R}[1]{>{\RaggedLeft\hspace{0pt}}p{#1}}
+\captionsetup[figure]{font=footnotesize,labelfont=footnotesize,labelfont={bf},labelformat={default},labelsep=period,name={Fig.}, justification=centering,singlelinecheck=false, width = \linewidth}
+\captionsetup[table]{font=footnotesize,labelfont=footnotesize,labelfont={bf},labelformat={default},labelsep=period,name={Table},justification=centering, singlelinecheck=false, width = \linewidth}
+
+% define admin variables
+\title{Sentiment Analysis and Argumentation Mining in United
+Nations Security Council Speeches}
+\author{Juliane Hanel, Atreya Shankar\\
+\texttt{\{hanel,shankar\}@uni-potsdam.de} \\
+PM: Mining Sentiments and Arguments, WiSe 2019/20 \\
+Prof. Dr. Manfred Stede \\
+Applied Computational Linguistics\\
+University of Potsdam}
+\date{\today}
+
+\begin{document}
+\newgeometry{}
+\maketitle
+\thispagestyle{empty}
+\begin{abstract}
+The United Nations Security Council (UNSC) corpus from \citet{schnfeld2019security} is a novel political speech corpus containing $\sim$65,000 textual speech records from $\sim$5,000 security council meetings over the years of 1995-2017. Due to its large size and wide temporal distribution, it could be a very useful corpus for various Natural Language Processing (NLP) tasks in the political domain. One limitation of the current version of this corpus is its lack of extensive handwritten annotations; which diminish its utility for downstream supervised NLP tasks. In order to address this limitation, our project aims to evaluate and provide machine-driven sentiment and argumentation annotations for this corpus. We utilize state-of-the-art sentiment analysis and argumentation mining tools for this purpose, which include \texttt{VADER}, \texttt{AFINN}, and \texttt{TextBlob} for sentiment analysis and a political-domain fine-tuned version of the \texttt{ALBERT} language model for argumentation mining. Our automatic annotations, while not being as reliable as human annotations, nevertheless provide an initial foothold for future human annotations to follow-through.
+\end{abstract}
+\newpage
+\restoregeometry
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+\setcounter{page}{1}
+\thispagestyle{plain}
+\input{section_1}
+\input{section_2}
+\input{section_3}
+\input{section_4}
+\input{section_5}
+\input{section_6}
+\newpage
+\addcontentsline{toc}{section}{References}
+\bibliography{bibtex}
+\bibliographystyle{apalike}
+\nocite{*}
+\end{document}
+
+% final touches:
+% TODO: truncate paper back to reasonable number of pages later on
+% add paper to github with updates and linkages to bibtex and readmes3

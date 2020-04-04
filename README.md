@@ -21,6 +21,7 @@ To find out more about our methodologies, read the next parts of this readme. Ad
 
 * [Preliminary presentation](/docs/prelim_presentation/main.pdf)
 * [Progress-update presentation](/docs/progress_presentation/main.pdf)
+* [Final Report](/docs/final_report/main.pdf)
 
 ### 2. Dependencies
 
