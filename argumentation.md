@@ -59,7 +59,7 @@ This process will produce respective `json`, `csv` and `npy` files in the `./dat
 
 ### 2. Training and Evaluation
 
-For training, we use the base version 2 of [ALBERT](https://github.com/google-research/ALBERT) and fine-tune it on the US Election Debate corpus in the form of a sequence tagging task. Within this task, each token of the US Election Debate corpus must be classified into one of three argument candidates; specifically "None" (N), "Claim" (C) or "Premise" (P). This is very similar to a Natural Entity Recognition (NER) task. This workflow is encompassed in `train_USElectionDebates.py`.
+For training, we use the base version 2 of [ALBERT](https://github.com/google-research/ALBERT) and fine-tune it on the US Election Debate corpus in the form of a sequence tagging task. Within this task, each token of the US Election Debate corpus must be classified into one of three argument candidates; specifically "None" (N), "Claim" (C) or "Premise" (P). This is very similar to a Named Entity Recognition (NER) task. This workflow is encompassed in `train_USElectionDebates.py`.
 
 ```
 $ python3 train_USElectionDebates.py --help
