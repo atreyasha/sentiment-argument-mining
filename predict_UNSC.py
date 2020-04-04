@@ -64,14 +64,14 @@ def load_saved_model(model_path):
                                        "argument_candidate_acc":class_acc(3)})
     return model
 
-def pred_model_UNSC(direct_model,max_seq_length=512,
+def pred_model_UNSC(model_path,max_seq_length=512,
                     direct_save="./data/UNSC/pred/",
                     force_pred=False):
     """
     Predict given saved model on UNSC corpus
 
     Args:
-        direct_model (str): path to *h5 keras model
+        model_path (str): path to *h5 keras model
         max_seq_length (int): maximum sequence length to be used in training
         direct_save (str): directory where to save predictions
         force_pred (bool): whether to forcefully predict when an cached
@@ -86,7 +86,7 @@ def pred_model_UNSC(direct_model,max_seq_length=512,
                       str(max_seq_length)+".npy")
     else:
         _,pred_X,_ = read_or_create_data_UNSC(max_seq_length)
-        model = load_saved_model(direct_model)
+        model = load_saved_model(model_path)
         y_pred = model.predict(pred_X,batch_size=128)
         y_pred = np.argmax(y_pred,axis=-1)
         np.save(os.path.join(direct_save,"pred_Yhat_"
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     else:
         logger = logging.getLogger('root')
     logger.info("Loading model predictions, might take some time...")
-    y_pred = pred_model_UNSC(direct_model = args.model,
+    y_pred = pred_model_UNSC(model_path = args.model,
                              max_seq_length = args.max_seq_length,
                              force_pred = args.force_pred)
     logger.info("Simplifying model predictions for human readability")
