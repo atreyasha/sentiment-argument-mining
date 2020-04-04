@@ -80,7 +80,7 @@ Under argumentation mining, we fine-tuned the [ALBERT](https://github.com/google
 
 For further details on argumentation mining, check out our dedicated readme [here](./argumentation.md).
 
-Our final products for argumentation mining are twofold; firstly being the fine-tuned ALBERT language [model](./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_1.h5) and secondly a human-readable [json](./data/UNSC/pred/pred_clean_512.json) file mapping UNSC speech IDs to tokenized argumentation labels. For the `json` file, we were only able to conduct argumentation mining for shorter UNSC speeches.
+Our final products for argumentation mining are twofold; firstly being the fine-tuned ALBERT language [model](./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_1.h5) and secondly a human-readable [json](./data/UNSC/pred/pred_clean_512.json) file mapping UNSC speech IDs to token-level argumentation labels. For the `json` file, we were only able to conduct argumentation mining for shorter UNSC speeches.
 
 ### 6. Citations
 
