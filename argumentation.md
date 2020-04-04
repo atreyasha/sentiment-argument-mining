@@ -125,7 +125,7 @@ After training, we can utilize our best model to predict argumentation candidate
 $ python3 predict_UNSC.py --help
 
 usage: predict_UNSC.py [-h] [--max-seq-length int] [--force-pred] [--verbosity int]
-                       --model-dir str
+                       --model str
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -135,7 +135,7 @@ optional arguments:
   --verbosity int       0 for no text, 1 for verbose text (default: 1)
 
 required name arguments:
-  --model-dir str       path to model *h5 file (default: None)
+  --model str           path to model *h5 file (default: None)
 ```
 
 This script will load the best saved model and will predict the argumentation candidates on the preprocessed `UNSC` corpus. Next, it will save various files to the `./data` folder, which can be used for analysis and visualization of results.
@@ -143,7 +143,7 @@ This script will load the best saved model and will predict the argumentation ca
 To run this script on our best model, simply execute:
 
 ```shell
-$ python3 predict_UNSC --model-dir ./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_1.h5
+$ python3 predict_UNSC --model ./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_1.h5
 ```
 
 Under the default maximum sequence length of `512` tokens, this process will produce a clean human-readable `json` file, specifically `./data/UNSC/pred/pred_clean_512.json`, where each key maps to a speech id and the value of the key represents the tokenized version of the speech along with token-based argumentation classifications. 

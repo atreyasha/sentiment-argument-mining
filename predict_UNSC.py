@@ -171,7 +171,7 @@ if __name__ == "__main__":
     parser.add_argument("--verbosity", type=int, default=1,
                         help="0 for no text, 1 for verbose text")
     required = parser.add_argument_group("required name arguments")
-    required.add_argument("--model-dir", required=True, type=str,
+    required.add_argument("--model", required=True, type=str,
                           help="path to model *h5 file")
     args = parser.parse_args()
     if args.verbosity == 1:
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     else:
         logger = logging.getLogger('root')
     logger.info("Loading model predictions, might take some time...")
-    y_pred = pred_model_UNSC(direct_model = args.model_dir,
+    y_pred = pred_model_UNSC(direct_model = args.model,
                              max_seq_length = args.max_seq_length,
                              force_pred = args.force_pred)
     logger.info("Simplifying model predictions for human readability")
