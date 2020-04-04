@@ -1,69 +1,66 @@
 ## Sentiment Analysis and Argumentation Mining (UN Security Council Speeches)
 
-### Overview
+This readme will summarize our code and results in conducting sentiment analysis and argumentation mining on the UNSC corpus.
 
-This project entails sentiment analysis and argumentation mining into the recently published UN security council speeches (detailed in [Schönfeld et al. 2019](https://arxiv.org/abs/1906.10969)), which is publicly accessible [here](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KGVSYH).
+### Table of Contents
 
-This dataset contains ~65,000 UN security council speeches from ~5,000 security council meetings from years 1995-2017. Each meeting is split up into the various speeches given by member countries. Furthermore, speeches are annotated with dates, topics and overall meeting outcomes.
+1. [Dependencies](#1-Dependencies)
+2. [Repository Initialization](#2-Repository-Initialization)
+3. [Sentiment Analysis](#3-Sentiment-Analysis)
+4. [Argumentation Mining](#4-Argumentation-Mining)
 
-It could be very interesting to conduct sentiment analysis and argumentation mining on this dataset, as it is generally uncommon to find textual corpora for political text and debates.
+### 1. Dependencies
 
-### Methodologies
+**i.** In order to set up this repository, we would need to satisfy local pythonic dependencies. If `poetry` is installed on your system, you can install dependencies and create a virtual environment automatically via the following command:
 
-For sentiment analysis, we compare the performance of various successful textual sentiment classifiers on the UNSC corpus.
-The tools used for sentiment analysis are [VADER](https://github.com/cjhutto/vaderSentiment) and [AFINN](https://github.com/fnielsen/afinn), a lexicon that contains more than 3,300 words with a polarity score associated with each word. For subjectivity analysis, we used [TextBlob](https://github.com/sloria/TextBlob), a text processing framework for Python. 
-
-For argumentation mining, we train an argument candidate classifier (based on the [ALBERT](https://github.com/google-research/ALBERT) language encoder) on the US Election Debate corpus from [Haddadan et al. 2019](https://www.aclweb.org/anthology/P19-1463/), which is available to the public [here](https://github.com/ElecDeb60To16/Dataset). Next, we apply this classifier on the UNSC corpus to check if we can extract meaningful argumentation candidates.
-
-A list of documents detailing our methodologies can be found below:
-
-* [Preliminary presentation](/docs/prelim_presentation/main.pdf)
-* [Progress-update presentation](/docs/progress_presentation/main.pdf)
-
-A formal description of our code and results can be found in the [readme](/src/README.md) in the `./src` directory.
-
-### Citations
-
-Schönfeld et al. 2019 (paper describing creation of UN security council corpus)
-
-```
-@misc{schnfeld2019security,
-    title={The UN Security Council debates 1995-2017},
-    author={Mirco Schönfeld and Steffen Eckhard and Ronny Patz and Hilde van Meegdenburg},
-    year={2019},
-    eprint={1906.10969},
-    archivePrefix={arXiv},
-    primaryClass={cs.DL}
-}
+```shell
+$ poetry install
 ```
 
-Haddadan et al. 2019 (paper describing US Election Debate corpus)
+Alternatively, you can install dependencies with `pip`:
 
-```
-@inproceedings{haddadan-etal-2019-yes,
-    title = "Yes, we can! Mining Arguments in 50 Years of {US} Presidential Campaign Debates",
-    author = "Haddadan, Shohreh  and
-      Cabrio, Elena  and
-      Villata, Serena",
-    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
-    month = jul,
-    year = "2019",
-    address = "Florence, Italy",
-    publisher = "Association for Computational Linguistics",
-    url = "https://www.aclweb.org/anthology/P19-1463",
-    doi = "10.18653/v1/P19-1463",
-    pages = "4684--4690"
-}
+```shell
+$ pip install -r requirements.txt
 ```
 
-### Developments
+**Note**: These dependencies were tested with python version `3.7.*`, but should work with newer versions. 
 
-A detailed development log can be found [here](/docs/shankar_todos.md).
+**ii.** In this repository, we use `R` and `ggplot` for visualization. Execute the following within your R console to get the dependencies:
 
-### Authors
+```r
+> install.packages(c("ggplot2","tikzDevice","reshape2","optparse","ggsci"))
+```
 
-Atreya Shankar, Juliane Hanel
+**Note:** R-scripts were tested with R version `3.6.*`.
 
-Project Module: Mining Sentiments and Arguments, WiSe 2019/20
+**iii.** If you want to use or reference the best argumentation classification model in this repository (which is stored in a `git-lfs` entry), you would need to install `git-lfs` for your system.
 
-Cognitive Systems: Language, Learning, and Reasoning, University of Potsdam
+If you already had `git-lfs` installed before cloning the repository, the best model data would be downloaded alongside the clone.
+
+If you installed `git-lfs` after cloning this repository, execute `git lfs pull` in order to recover the large model data, as per suggestions [here](https://github.com/git-lfs/git-lfs/issues/325).
+
+### 2. Repository Initialization
+
+In order to initialize this repository, simply run `init.sh` as shown below:
+
+```shell
+$ ./init.sh
+```
+
+**i.** Firstly, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
+
+**ii.** Secondly, you will be prompted to download and deploy the UNSC corpus files. This will download and unzip the corresponding files, but can take quite some time due to large file sizes.
+
+**iii.** Thirdly, you will be prompted to download and deploy the US election debate corpus. This will download and unzip the corresponding files, and should be fairly quick.
+
+### 3. Sentiment Analysis
+
+Under sentiment analysis, we tested two successful sentiment-analysis tools, specifically [VADER](https://github.com/cjhutto/vaderSentiment) and [AFINN](https://github.com/fnielsen/afinn), on the UNSC corpus. For subjectivity analysis, we used [TextBlob](https://github.com/sloria/TextBlob), a text processing framework for Python. Next, we evaluated the predicted results to check their quality.
+
+For further details on sentiment analysis, check out our dedicated Jupyter notebook [here](./sentiment.ipynb).
+
+### 4. Argumentation Mining
+
+Under argumentation mining, we fine-tuned the [ALBERT](https://github.com/google-research/ALBERT) language encoder (with custom decoders) on a small annotated political argumentation corpus known as the US Election Debate Corpus, detailed in [Haddadan et al. 2019](https://www.aclweb.org/anthology/P19-1463/) and publicly available [here](https://github.com/ElecDeb60To16/Dataset). Next, we applied the fine-tuned argumentation classifier on the UNSC corpus to predict and extract argumentation candidates. 
+
+For further details on argumentation mining, check out our dedicated readme [here](./argumentation.md).
