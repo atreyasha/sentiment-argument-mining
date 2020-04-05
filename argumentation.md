@@ -143,7 +143,7 @@ This script will load the best saved model and will predict the argumentation ca
 To run this script on our best model, simply execute:
 
 ```shell
-$ python3 predict_UNSC --model ./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_1.h5
+$ python3 predict_UNSC.py --model ./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_1.h5
 ```
 
 Under the default maximum sequence length of `512` tokens, this process will produce a clean human-readable `json` file, specifically `./data/UNSC/pred/pred_clean_512.json`, where each key maps to a speech id and the value of the key represents the tokenized version of the speech along with token-based argumentation classifications. 
