@@ -15,28 +15,23 @@ Interestingly, the Middle East topic occurs in the most discussed topics for the
 \end{figure}%
 
 A shift in topics can be observed after the year 2001. The most common topics diverged from humanitarian ones (e.g. Africa, Angola, East Timor) to more fundamental ones (e.g. Peace and Security - terrorist acts, Women and Peace and Security, Post-conflict peacebuilding). Figure \ref{common_2} and Figure \ref{common_3} visualize the differences in topics for 1996 and 2003. 
-
-
-
 \begin{figure}[t]
   \centering
-  \includegraphics[width=12cm]{img/1996_most_common_topics.png}
+  \includegraphics[width=13cm]{img/1996_most_common_topics.png}
   \caption{Most common topics in 1996}
   \label{common_2}
-  
-\end{figure}%
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=12cm]{img/2003_most_common_topics.png}
-  \caption{Most common topics in 2003}
-  \label{common_3}
 \end{figure}%
 
 \subsubsection{Sentiment in the UNSC}
 The sentiment analysis in the UNSC was conducted on 182 individual members of the council, sovereign nations and independent members were included. As could be expected, the participation varies among the members. For some countries, only scarce data is available, e.g. Belize, which only took part in four years of council meetings. Other countries attended the council meetings more frequently, with many countries appearing in all 23 years of the analysis. It is also worth noting that some countries' names changed over time, e.g. Zaire, which is now known as Democratic Republic of the Congo, and some countries do not exist anymore, e.g. the former Yugoslavia.
 
-\begin{figure}[t!]
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=13cm]{img/2003_most_common_topics.png}
+  \caption{Most common topics in 2003}
+  \label{common_3}
     \centering
+    \vspace{10pt}
     \begin{minipage}{0.47\textwidth}
         \centering
         \includegraphics[width=1.1\textwidth]{img/Belize_average.png} % first figure itself
@@ -61,19 +56,19 @@ The core nations were a suitable subject for our analysis since they participate
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=14cm]{img/over_time_Vader_Sentiment.png}
+  \includegraphics[width=14.75cm]{img/over_time_Vader_Sentiment.png}
   \caption{Sentiment development in the UNSC core nations}
   \label{fig:vadercore}
 \end{figure}%
 
-The sentiment analysis for the UNSC core nations shows a general downward trend in sentiment polarity (Figure \ref{fig:vadercore}). Significant negative peaks were revealed for historical events, e.g. the year 2002 for the Russian Federation and the year 2003 for the United States of America, both possibly related to the imminent Iraq War.
-
-\begin{figure}[b]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=14cm]{img/over_time_Blob_Subjectivityy.png}
+  \includegraphics[width=14.75cm]{img/over_time_Blob_Subjectivityy.png}
   \caption{Subjectivity development in the UNSC core nations}
   \label{fig:subjcore}
 \end{figure}%
+
+The sentiment analysis for the UNSC core nations shows a general downward trend in sentiment polarity (Figure \ref{fig:vadercore}). Significant negative peaks were revealed for historical events, e.g. the year 2002 for the Russian Federation and the year 2003 for the United States of America, both possibly related to the imminent Iraq War.
 
 The visualization of the subjectivity analysis (Figure  \ref{fig:subjcore}) shows a mostly consistent development of subjectivity in the core nations but suggests a slight downward trend, meaning a rise in objectivity, over the investigated time frame. This is consistent with the observation made in %link subsubsection sentiment in the unsc 
 the sentiment analysis conducted on all members of the UNSC. The negative peaks in sentiment mentioned for Russia and the USA, 2002 and 2003 respectively, also appear as negative, more objective, peaks in the subjectivity analysis.
@@ -93,7 +88,7 @@ On March 19, 2003, an U.S.-led coalition invaded Iraq.
 \paragraph{General Sentiment}
 In order to examine the general sentiment of the core nations regarding the Iraq War, we extracted all speeches with a topic labelled ``Iraq" or ``Iraq-Kuwait". 
 
-\begin{figure}[H]
+\begin{figure}[t!]
     \centering
     \begin{minipage}{0.47\textwidth}
         \centering
@@ -109,17 +104,17 @@ In order to examine the general sentiment of the core nations regarding the Iraq
     \end{minipage}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[t!]
     \centering
     \begin{minipage}{0.47\textwidth}
         \centering
-        \includegraphics[height=1.3\textwidth]{Resolution 1441_sentiment.png} % first figure itself
+        \includegraphics[height=1.7\textwidth]{Resolution 1441_sentiment.png} % first figure itself
         \caption{Sentiment regarding Resolution \\ 1441}
         \label{1441sent}
     \end{minipage}\hfill
     \begin{minipage}{0.47\textwidth}
         \centering
-        \includegraphics[height=1.3\textwidth]{Resolution 1441_subjectivity.png} % second figure itself
+        \includegraphics[height=1.7\textwidth]{Resolution 1441_subjectivity.png} % second figure itself
         \caption{Subjectivity regarding Resolution \\ 1441}
         \label{1441subj}
     \end{minipage}
@@ -138,13 +133,13 @@ In order to give a better insight into Iraq War related resolutions, we focused 
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
-        \includegraphics[height=1.3\textwidth]{Powell Speech_sentiment.png} % first figure itself
-        \caption{Subjectivity regarding Powell's \\ speech}
+        \includegraphics[height=1.7\textwidth]{Powell Speech_sentiment.png} % first figure itself
+        \caption{Sentiment regarding Powell's \\ speech}
         \label{powellsent}
     \end{minipage}\hfill
     \begin{minipage}{0.45\textwidth}
         \centering
-        \includegraphics[height=1.3\textwidth]{Powell Speech_subjectivity.png} % second figure itself
+        \includegraphics[height=1.7\textwidth]{Powell Speech_subjectivity.png} % second figure itself
         \caption{Subjectivity regarding Powell's \\ speech}
         \label{powellsubj}
     \end{minipage}

@@ -313,7 +313,7 @@ plot_model_evolution <- function(path){
   tikz("model_training_evolution.tex", width=20, height=14, standAlone = TRUE)
   # make ggplot object
   g <- ggplot(stats,aes(x=epoch,y=value,color=variable)) +
-    ## geom_point(size=2,alpha=0.9) +
+		geom_point(size=2,alpha=0.9) +
     geom_line(size=2,alpha=0.9)+
     geom_vline(aes(xintercept = stop_epoch, color="Model Checkpoint"),
                linetype="dashed",alpha=0.8)+
