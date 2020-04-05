@@ -91,6 +91,6 @@ For all the aforementioned processes, we utilized the \texttt{bert-for-tf2} pyth
 
 \subsubsection{Prediction on UNSC}
 
-After following the aforementioned fine-tuning and model evaluation process, we arrive at our best performing model. In order to use this model to predict argumentation token-level argumentation candidates in the UNSC corpus, we simply pipe the preprocessed UNSC corpus into the model and acquire the model's outputs.
+After following the aforementioned fine-tuning and model evaluation process, we arrive at our best performing model. In order to use this model to predict token-level argumentation candidates in the UNSC corpus, we simply pipe the preprocessed UNSC corpus into the model and acquire the model's outputs.
 
 Due to the static configuration of our model, the output will have a sequence length of 512 tokens. We then remove the output sequence positons which correspond to the BERT \texttt{[CLS]}, \texttt{[SEP]} and \texttt{<pad>} special tokens; leaving behind only the important sub-word tokens that have been classified into N, C or P argumentation candidates. As a final product, we compile our UNSC predictions into a human-readable \texttt{json} file in our GitHub repository\footnotemark[\value{footnote}], which maps UNSC speech IDs to token-level argumentation predictions.

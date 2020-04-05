@@ -217,7 +217,7 @@ Our final model results are summarized in Table \ref{table_arg_model_performance
 
 After identifying the best model as the TD$\_$Dense model, we then used this model to predict token-level argumentation labels of the preprocessed (pruned) UNSC corpus. Figure \ref{unsc_pred} shows the token distribution of the predictions of our best classifier on the UNSC corpus. Similar to the token distributions in the USED corpus as shown in Figure \ref{used_distribution_combined}, we observe that the proportions of claim and premise tokens, as well as argumentative speeches, increase as the speech sequence lengths increase. However, unlike the USED corpus' balanced token/speech distributions in Figure \ref{used_distribution_combined}; our fine-tuned model's predictions appear to show a strong skew towards N tokens and non-argumentative speeches.
 
-There could be many reasons for this; one of which could be a bias towards more informal argumentation structures in the USED corpus which might conflict with the formalized argumentation structures in the USED corpus. In section \ref{manual_semantic}, we will perform some manual semantic analyses of positive and negative UNSC predictions to sample, albeit in an extremely limited manner, performance on the UNSC corpus. 
+There could be many reasons for this; one of which could be a bias towards more informal argumentation structures in the USED corpus which might conflict with the formalized argumentation structures in the UNSC corpus. In section \ref{manual_semantic}, we will perform some manual semantic analyses of positive and negative UNSC predictions to sample, albeit in an extremely limited manner, performance on the UNSC corpus. 
 
 \begin{figure}[t!]
     \centering
