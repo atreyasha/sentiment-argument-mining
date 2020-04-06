@@ -7,8 +7,8 @@
 3. [Repository Initialization](#3-Repository-Initialization)
 4. [Sentiment Analysis](#4-Sentiment-Analysis)
 5. [Argumentation Mining](#5-Argumentation-Mining)
-6. [Citations](#6-Citations)
-7. [Developments](#7-Developments)
+6. [Developments](#6-Developments)
+7. [References](#7-References)
 8. [Authors](#8-Authors)
 
 ### 1. Overview
@@ -83,7 +83,11 @@ For further details on argumentation mining, check out our dedicated readme [her
 
 Our final products for argumentation mining are twofold; firstly being the fine-tuned ALBERT language [model](./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_1.h5) and secondly a human-readable [json](./data/UNSC/pred/pred_clean_512.json) file mapping UNSC speech IDs to token-level argumentation labels. For the `json` file, we were only able to conduct argumentation mining for shorter UNSC speeches.
 
-### 6. Citations
+### 6. Developments
+
+A detailed development log can be found [here](/docs/shankar_todos.md).
+
+### 7. References
 
 Schönfeld et al. 2019 (paper describing creation of UN security council corpus)
 
@@ -116,10 +120,6 @@ Haddadan et al. 2019 (paper describing US Election Debate corpus)
     pages = "4684--4690"
 }
 ```
-
-### 7. Developments
-
-A detailed development log can be found [here](/docs/shankar_todos.md).
 
 ### 8. Authors
 
