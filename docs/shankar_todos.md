@@ -8,13 +8,10 @@ Developments
     1.  **TODO** push final paper and bibtex when all is
         done, add global references to results from paper
 
-    2.  **TODO** possibly improve final output and format to
-        all claims and premises extracted from speeches
-
-    3.  add script to compute classification report of best model at the
+    2.  add script to compute classification report of best model at the
         end of training
 
-    4.  add test scripts to ensure constant sanity checks, or test
+    3.  add test scripts to ensure constant sanity checks, or test
         manually on jarvis
 
 2.  Sequence encoding

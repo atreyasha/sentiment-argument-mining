@@ -7,7 +7,7 @@ Given the abundance of UNSC session data available, we decided to narrow the sco
 In order to get a grasp of the contents of the sessions, we examined the most common topics for the provided time frame and each year respectively. Figure \ref{common_1} visualizes the 20 most common topics for the UNSC speeches. It can be observed that there is no uniform naming convention for the topics. The most discussed topic is \textit{Middle East situation, including the Palestinian question} and the topic on rank six is \textit{The situation in the Middle East, including the Palestinian question}. In other analyses, the topic name \textit{The situation in the Middle East} occurs as well. It can be assumed that the different topic names refer to one and the same topic.  
 Interestingly, the Middle East topic occurs in the most discussed topics for the first time in 2000 and remains in the top 5 most discussed topics for the entirety of 2000-2017, despite the inconsistent naming convention.
 
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
   \includegraphics[width=14.5cm]{img/20most_common_topics.png}
   \caption{The 20 most common topics in the UNSC}
@@ -15,21 +15,28 @@ Interestingly, the Middle East topic occurs in the most discussed topics for the
 \end{figure}%
 
 A shift in topics can be observed after the year 2001. The most common topics diverged from humanitarian ones (e.g. Africa, Angola, East Timor) to more fundamental ones (e.g. Peace and Security - terrorist acts, Women and Peace and Security, Post-conflict peacebuilding). Figure \ref{common_2} and Figure \ref{common_3} visualize the differences in topics for 1996 and 2003. 
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
   \includegraphics[width=13cm]{img/1996_most_common_topics.png}
   \caption{Most common topics in 1996}
   \label{common_2}
 \end{figure}%
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=13cm]{img/2003_most_common_topics.png}
+  \caption{Most common topics in 1996}
+  \label{common_3}
+\end{figure}%
+
 \subsubsection{Sentiment in the UNSC}
 The sentiment analysis in the UNSC was conducted on 182 individual members of the council, sovereign nations and independent members were included. As could be expected, the participation varies among the members. For some countries, only scarce data is available, e.g. Belize, which only took part in four years of council meetings. Other countries attended the council meetings more frequently, with many countries appearing in all 23 years of the analysis. It is also worth noting that some countries' names changed over time, e.g. Zaire, which is now known as Democratic Republic of the Congo, and some countries do not exist anymore, e.g. the former Yugoslavia.
 
 \begin{figure}[t]
-  \centering
-  \includegraphics[width=13cm]{img/2003_most_common_topics.png}
-  \caption{Most common topics in 2003}
-  \label{common_3}
+  %\centering
+  %\includegraphics[width=13cm]{img/2003_most_common_topics.png}
+  %\caption{Most common topics in 2003}
+  %\label{common_3}
     \centering
     \vspace{10pt}
     \begin{minipage}{0.47\textwidth}
@@ -54,7 +61,7 @@ After completing the topic and sentiment analysis for the UNSC, we decided to na
 These core nation are granted a permanent member status of the council as per the Charter of the United Nations, a treaty from 1945\footnote{\href{https://www.un.org/en/charter-united-nations/}{https://www.un.org/en/charter-united-nations/}}. A permanent membership entails a \textit{Power of Veto}, which allows voting against UNSC resolutions and thus preventing their adoption. 
 The core nations were a suitable subject for our analysis since they participated in most of the UNSC meetings. Not only could we rely on data for every year provided in the corpus, we could also assume that important resolutions would be included in the analysis.
 
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
   \includegraphics[width=14.75cm]{img/over_time_Vader_Sentiment.png}
   \caption{Sentiment development in the UNSC core nations}
@@ -104,7 +111,17 @@ In order to examine the general sentiment of the core nations regarding the Iraq
     \end{minipage}
 \end{figure}
 
-\begin{figure}[t!]
+
+
+For presenting the results of the analysis, we chose two countries with opposing opinions on the invasion of Iraq, France (Figure \ref{iraqfr}) and the United States of America (Figure \ref{iraqusa}).
+For both countries, the amount of sentences with polarity with regard to Iraq is the highest for the year 2003, due to the Iraq War. Before and after 2003, France contributed on average less than 100 sentences on this topic, an increase after 2003 cannot be observed. This is different for the USA. Before 2003, the analysis reveals years were the country contributed fewer sentences than France, with 1999 being the the year with the most contributions and 2000 being the year with the fewest. After 2003, the USA consistently contributed more than 200 negative and positive sentences per year, which is significantly more than all other core nations.
+
+In 2003, the representatives of the USA contributed more than 800 sentences with polarity, with roughly a third of them being negative. 
+For France, the country representatives uttered almost 500 relevant sentences with roughly a quarter of them being negative.
+
+\paragraph{In-Depth: Iraq War related Resolutions}
+In order to give a better insight into Iraq War related resolutions, we focused on two sessions that were highly significant in the year leading to the invasion of Iraq. First, we examined Resolution 1441, a resolution that was adopted in the 4644th session of the UNSC on 18 November 2002. As mentioned before, it granted Iraq "a final opportunity to comply with its disarmament obligations" \citep{resolution1441} and subsequently lead to the invasion of Iraq, after the country allegedly failed to comply with said disarmament obligations.
+\begin{figure}[h]
     \centering
     \begin{minipage}{0.47\textwidth}
         \centering
@@ -119,17 +136,7 @@ In order to examine the general sentiment of the core nations regarding the Iraq
         \label{1441subj}
     \end{minipage}
 \end{figure}
-
-For presenting the results of the analysis, we chose two countries with opposing opinions on the invasion of Iraq, France (Figure \ref{iraqfr}) and the United States of America (Figure \ref{iraqusa}).
-For both countries, the amount of sentences with polarity with regard to Iraq is the highest for the year 2003, due to the Iraq War. Before and after 2003, France contributed on average less than 100 sentences on this topic, an increase after 2003 cannot be observed. This is different for the USA. Before 2003, the analysis reveals years were the country contributed fewer sentences than France, with 1999 being the the year with the most contributions and 2000 being the year with the fewest. After 2003, the USA consistently contributed more than 200 negative and positive sentences per year, which is significantly more than all other core nations.
-
-In 2003, the representatives of the USA contributed more than 800 sentences with polarity, with roughly a third of them being negative. 
-For France, the country representatives uttered almost 500 relevant sentences with roughly a quarter of them being negative.
-
-\paragraph{In-Depth: Iraq War related Resolutions}
-In order to give a better insight into Iraq War related resolutions, we focused on two sessions that were highly significant in the year leading to the invasion of Iraq. First, we examined Resolution 1441, a resolution that was adopted in the 4644th session of the UNSC on 18 November 2002. As mentioned before, it granted Iraq "a final opportunity to comply with its disarmament obligations" \citep{resolution1441} and subsequently lead to the invasion of Iraq, after the country allegedly failed to comply with said disarmament obligations.
-
-\begin{figure}[b!]
+\begin{figure}[h]
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
@@ -161,7 +168,7 @@ The subjectivity scores (Figure \ref{powellsubj}) concerning the Powell session 
 
 As mentioned in section \ref{fine_tune}, we fine-tuned three different model types using a grid-search technique. We ran the grid-search fine-tuning (or training) for 1.5 days on a single GPU, evaluating our results against the USED test set. We compared these models with a baseline majority-class classifier; which predicted all tokens in the test set as claim tokens which form the majority class.
 
-\begin{table}[b!]
+\begin{table}[t!]
 	\centering
 	\small
 	\setlength{\tabcolsep}{0.5em}
@@ -185,7 +192,6 @@ As mentioned in section \ref{fine_tune}, we fine-tuned three different model typ
 		\caption{Tabular summary of model performance on the USED test set; bold implies best performance for given category}
 		\label{table_arg_model_performances}
 	\end{threeparttable}
-	
 	\centering
 	\small
 	\setlength{\tabcolsep}{0.5em}
@@ -204,14 +210,14 @@ As mentioned in section \ref{fine_tune}, we fine-tuned three different model typ
 	\end{threeparttable}
 \end{table}
 
-Our final model results are summarized in Table \ref{table_arg_model_performances}. While the 1D$\_$CNN model performed best in classifying premise tokens, the TD$\_$Dense model performed best on the overall USED test set with a Macro-F$_1$ score of 69.3$\%$. Table \ref{table_arg_model_PR} shows the precision-recall scores for the TD$\_$Dense model on the USED test set. Overall, we can observe a higher performance for N tokens compared to C and P tokens; which is in some ways intuitive since N tokens aggregate together in non-argumentative speeches, while C and P tokens are distributed in tight spans within argumentative speeches. This might make the detection of C and P tokens more nuanced compared to the N tokens. Next, we can observe the performance of the TD$\_$Dense model with respect to training epochs in Figure \ref{model_performance}. This figure further emphasizes the point that fine-tuning is fast and computationally inexpensive; with the lowest validation cross-entropy loss being achieved in just 12 training epochs.
-
 \begin{figure}[t!]
     \centering
     \includegraphics[trim={1.0cm 0cm 0cm 0cm},clip,width=\textwidth]{img/model_training_evolution.pdf}
     \caption{TD$\_$Dense model performance summary statistics by training epochs; black vertical line demarcates the 12th training epoch where validation cross-entropy loss was minimized}
     \label{model_performance}
 \end{figure}
+
+Our final model results are summarized in Table \ref{table_arg_model_performances}. While the 1D$\_$CNN model performed best in classifying premise tokens, the TD$\_$Dense model performed best on the overall USED test set with a Macro-F$_1$ score of 69.3$\%$. Table \ref{table_arg_model_PR} shows the precision-recall scores for the TD$\_$Dense model on the USED test set. Overall, we can observe a higher performance for N tokens compared to C and P tokens; which is in some ways intuitive since N tokens aggregate together in non-argumentative speeches, while C and P tokens are distributed in tight spans within argumentative speeches. This might make the detection of C and P tokens more nuanced compared to the N tokens. Next, we can observe the performance of the TD$\_$Dense model with respect to training epochs in Figure \ref{model_performance}. This figure further emphasizes the point that fine-tuning is fast and computationally inexpensive; with the lowest validation cross-entropy loss being achieved in just 12 training epochs.
 
 \subsubsection{Prediction on UNSC}
 
