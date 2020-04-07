@@ -71,7 +71,7 @@ $ ./init.sh
 
 Under sentiment analysis, we tested two successful sentiment-analysis tools, specifically [VADER](https://github.com/cjhutto/vaderSentiment) and [AFINN](https://github.com/fnielsen/afinn), on the UNSC corpus. For subjectivity analysis, we used [TextBlob](https://github.com/sloria/TextBlob), a text processing framework for Python. Next, we evaluated the predicted results to check their quality.
 
-For further details on sentiment analysis, check out our dedicated Jupyter notebook [here](./sentiment.ipynb).
+For further details on sentiment analysis, check out our dedicated Jupyter  [notebook](./sentiment.ipynb).
 
 Our final product for sentiment analysis is the following [json](./data/UNSC/sentiment_annotation.json) file which maps UNSC speech IDs to automatically produced sentiment and subjectivity scores.
 
@@ -79,7 +79,7 @@ Our final product for sentiment analysis is the following [json](./data/UNSC/sen
 
 Under argumentation mining, we fine-tuned the [ALBERT](https://github.com/google-research/ALBERT) language encoder (with custom decoders) on a small annotated political argumentation corpus known as the US Election Debate (USED) Corpus, detailed in [Haddadan et al. 2019](https://www.aclweb.org/anthology/P19-1463/) and publicly available [here](https://github.com/ElecDeb60To16/Dataset). Next, we applied the fine-tuned argumentation classifier on the UNSC corpus to predict and extract argumentation candidates. 
 
-For further details on argumentation mining, check out our dedicated readme [here](./argumentation.md).
+For further details on argumentation mining, check out our dedicated [readme](./argumentation.md).
 
 Our final products for argumentation mining are twofold; firstly being the fine-tuned ALBERT language [model](./model_logs/2020_03_17_09_17_44_MSL512_grid_train/model_1.h5) and secondly a human-readable [json](./data/UNSC/pred/pred_clean_512.json) file mapping UNSC speech IDs to token-level argumentation labels. For the `json` file, we were only able to conduct argumentation mining for shorter UNSC speeches.
 
