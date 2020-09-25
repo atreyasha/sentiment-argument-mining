@@ -552,7 +552,7 @@ description = "TensorFlow is an open source machine learning framework for every
 name = "tensorflow-gpu"
 optional = false
 python-versions = "*"
-version = "2.0.1"
+version = "2.0.3"
 
 [package.dependencies]
 absl-py = ">=0.7.0"
@@ -562,7 +562,7 @@ google-pasta = ">=0.1.6"
 grpcio = ">=1.8.6"
 keras-applications = ">=1.0.8"
 keras-preprocessing = ">=1.0.5"
-numpy = ">=1.16.0,<2.0"
+numpy = ">=1.16.0,<1.19.0"
 opt-einsum = ">=2.3.2"
 protobuf = ">=3.6.1"
 six = ">=1.10.0"
@@ -659,7 +659,8 @@ python-versions = "*"
 version = "1.12.1"
 
 [metadata]
-content-hash = "601bdac3cd3e9e59b7170b8094779c2d1a086f7d1ad8174dac51cca31c804fbb"
+content-hash = "94fc16e897ef69d6d575e93cafdbecf14ba9eb0ba73d9ca53dc00d2d2d138dc9"
+lock-version = "1.0"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1003,6 +1004,7 @@ pytz = [
     {file = "pytz-2019.3.tar.gz", hash = "sha256:b02c06db6cf09c12dd25137e563b31700d3b80fcc4ad23abb7a315f2789819be"},
 ]
 requests = [
+    {file = "requests-2.23.0-py2.7.egg", hash = "sha256:5d2d0ffbb515f39417009a46c14256291061ac01ba8f875b90cad137de83beb4"},
     {file = "requests-2.23.0-py2.py3-none-any.whl", hash = "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee"},
     {file = "requests-2.23.0.tar.gz", hash = "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"},
 ]
@@ -1104,12 +1106,12 @@ tensorflow-estimator = [
     {file = "tensorflow_estimator-2.0.1-py2.py3-none-any.whl", hash = "sha256:aa8deab25d09a9730dfbae8ec58f4eb00ec2a90b5ca3dcbd8fa0717103d3bbb3"},
 ]
 tensorflow-gpu = [
-    {file = "tensorflow_gpu-2.0.1-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:71027ad413ebf221c4a3cb379e60ac2444b127220ab701ff0c011b9d4640eac8"},
-    {file = "tensorflow_gpu-2.0.1-cp35-cp35m-win_amd64.whl", hash = "sha256:7eeeb04d54a65e3557988a90937abe92030a0869f8f360978fb2c409c1087646"},
-    {file = "tensorflow_gpu-2.0.1-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:7348c02c34591a0942b446586585f20b2be213b1cb38fce661ab7fba8483784d"},
-    {file = "tensorflow_gpu-2.0.1-cp36-cp36m-win_amd64.whl", hash = "sha256:efe7b42b729dc5a994834456c30e9bdf073fa3f9690c0737161417697535a5d4"},
-    {file = "tensorflow_gpu-2.0.1-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:bdbe4027061b1fec275bac57fa70521ed199981dc95b2d60ecb3f2f8606bca7d"},
-    {file = "tensorflow_gpu-2.0.1-cp37-cp37m-win_amd64.whl", hash = "sha256:9ebe6e1797b0682306b178f971d11be40c850ab738a14566e5e65e749297f6f8"},
+    {file = "tensorflow_gpu-2.0.3-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:1dbfb24cebfacf4c67ad9a64ee494079a0355448f0ad692864fc59321c81789f"},
+    {file = "tensorflow_gpu-2.0.3-cp35-cp35m-win_amd64.whl", hash = "sha256:63f43e3123fcab4a000a157ce7d05c7279802c5ceab9f1181d946e667760a180"},
+    {file = "tensorflow_gpu-2.0.3-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:b34273a4033f3554809f209c6d6a406a55cb272739d55d2e4dcb219295718b27"},
+    {file = "tensorflow_gpu-2.0.3-cp36-cp36m-win_amd64.whl", hash = "sha256:66976eb4f1e829b32b7441f2bf44e28c7e543d81ca65c494f1aaa8291302f91a"},
+    {file = "tensorflow_gpu-2.0.3-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:7aa73a41a6d4142ff547892cc17ad2c680a991342bf547217df6f1ef34642d5a"},
+    {file = "tensorflow_gpu-2.0.3-cp37-cp37m-win_amd64.whl", hash = "sha256:8c239a34b0e9d48a7237405995819754be19931e6c050cd0351c53543b22b683"},
 ]
 termcolor = [
     {file = "termcolor-1.1.0.tar.gz", hash = "sha256:1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"},
