@@ -110,7 +110,8 @@ Haddadan et al. 2019 (paper describing US Election Debate corpus)
     author = "Haddadan, Shohreh  and
       Cabrio, Elena  and
       Villata, Serena",
-    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
+    booktitle = {Proceedings of the 57th Annual Meeting of the Association
+    for Computational Linguistics},
     month = jul,
     year = "2019",
     address = "Florence, Italy",
