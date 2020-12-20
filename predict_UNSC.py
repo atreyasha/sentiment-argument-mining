@@ -12,14 +12,13 @@ from tqdm import tqdm
 from glob import glob
 from collections import Counter
 from tensorflow.keras.models import load_model
-from train_USElectionDebates import read_or_create_data_US
+from train_USElectionDebates import read_data_US
 from pre_process_UNSC import *
 from utils.arg_metav_formatter import *
 from utils.model_utils import *
 
 
-def read_or_create_data_UNSC(max_seq_length=512,
-                             directory="./data/UNSC/pred/"):
+def read_data_UNSC(max_seq_length=512, directory="./data/UNSC/pred/"):
     """
     Function to either read or create UNSC corpus data
 
@@ -37,8 +36,8 @@ def read_or_create_data_UNSC(max_seq_length=512,
     """
     check = glob(os.path.join(directory, "*" + str(max_seq_length) + "*"))
     if len(check) < 3:
-        (pred_tokens, pred_X,
-         pred_mask) = corpus2tokenids_UNSC(max_seq_length=max_seq_length)
+        raise FileNotFoundError("Preprocessed UNSC data not "
+                                "found, please preprocess data first")
     else:
         with open(
                 os.path.join(directory,
@@ -94,7 +93,7 @@ def pred_model_UNSC(model_path,
         y_pred = np.load("./data/UNSC/pred/pred_Yhat_" + str(max_seq_length) +
                          ".npy")
     else:
-        _, pred_X, _ = read_or_create_data_UNSC(max_seq_length)
+        _, pred_X, _ = read_data_UNSC(max_seq_length)
         model = load_saved_model(model_path)
         y_pred = model.predict(pred_X, batch_size=128)
         y_pred = np.argmax(y_pred, axis=-1)
@@ -161,8 +160,8 @@ def simplify_results(y_pred,
         clean_results (dict): simplified dictionary mapping from speech ID's
         to saved model predictions
     """
-    pred_tokens, _, pred_mask = read_or_create_data_UNSC(max_seq_length)
-    _, _, _, _, label_map = read_or_create_data_US(max_seq_length)
+    pred_tokens, _, pred_mask = read_data_UNSC(max_seq_length)
+    _, _, _, _, label_map = read_data_US(max_seq_length)
     label_map_inverse = {item[1]: item[0] for item in label_map.items()}
     keys = list(pred_tokens.keys())
     clean_results = {}
