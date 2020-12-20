@@ -12,6 +12,7 @@ from tensorflow.keras.layers import Dense, Activation
 from tensorflow.keras.layers import Conv1D, LSTM, TimeDistributed, Input
 from sklearn.metrics import classification_report
 
+
 def class_acc(label_threshold_less):
     """
     Wrapper function to return keras accuracy logger
@@ -35,20 +36,22 @@ def class_acc(label_threshold_less):
         Returns:
             class_accuracy (int): simple accuracy of argument candidates
         """
-        class_id_true = K.cast(y_true,'int64')
+        class_id_true = K.cast(y_true, 'int64')
         class_id_preds = K.argmax(y_pred, axis=-1)
-        accuracy_mask = K.cast(K.less(class_id_preds,label_threshold_less),
+        accuracy_mask = K.cast(K.less(class_id_preds, label_threshold_less),
                                'float32')
         accuracy_mask = 1 - accuracy_mask
-        class_acc_tensor = (K.cast(K.equal(class_id_true,
-                                          class_id_preds),
-                                   'float32') * accuracy_mask)
-        class_accuracy = (K.sum(class_acc_tensor)/
-                          K.maximum(K.sum(accuracy_mask),1))
+        class_acc_tensor = (
+            K.cast(K.equal(class_id_true, class_id_preds), 'float32') *
+            accuracy_mask)
+        class_accuracy = (K.sum(class_acc_tensor) /
+                          K.maximum(K.sum(accuracy_mask), 1))
         return class_accuracy
+
     return argument_candidate_acc
 
-def class_report(y_true,y_pred,greater_than_equal=3):
+
+def class_report(y_true, y_pred, greater_than_equal=3):
     """
     Function to calculate a classification report for predictions
 
@@ -66,7 +69,8 @@ def class_report(y_true,y_pred,greater_than_equal=3):
     relevant_indices = np.where(y_true >= greater_than_equal)[0]
     y_pred = y_pred[relevant_indices]
     y_true = y_true[relevant_indices]
-    return classification_report(y_true,y_pred,output_dict=True)
+    return classification_report(y_true, y_pred, output_dict=True)
+
 
 def fetch_bert_layer():
     """
@@ -83,9 +87,8 @@ def fetch_bert_layer():
     l_bert = bert.BertModelLayer.from_params(model_params, name="albert")
     return l_bert, model_ckpt
 
-def learning_rate_scheduler(max_learn_rate,
-                            end_learn_rate,
-                            warmup_epoch_count,
+
+def learning_rate_scheduler(max_learn_rate, end_learn_rate, warmup_epoch_count,
                             total_epoch_count):
     """
     Wrapper function to return keras learning rate scheduler callback
@@ -114,18 +117,19 @@ def learning_rate_scheduler(max_learn_rate,
             (float): current learning rate
         """
         if epoch < warmup_epoch_count:
-            res = (max_learn_rate/warmup_epoch_count) * (epoch + 1)
+            res = (max_learn_rate / warmup_epoch_count) * (epoch + 1)
         else:
-            res = max_learn_rate*math.exp(math.log(end_learn_rate/
-                                                   max_learn_rate)*
-                                          (epoch-warmup_epoch_count+1)/
-                                          (total_epoch_count-
-                                           warmup_epoch_count+1))
+            res = max_learn_rate * math.exp(
+                math.log(end_learn_rate / max_learn_rate) *
+                (epoch - warmup_epoch_count + 1) /
+                (total_epoch_count - warmup_epoch_count + 1))
         return float(res)
-    return LearningRateScheduler(lr_scheduler,verbose=1)
 
-def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
-                 label_threshold_less,model_type):
+    return LearningRateScheduler(lr_scheduler, verbose=1)
+
+
+def create_model(l_bert, model_ckpt, max_seq_len, num_labels,
+                 label_threshold_less, model_type):
     """
     Wrapper function to return keras learning rate scheduler callback
 
@@ -143,8 +147,7 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
         model (tensorflow.python.keras.engine.training.Model): final compiled
         model which can be used for fine-tuning
     """
-    input_ids = Input(shape=(max_seq_len,),
-                      dtype='int32')
+    input_ids = Input(shape=(max_seq_len, ), dtype='int32')
     output = l_bert(input_ids)
     if model_type == "TD_Dense":
         output = TimeDistributed(Dense(512))(output)
@@ -157,19 +160,19 @@ def create_model(l_bert,model_ckpt,max_seq_len,num_labels,
         output = Activation("relu")(output)
         output = TimeDistributed(Dense(num_labels))(output)
     elif model_type == "1D_CNN":
-        output = Conv1D(512,3,padding="same")(output)
+        output = Conv1D(512, 3, padding="same")(output)
         output = Activation("relu")(output)
-        output = Conv1D(256,3,padding="same")(output)
+        output = Conv1D(256, 3, padding="same")(output)
         output = Activation("relu")(output)
-        output = Conv1D(128,3,padding="same")(output)
+        output = Conv1D(128, 3, padding="same")(output)
         output = Activation("relu")(output)
-        output = Conv1D(64,3,padding="same")(output)
+        output = Conv1D(64, 3, padding="same")(output)
         output = Activation("relu")(output)
-        output = Conv1D(num_labels,3,padding="same")(output)
+        output = Conv1D(num_labels, 3, padding="same")(output)
     elif model_type == "Stacked_LSTM":
-        output = LSTM(512,return_sequences=True)(output)
-        output = LSTM(256,return_sequences=True)(output)
-        output = LSTM(128,return_sequences=True)(output)
+        output = LSTM(512, return_sequences=True)(output)
+        output = LSTM(256, return_sequences=True)(output)
+        output = LSTM(128, return_sequences=True)(output)
         output = TimeDistributed(Dense(64))(output)
         output = Activation("relu")(output)
         output = TimeDistributed(Dense(num_labels))(output)

@@ -1,5 +1,4 @@
-Developments
-------------
+## Developments
 
 ### Argumentation workflow
 
