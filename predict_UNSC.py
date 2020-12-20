@@ -20,7 +20,7 @@ from utils.model_utils import *
 
 def read_data_UNSC(max_seq_length=512, directory="./data/UNSC/pred/"):
     """
-    Function to either read or create UNSC corpus data
+    Function reads UNSC corpus data
 
     Args:
         max_seq_length (int): maximum sequence length to be used in training

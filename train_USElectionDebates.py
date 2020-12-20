@@ -29,8 +29,7 @@ def getCurrentTime():
 def read_data_US(max_seq_length,
                  directory="./data/USElectionDebates/training/"):
     """
-    Function either loads cached training data or re-executes
-    pre-processing pipeline to generate training data
+    Function reads US Election Debate training data
 
     Args:
         max_seq_length (int): maximum sequence length for training data
