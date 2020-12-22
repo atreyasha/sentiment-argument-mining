@@ -2,12 +2,10 @@ absl-py==0.9.0; python_version >= "2.7" and python_full_version < "3.0.0" or pyt
 afinn==0.1
 astor==0.8.1; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.4.0"
 bert-for-tf2==0.13.2; python_version >= "3.5"
-bert==2.2.0
 cachetools==4.0.0; python_version >= "3.5" and python_version < "4.0" and (python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.4.0")
 certifi==2019.11.28; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0"
 chardet==3.0.4; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0"
 cycler==0.10.0; python_version >= "3.6"
-erlastic==2.0.0
 gast==0.2.2; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.4.0"
 google-auth-oauthlib==0.4.1; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.2.0"
 google-auth==1.11.3; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.4.0"
@@ -26,9 +24,9 @@ numpy==1.18.2; python_version >= "3.5"
 oauthlib==3.1.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.4.0"
 opt-einsum==3.2.0; python_version >= "3.5"
 pandas==1.0.2; python_full_version >= "3.6.1" and python_version >= "3.6"
-params-flow==0.7.4; python_version >= "3.5"
+params-flow==0.8.2; python_version >= "3.5"
 protobuf==3.11.3; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.2.0"
-py-params==0.8.3; python_version >= "3.5"
+py-params==0.9.7; python_version >= "3.6"
 pyasn1-modules==0.2.8; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.4.0"
 pyasn1==0.4.8; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.4.0"
 pyparsing==2.4.6; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.3.0" and python_version >= "3.6"
@@ -52,5 +50,4 @@ tqdm==4.43.0; (python_version >= "2.6" and python_full_version < "3.0.0") or (py
 urllib3==1.25.8; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version < "4"
 vadersentiment==3.3.1
 werkzeug==1.0.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0"
-wheel==0.34.2; python_version >= "3" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version >= "3"
 wrapt==1.12.1

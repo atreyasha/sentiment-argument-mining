@@ -8,17 +8,16 @@ authors = ["Atreya Shankar <35427332+atreyasha@users.noreply.github.com>"]
 python = "^3.7"
 numpy = "^1.18.1"
 nltk = "^3.4.5"
-bert = "^2.2.0"
 tqdm = "^4.43.0"
 scikit_learn = "^0.22.2"
 sentencepiece = "^0.1.85"
 tensorflow-gpu = "2.0.3"
-bert_for_tf2 = "0.13.2"
 pyreadr = "^0.2.6"
 textblob = "^0.15.3"
 vaderSentiment = "^3.3.1"
 afinn = "^0.1"
 seaborn = "^0.10.0"
+bert-for-tf2 = "0.13.2"
 
 [tool.poetry.dev-dependencies]
 
