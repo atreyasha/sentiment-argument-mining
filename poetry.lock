@@ -298,7 +298,7 @@ test = ["pytest (>=4.0.2)", "pytest-xdist", "hypothesis (>=3.58)"]
 
 [[package]]
 name = "params-flow"
-version = "0.8.2"
+version = "0.7.4"
 description = "Tensorflow Keras utilities for reducing boilerplate code."
 category = "main"
 optional = false
@@ -306,7 +306,7 @@ python-versions = ">=3.5"
 
 [package.dependencies]
 numpy = "*"
-py-params = ">=0.9.6"
+py-params = ">=0.6.4"
 tqdm = "*"
 
 [[package]]
@@ -322,11 +322,11 @@ six = ">=1.9"
 
 [[package]]
 name = "py-params"
-version = "0.9.7"
+version = "0.8.3"
 description = "A type safe dictionary in python"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.4"
 
 [[package]]
 name = "pyasn1"
@@ -613,7 +613,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "a3c3ab266b35170118c550ce8971e88181b58dc093db09749429083d22b6f80c"
+content-hash = "3e09822fe6801db17496bb67da813281af63a8271658979089669732d4d2638e"
 
 [metadata.files]
 absl-py = [
@@ -864,7 +864,7 @@ pandas = [
     {file = "pandas-1.0.2.tar.gz", hash = "sha256:76334ba36aa42f93b6b47b79cbc32187d3a178a4ab1c3a478c8f4198bcd93a73"},
 ]
 params-flow = [
-    {file = "params-flow-0.8.2.tar.gz", hash = "sha256:f6799a53433af84013f1fc7a5da3864ca341c5c7c7765506aa21314cdb53ddf0"},
+    {file = "params-flow-0.7.4.tar.gz", hash = "sha256:150e0fa66dd869eeb00535daa74c8c36b24ef6aec9fbae10b1f36414a4a8fc83"},
 ]
 protobuf = [
     {file = "protobuf-3.11.3-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:ef2c2e56aaf9ee914d3dccc3408d42661aaf7d9bb78eaa8f17b2e6282f214481"},
@@ -888,7 +888,7 @@ protobuf = [
     {file = "protobuf-3.11.3.tar.gz", hash = "sha256:c77c974d1dadf246d789f6dad1c24426137c9091e930dbf50e0a29c1fcf00b1f"},
 ]
 py-params = [
-    {file = "py-params-0.9.7.tar.gz", hash = "sha256:e607ac8bb9f0fda1167d5e4184d3a7bec8cfa9f86d4e803b730ea573daafe1aa"},
+    {file = "py-params-0.8.3.tar.gz", hash = "sha256:661d258ee852b0c2b48186f898e2d5c5afe61b56275d7b8ee21487df08597fcd"},
 ]
 pyasn1 = [
     {file = "pyasn1-0.4.8-py2.4.egg", hash = "sha256:fec3e9d8e36808a28efb59b489e4528c10ad0f480e57dcc32b4de5c9d8c9fdf3"},
