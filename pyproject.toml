@@ -20,6 +20,7 @@ seaborn = "^0.10.0"
 bert-for-tf2 = "0.13.2"
 params-flow = "0.7.4"
 py-params = "0.8.3"
+rsa = "4.1"
 
 [tool.poetry.dev-dependencies]
 
