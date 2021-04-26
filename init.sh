@@ -1,12 +1,6 @@
 #!/bin/bash
 set -e
 
-read -rep "create pre-commit hook for updating python dependencies? (y/n): " ans
-if [ $ans == "y" ]; then
-  # move pre-commit hook into local .git folder for activation
-  cp ./hooks/pre-commit ./.git/hooks/pre-commit
-fi
-
 read -rep "download and deploy UNSC corpus? (y/n): " ans
 if [ $ans == "y" ]; then
   # get us-election and unsc data
@@ -27,4 +21,10 @@ if [ $ans == "y" ]; then
   wget -O ./USElectionDebates/ElecDeb60To16.zip "https://github.com/ElecDeb60To16/Dataset/raw/master/ElecDeb60To16.zip"
   unzip -o ./USElectionDebates/ElecDeb60To16.zip -d ./USElectionDebates/
   cd ..
+fi
+
+read -rep "create pre-commit hook for updating python dependencies? (y/n): " ans
+if [ $ans == "y" ]; then
+  # move pre-commit hook into local .git folder for activation
+  cp ./hooks/pre-commit ./.git/hooks/pre-commit
 fi
