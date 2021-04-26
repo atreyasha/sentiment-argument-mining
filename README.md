@@ -56,7 +56,7 @@ Under sentiment analysis, we tested two successful sentiment-analysis tools; spe
 
 For further details on sentiment analysis, check out our dedicated Jupyter  [notebook](./sentiment.ipynb).
 
-Our final product for sentiment analysis is the following [json](./data/UNSC/sentiment_annotation.json) file which maps UNSC speech IDs to automatically produced sentiment and subjectivity scores.
+Our final product for sentiment analysis is a [json](./data/UNSC/sentiment_annotation.json) file which maps UNSC speech IDs to automatically produced sentiment and subjectivity scores.
 
 ## Argumentation Mining
 
