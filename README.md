@@ -28,7 +28,7 @@ To find out more about our methodologies, read the next parts of this readme. Ad
 
 ## Repository Initialization
 
-### Data and git-hooks
+### Data and hooks
 
 In order to prepare the necessary data and git hooks, simply run `init.sh` and you will receive the following prompts:
 
