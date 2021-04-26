@@ -40,7 +40,7 @@ $ ./init.sh
 
 2. You will be prompted to download and deploy the US Election Debate corpus which is publicly accesible [here](https://github.com/ElecDeb60To16/Dataset). This will download and unzip the corresponding files, and should be fairly quick.
 
-3. **Optional:** Finally, you will be prompted to initialize a pre-commit hook which will keep python dependencies up-to-date in `requirements.txt`. This is only necessary if you are further developing this repository.
+3. **Optional:** Finally, you will be prompted to initialize a pre-commit hook which keeps python dependencies up-to-date in `requirements.txt`, lints R/shell scripts and converts `org` files to the GitHub markdown format. This is only necessary if you are further developing this repository.
 
 ### Pre-trained argumentation model
 
