@@ -113,7 +113,7 @@ An example of executing a grid-search model training is shown below:
 $ python3 train_USElectionDebates.py --grid-search --batch-size 30
 ```
 
-**Note:** This workflow was tested on a single NVIDIA GeForce GTX 1080 Ti GPU with 12 GB RAM. Due to limited memory, we had to use a small batch-size of `10`. Our best model with the `TD_Dense` decoder achieved a `69%` Macro-F<sub>1</sub> score on the test dataset.
+**Note:** This workflow was tested on a single NVIDIA GeForce GTX 1080 Ti GPU with 12 GB RAM. Due to limited memory, we had to use a small batch-size of `10`. Our best model with the `TD_Dense` decoder achieved a `69%` Macro-F<sub>1</sub> score on the test dataset. This best model's weights and evaluation metrics can be found in `./model_logs/2020_03_17_09_17_44_MSL512_grid_train`. Check this [section](https://github.com/atreyasha/sentiment-argument-mining#pre-trained-argumentation-model) for instructions on syncing the best pre-trained model.
 
 ### 3. Prediction on UNSC
 
