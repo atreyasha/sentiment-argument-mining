@@ -1,4 +1,5 @@
 # Sentiment Analysis and Argumentation Mining in UNSC Speeches
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4813014.svg)](https://doi.org/10.5281/zenodo.4813014)
 
 ## Overview
 
