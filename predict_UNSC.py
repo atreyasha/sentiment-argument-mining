@@ -6,6 +6,7 @@ import json
 import argparse
 import logging
 import logging.config
+
 logging.config.fileConfig('./utils/logging.conf')
 import numpy as np
 from tqdm import tqdm
